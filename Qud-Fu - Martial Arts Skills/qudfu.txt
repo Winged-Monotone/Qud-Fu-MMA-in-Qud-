@@ -1,0 +1,51 @@
+
+Qud-fu
+
+Martial Conditioning I
+Strikes delivered with unnarmed, or natural weapons deal penetration equal to twice their governed melee-attribute, gain a +3 to hit. You also deal additional damage when attacking while unnarmed or equipped with natural weapons equal to 1d + (2 + (Your Level / 4)). 
+
+Flurry of Blows
+The chances of performing an offhand strike while unnarmed or wielding natural weapons is increased by 5% multiplied against your agility modifier. This is further increased by 5% per character level.
+
+Combination Strikes I
+Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your damage in increments of 5% up to 50% per successful hit, this refreshes after leaving combat or missing/failing to penetrate with your attack.
+
+Martial Conditioning II
+Your body is conditioned to take blows and your combat experience allows you to react more strategically to taking hits, you are more resistant to being stunned and dazed, and harder to knock prone. You gain +10 to your Quickness.
+
+Grappler
+Grapple enemies, a grappled enemy loses their DV bonus and must succeed an agility or strength saving throw vs the grappler's strength modifier to escape. While grappled, there is a chance melee and ranged attacks from other enemies may be redirected to the grappled target instead. You no longer earn a penalty to agility while prone.
+
+Combination Strikes II
+Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your chance for a critical by 2% up to 20% per successful hit, this refreshes after leaving combat, or missing/failing to penetrate with your attack.
+
+Sure Strike [Cooldown: 20]
+You can deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand.
+
+Martial Stances (0)
+Only Natural Equipment and unnarmed slots gain bonuses from stances, unless stated otherwise.
+[Stances cost 1000 energy to swap into.]
+
+Path of the Dawnglider [Your Neutral Go-To] [300]
+A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +1 to hit and + 2 to DV.
+
+Path of The Salt-Back [Stand Your Ground]
+Sacrifice attack power for defensive capabilities. Sacrificing consecutive attacks and your damage bonus, you can now deflect enemies blows with a 20% chance of adding your toughness to your AC on a sucessful block. Successful blocks count towards your Combination Strikes. [Wearing bracers or wristblades increases this chance 10%.]
+
+Path of the Salthopper [Break Your Enemy Down]
+Sudden, high precision strikes that target sensitive areas on the foe; melee damage switches to agility, cannot deliver combinations strikes, however each blow has a 10% chance of adding either Immobilize, Confuse, Stun, Daze or Crippled/Hobbled to your enemy.
+
+Path of The Slumberling [Opportunity for Vicious Reprieval]
+Vicious sweeping attacks that harm all while throwing away all defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage. There's a 2% chance each strike, you might dismember an opponents limb. On a successful dismemberment, enemies flanking you must make a Willpower saving throw or be given the Fear effect.
+
+Path of the Astral Cabby [Disengage, Return to Neutral]
+Evasive, untouchable, no matter how many flank you--you move as the void does. When flanked by multiple enemies, you add your agility modifier to your DV per unit surrounding you, successful dodges build your Combination Strike counter and you gain a +5 to movement speed, you however lose your unnarmed damage bonus and can longer perform consecutive attacks.
+
+
+
+Master of Stances:
+Switching stances no longer cost energy. 
+
+Combination Strikes III
+Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your Penetration by 1 per successful consecutive hits, this refreshes after leaving combat, or missing/failing to penetrate with your attack.
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+    <object Name="DefaultFist" Load="Merge">
+        <tag Name="EMG_MartialArtsTech"></tag>
+        <part Name="MartialConditioningFistMod"></part>
+    </object>
+    <object Name="CarbideFist" Load="Merge">
+        <tag Name="EMG_MartialArtsTech"></tag>
+    </object>
+    <object Name="FulleriteFist" Load="Merge">
+        <tag Name="EMG_MartialArtsTech"></tag>
+    </object>
+    <object Name="FungalInfection" Load="Merge">
+        <tag Name="EMG_MartialArtsTech"></tag>
+    </object>
+</objects>
