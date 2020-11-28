@@ -24,8 +24,15 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
+            if (!ParentObject.HasPart("KO_On_Finish"))
+            {
+                ParentObject.AddPart<KO_On_Finish>();
+                AddPlayerMessage("Part added to " + ParentObject);
+            }
             if (!ParentObject.HasSkill("WM_MMA_MartialConI"))
+            {
                 ParentObject.AddSkill("WM_MMA_MartialConI");
+            }
             return true;
         }
 

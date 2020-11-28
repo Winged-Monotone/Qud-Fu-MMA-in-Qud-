@@ -30,6 +30,7 @@ namespace XRL.World.Parts
                 if (!ParentObject.HasPart("KO_On_Finish"))
                 {
                     ParentObject.AddPart<KO_On_Finish>();
+
                     AddPlayerMessage("Part added to " + ParentObject);
                 }
 
