@@ -59,42 +59,29 @@ namespace XRL.World.Parts
                 defender.UnregisterPartEvent(this, "BeforeDie");
 
             }
-            else if (E.ID == "BeforeDie")
+            else if (E.ID == "DealDamage")
             {
-                var Dying = E.GetGameObjectParameter("Dying");
-                var Killer = E.GetGameObjectParameter("Killer");
-                var Weapon = E.GetGameObjectParameter("Weapon");
-
-                if (Killer.IsPlayer() && Weapon.HasPart("KO_On_Finish") && ShowMercy == true)
+                var attacker = E.GetGameObjectParameter("Attacker");
+                var weapon = E.GetGameObjectParameter("Weapon");
+                var defender = E.GetGameObjectParameter("Defender");
+                var damage = E.GetParameter<Damage>("Damage");
+                if (attacker.IsPlayer() && (weapon.HasPart("KO_On_Finish") || attacker.HasPart("KO_On_Finish")) && ShowMercy == true)
                 {
-                    AddPlayerMessage("KO Opponent");
-                    var KOdToughness = Dying.StatMod("Toughness");
-                    var SaveDC = 9999 - (KOdToughness * 10);
+                    if (damage.Amount >= defender.hitpoints)
+                    {
+                        damage.Amount = defender.hitpoints - 1; //Set damage equal to what we need to drop them to 1 HP
+                    }
+                    AddPlayerMessage("KO in deal damage event");
+                    var KOdEgo = defender.StatMod("Ego");
+                    var SaveDC = 40 - (KOdEgo * 10);
 
-                    Dying.hitpoints = 1;
-                    Dying.ApplyEffect(new Incapacitated(2400, SaveDC));
+                    defender.ApplyEffect(new Incapacitated(2400, SaveDC));
 
-                    return false;
-                }
-                else if (Killer.IsPlayer() && Killer.HasPart("KO_On_Finish") && ShowMercy == true)
-                {
-                    AddPlayerMessage("KO Opponent tag on parent");
-                    var KOdToughness = Dying.StatMod("Ego");
-                    var SaveDC = 40 - (KOdToughness * 10);
-
-                    Dying.hitpoints = 1;
-                    Dying.ApplyEffect(new Incapacitated(2400, SaveDC));
-
-                    return false;
-                }
-                if (Killer.IsPlayer() && Dying.HasEffect("Incapacitated") && ShowMercy == false)
-                {
-                    AddPlayerMessage("Execute Initilized");
-                    Dying.Die(ParentObject, ParentObject.it + " executes " + Dying.it, "Executed by " + ParentObject.Its);
+                    return true;
                 }
             }
 
-            return true;
+            return base.FireEvent(E);
         }
 
         public override bool HandleEvent(AfterAddSkillEvent E)

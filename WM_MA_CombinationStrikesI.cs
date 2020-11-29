@@ -59,7 +59,9 @@ namespace XRL.World.Parts.Skill
 
         public override bool WantEvent(int ID, int cascade)
         {
-            return base.WantEvent(ID, cascade) || ID == AttackerDealingDamageEvent.ID;
+            return base.WantEvent(ID, cascade)
+            || ID == AttackerDealingDamageEvent.ID
+            || ID == GetAttackerHitDiceEvent.ID;
         }
 
         public override void Register(GameObject Object)
@@ -72,6 +74,21 @@ namespace XRL.World.Parts.Skill
             base.Register(Object);
         }
 
+        public override bool HandleEvent(GetAttackerHitDiceEvent E)
+        {
+            var Weapon = E.Weapon;
+            var Parent = E.Attacker == ParentObject;
+            var Defender = E.Defender;
+            var PenBonus = E.PenetrationBonus;
+
+            if (Parent && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
+            {
+                PenBonus = +CurrentComboICounter;
+            }
+
+            return base.HandleEvent(E);
+
+        }
 
         public override bool HandleEvent(AttackerDealingDamageEvent E)
         {
@@ -97,8 +114,9 @@ namespace XRL.World.Parts.Skill
                             {
                                 var FistDamage = E.Damage.Amount;
 
-                                FistDamage = (int)Math.Round(FistDamage + (FistDamage / ((0.05) * (ParentsLevel))));
+                                FistDamage = (int)Math.Round(FistDamage + (FistDamage / ((0.05) * (ParentsLevel))) * CurrentComboICounter);
                             }
+
                         }
                     }
                 }
@@ -108,7 +126,7 @@ namespace XRL.World.Parts.Skill
                 }
             }
 
-            return true;
+            return base.HandleEvent(E);
         }
 
         public override bool FireEvent(Event E)

@@ -133,7 +133,6 @@ namespace XRL.World.Effects
             if (num > 15 && num < 30)
             {
                 E.Tile = null;
-                E.RenderString = "KO";
                 E.ColorString = "&R^r";
             }
             return true;
