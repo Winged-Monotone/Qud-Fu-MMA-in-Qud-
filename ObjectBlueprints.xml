@@ -4,6 +4,10 @@
         <tag Name="MMAHooks"></tag>
         <part Name="MartialConditioningFistMod"></part>
     </object>
+    <object Name="PsionicFist" Load="Merge">
+        <tag Name="MMAHooks"></tag>
+        <part Name="MartialConditioningFistMod"></part>
+    </object>
     <object Name="CarbideFist" Load="Merge">
         <tag Name="MMAHooks"></tag>
     </object>
