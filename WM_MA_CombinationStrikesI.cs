@@ -81,9 +81,9 @@ namespace XRL.World.Parts.Skill
             var Defender = E.Defender;
             var PenBonus = E.PenetrationBonus;
 
-            if (Parent && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
+            if (Parent && Weapon.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesIII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
             {
-                PenBonus = +CurrentComboICounter;
+                PenBonus = PenBonus + (CurrentComboICounter);
             }
 
             return base.HandleEvent(E);
@@ -122,7 +122,7 @@ namespace XRL.World.Parts.Skill
                 }
                 catch
                 {
-                    return true;
+                    return base.HandleEvent(E);
                 }
             }
 

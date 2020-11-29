@@ -16,7 +16,7 @@
 
         <power Name="Sure Strikes" Cost="100" Attribute="Strength" Minimum="17" Class="WM_MMA_SureStrikes" Prereq="" Description="You can deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike."></power>
 
-        <power Name="Martial Stances" Cost="300" Attribute="Intelligence" Minimum="16" Class="WM_MMA_MartialStances" Prereq="WM_MMA_MartialConII" Description="Gain access to special stances that "></power>
+        <power Name="Martial Stances" Cost="300" Attribute="Intelligence" Minimum="16" Class="WM_MMA_MartialStances" Prereq="WM_MMA_MartialConII" Description="Gain access to special stances that grant their user incredible prowess."></power>
 
         <power Name="Path of the Dawnglider" Cost="0" Attribute="Strength" Minimum="16" Class="WM_MMA_PathDawnGlider" Prereq="WM_MMA_MartialStances" Description="A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +1 to hit and + 2 to DV."></power>
 
