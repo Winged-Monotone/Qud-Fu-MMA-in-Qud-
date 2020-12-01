@@ -15,6 +15,7 @@ namespace XRL.World.Parts.Skill
     [Serializable]
     public class WM_MMA_SureStrikes : BaseSkill
     {
+        public string WeaponType = "MartialConditioningFistMod";
         public Guid SureStrikesActivatedAbilityID;
         public WM_MMA_SureStrikes()
         {
@@ -29,7 +30,6 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerGetWeaponPenModifier");
             Object.RegisterPartEvent(this, "GetWeaponPenModifier");
             Object.RegisterPartEvent(this, "AttackerHit");
-
         }
 
         public override bool FireEvent(Event E)
@@ -37,62 +37,34 @@ namespace XRL.World.Parts.Skill
             if (E.ID == "CommandSureStrikes")
             {
                 AddPlayerMessage("Firing Sure strike commandsurestrikes");
+
                 SureStrike();
+
+                var eAttacker = E.GetGameObjectParameter("Attacker");
+                var eDefender = E.GetGameObjectParameter("Defender");
+
+                var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+                var ParentAgi = ParentObject.StatMod("Agility");
+
+                for (int i = 0; i < ParentAgi; i++)
+                {
+                    if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
+                    {
+                        AddPlayerMessage("inititate chaining strike event");
+                        eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
+                    }
+                }
             }
-            if (E.ID == "GetWeaponPenModifier")
+            if (E.ID == "ChainingSureStrikes")
             {
-                AddPlayerMessage("getting event Getweaponpenmodifier");
-                var WeaponType = E.GetGameObjectParameter("Weapon");
+                AddPlayerMessage("Chaining strike fires");
 
-                if (E.ID == "AttackerGetWeaponPenModifier" && WeaponType.HasPart("MartialConditioningFistMod"))
-                {
-                    AddPlayerMessage("getting event attackergetweaponpenmodifier");
-                    E.SetParameter("PenBonus", E.GetIntParameter("PenBonus") * 2);
-                    E.SetParameter("CapBonus", E.GetIntParameter("CapBonus") * 2);
+                var eDefender = E.GetGameObjectParameter("Defender");
+                var eAttacker = E.GetGameObjectParameter("Attacker");
 
-                }
-                if (E.ID == "AttackerHit")
-                {
-                    AddPlayerMessage("Attack hit");
+                ChainingSureStrike(eDefender);
 
-                    var eAttacker = E.GetGameObjectParameter("Attacker");
-                    var eDefender = E.GetGameObjectParameter("Defender");
-
-                    var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
-                    var ParentAgi = ParentObject.StatMod("Agility");
-
-                    for (int i = 0; i < ParentAgi; i++)
-                    {
-                        if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
-                        {
-                            AddPlayerMessage("inititate chaining strike event");
-                            eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-                        }
-                    }
-                }
-                if (E.ID == "ChainingSureStrikes")
-                {
-                    AddPlayerMessage("Chaining strike fires");
-
-                    var eDefender = E.GetGameObjectParameter("Defender");
-                    var eAttacker = E.GetGameObjectParameter("Attacker");
-
-                    ChainingSureStrike(eDefender);
-                    if (E.ID == "GetWeaponPenModifier")
-                    {
-                        AddPlayerMessage("Getwep pen again");
-                        var WeaponTypeII = E.GetGameObjectParameter("Weapon");
-
-                        if (E.ID == "AttackerGetWeaponPenModifier" && WeaponTypeII.HasPart("MartialConditioningFistMod"))
-                        {
-                            AddPlayerMessage("AttackerGetpenagain");
-                            E.SetParameter("PenBonus", E.GetIntParameter("PenBonus") * 2);
-                            E.SetParameter("CapBonus", E.GetIntParameter("CapBonus") * 2);
-                        }
-                    }
-                }
             }
-
             return base.FireEvent(E);
         }
 
@@ -100,7 +72,22 @@ namespace XRL.World.Parts.Skill
         {
             AddPlayerMessage("Chaining Strikes Method Fires");
             PlayWorldSound("Woosh", 1.0f, 25, true);
-            ParentObject.PerformMeleeAttack(Target);
+            Event EventHook = null;
+
+            var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
+
+            var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
+
+            var FistPenBonus = PrimaryWeaponTraits.PenBonus;
+            PrimaryWeaponTraits.AdjustBonusCap(FistPenBonus * 2);
+
+            EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
+            EventHook.SetParameter("PenBonus", FistPenBonus * 2);
+            EventHook.SetParameter("PenCapBonus", ParentObject);
+            EventHook.SetParameter("Attacker", ParentObject);
+            EventHook.SetParameter("Defender", Target);
+
+            ParentObject.FireEvent("PerformMeleeAttack");
         }
 
 
@@ -115,7 +102,7 @@ namespace XRL.World.Parts.Skill
 
             var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
 
-            Event @event = null;
+            Event EventHook = null;
             GameObject Target = cell.FindObject(o => o.HasPart("Brain"));
 
             if (cell == null)
@@ -138,15 +125,18 @@ namespace XRL.World.Parts.Skill
             PlayWorldSound("Woosh", 1.5f, 50, true);
 
 
-            // var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
+            var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
 
-            // var FistPenBonus = PrimaryWeaponTraits.PenBonus;
+            var FistPenBonus = PrimaryWeaponTraits.PenBonus;
 
-            // @event = Event.New("AttackerGetWeaponPenModifier", 0, 0, 0);
-            // @event.SetParameter("PenBonus", FistPenBonus * 2);
-            // @event.SetParameter("Attacker", ParentObject);
+            EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
+            EventHook.SetParameter("PenBonus", FistPenBonus * 2);
+            EventHook.SetParameter("Attacker", ParentObject);
+            EventHook.SetParameter("TargetCell", cell);
+            EventHook.SetParameter("Defender", Target);
 
-            ParentObject.PerformMeleeAttack(Target);
+            ParentObject.FireEvent(EventHook);
+            // ParentObject.PerformMeleeAttack(Target);
         }
 
         public override bool AddSkill(GameObject GO)
