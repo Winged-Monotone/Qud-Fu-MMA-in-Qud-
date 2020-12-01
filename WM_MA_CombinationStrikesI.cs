@@ -131,7 +131,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
-            AddPlayerMessage("Is anything working?");
+            // AddPlayerMessage("Is anything working?");
             if (E.ID == "AttackerMeleeMiss")
             {
                 AddPlayerMessage("Decrease ComboCounter starting");
