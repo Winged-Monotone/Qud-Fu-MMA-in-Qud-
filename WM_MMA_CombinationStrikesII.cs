@@ -14,7 +14,7 @@ namespace XRL.World.Parts.Skill
         public WM_MMA_CombinationStrikesII()
         {
             Name = "WM_MMA_CombinationStrikesII";
-            DisplayName = "Martial Conditioning III";
+            DisplayName = "Martial Conditioning II";
         }
 
         public override bool AddSkill(GameObject GO)

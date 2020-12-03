@@ -18,7 +18,6 @@ namespace XRL.World.Parts.Skill
         public string WeaponType = "MartialConditioningFistMod";
         public int AwardSureStrikes;
         public Guid SureStrikesActivatedAbilityID;
-
         public GameObject eDefender;
         public WM_MMA_SureStrikes()
         {
@@ -34,6 +33,29 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "FailedChainingSureStrikes");
             Object.RegisterPartEvent(this, "GetWeaponPenModifier");
             Object.RegisterPartEvent(this, "AttackerHit");
+        }
+
+        public void ChainFuntion()
+        {
+            var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+            var ParentAgi = ParentObject.StatMod("Agility");
+
+            AwardSureStrikes = ParentAgi;
+            var Attacker = _ParentObject;
+
+            if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
+            {
+                --AwardSureStrikes;
+                AddPlayerMessage("inititate chaining strike event");
+                Attacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
+            }
+            else
+            {
+                --AwardSureStrikes;
+                Attacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
+            }
+
+
         }
 
         public override bool FireEvent(Event E)
@@ -58,18 +80,8 @@ namespace XRL.World.Parts.Skill
                 }
                 else
                 {
-                    if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
-                    {
-                        --AwardSureStrikes;
-                        AddPlayerMessage("inititate chaining strike event");
-                        eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-                    }
-                    else
-                    {
-                        --AwardSureStrikes;
-                        eAttacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-
-                    }
+                    ChainFuntion();
+                    ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
             }
             if (E.ID == "FailedChainingSureStrikes")
@@ -79,15 +91,8 @@ namespace XRL.World.Parts.Skill
 
                 if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
                 {
-                    --AwardSureStrikes;
-                    AddPlayerMessage("initiate chaining strike event");
-                    eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-                }
-                else
-                {
-                    --AwardSureStrikes;
-                    eAttacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-
+                    ChainFuntion();
+                    ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
             }
             if (E.ID == "ChainingSureStrikes")
@@ -103,14 +108,8 @@ namespace XRL.World.Parts.Skill
 
                 if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
                 {
-                    --AwardSureStrikes;
-                    AddPlayerMessage("inititate chaining strike event");
-                    eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-                }
-                else
-                {
-                    --AwardSureStrikes;
-                    eAttacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
+                    ChainFuntion();
+                    ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
             }
             return base.FireEvent(E);
@@ -144,17 +143,7 @@ namespace XRL.World.Parts.Skill
             var eAttacker = Target;
             var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
-            if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
-            {
-                --AwardSureStrikes;
-                AddPlayerMessage("inititate chaining strike event");
-                eAttacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-            }
-            else
-            {
-                --AwardSureStrikes;
-                eAttacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", eAttacker));
-            }
+            ChainFuntion();
         }
 
 
@@ -210,7 +199,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.SureStrikesActivatedAbilityID = base.AddMyActivatedAbility("Sure Strikes", "CommandSureStrikes", "Skill", "Deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike.", ">", null, false, false, false, false, false, false, false, 20, null);
+            this.SureStrikesActivatedAbilityID = base.AddMyActivatedAbility("Sure Strikes", "CommandSureStrikes", "Skill", "Deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike.", ">", null, false, false, false, false, false, false, false, 80, null);
 
             return true;
         }

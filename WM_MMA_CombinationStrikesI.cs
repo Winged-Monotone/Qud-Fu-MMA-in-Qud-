@@ -81,6 +81,7 @@ namespace XRL.World.Parts.Skill
             var Defender = E.Defender;
             var PenBonus = E.PenetrationBonus;
 
+
             if (Parent && Weapon.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesIII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
             {
                 PenBonus = PenBonus + (CurrentComboICounter);
@@ -116,7 +117,10 @@ namespace XRL.World.Parts.Skill
 
                                 FistDamage = (int)Math.Round(FistDamage + (FistDamage / ((0.05) * (ParentsLevel))) * CurrentComboICounter);
                             }
-
+                            if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                            {
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.5) * E.Damage.Amount));
+                            }
                         }
                     }
                 }
