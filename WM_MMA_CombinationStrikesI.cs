@@ -13,6 +13,7 @@ namespace XRL.World.Parts.Skill
         public int CurrentComboICounter = 0;
         public int MaximumComboICounter = 20;
         public Guid ComboCounterID = Guid.Empty;
+        public Guid ResetComboCounterID = Guid.Empty;
         public WM_MMA_CombinationStrikesI()
         {
             Name = "WM_MMA_CombinationStrikesI";
@@ -22,6 +23,8 @@ namespace XRL.World.Parts.Skill
         public override bool AddSkill(GameObject GO)
         {
             this.ComboCounterID = base.AddMyActivatedAbility("Combo-Counter", "CommandPlaceHolder", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            UpdateCounter();
+            this.ResetComboCounterID = base.AddMyActivatedAbility("Reset Counter", "CommandResetCmbo", "Skill", "Reset the ComboCounter", "*", null, false, false, true);
             UpdateCounter();
             return true;
         }
@@ -71,6 +74,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerMeleeMiss");
             Object.RegisterPartEvent(this, "EndSegment");
+            Object.RegisterPartEvent(this, "CommandResetCmbo");
             base.Register(Object);
         }
 
@@ -170,6 +174,10 @@ namespace XRL.World.Parts.Skill
                     ++CurrentComboICounter;
                     UpdateCounter();
                 }
+            }
+            else if (E.ID == "CommandResetCmbo")
+            {
+                CurrentComboICounter = 0;
             }
 
             return base.FireEvent(E);
