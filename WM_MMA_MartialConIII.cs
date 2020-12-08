@@ -21,7 +21,6 @@ namespace XRL.World.Parts.Skill
         {
             go.RegisterPartEvent((IPart)this, "Regenerating");
             go.RegisterPartEvent((IPart)this, "AdjustSprintDuration");
-
         }
 
         public override bool FireEvent(Event E)

@@ -12,6 +12,10 @@ namespace XRL.World.Parts.Skill
     {
         public int CurrentComboICounter = 0;
         public int MaximumComboICounter = 20;
+        public int BufferDuration;
+        public bool ComboCoolingDown = false;
+        public bool ComboResetCoolingDown = false;
+        public bool IsComboResettable = false;
         public Guid ComboCounterID = Guid.Empty;
         public Guid ResetComboCounterID = Guid.Empty;
         public WM_MMA_CombinationStrikesI()
@@ -75,6 +79,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerMeleeMiss");
             Object.RegisterPartEvent(this, "EndSegment");
             Object.RegisterPartEvent(this, "CommandResetCmbo");
+            Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object);
         }
 
@@ -123,7 +128,7 @@ namespace XRL.World.Parts.Skill
                             }
                             if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.5) * E.Damage.Amount));
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
                             }
                         }
                     }
@@ -164,6 +169,7 @@ namespace XRL.World.Parts.Skill
                 Body body = ParentObject.GetPart("Body") as Body;
                 List<BodyPart> hands = body.GetPart("Hand");
 
+                var Penetrations = E.GetIntParameter("Penetrations");
                 var Parent = E.GetGameObjectParameter("Attacker") == ParentObject;
                 var Defender = E.GetGameObjectParameter("Defender");
                 var DeezHands = E.GetGameObjectParameter("Weapon");
@@ -172,13 +178,59 @@ namespace XRL.World.Parts.Skill
                 {
                     AddPlayerMessage("Increase ComboCounter");
                     ++CurrentComboICounter;
+
+                    if (ComboCoolingDown != true)
+                    {
+                        ComboCoolingDown = true;
+                    }
+
+                    BufferDuration = 3 + Penetrations;
                     UpdateCounter();
                 }
             }
             else if (E.ID == "CommandResetCmbo")
             {
+                AddPlayerMessage("Reset Combo");
                 CurrentComboICounter = 0;
             }
+            else if (E.ID == "EndTurn")
+            {
+                if (BufferDuration > 0 && ComboCoolingDown == true)
+                {
+                    int ComboResetDuration = CurrentComboICounter / 2;
+                    AddPlayerMessage("depricate bufferduration");
+                    --BufferDuration;
+                    if (ComboResetCoolingDown != true)
+                    {
+                        ComboResetCoolingDown = true;
+                    }
+                    else if (BufferDuration <= 0 && ComboCoolingDown == true && ComboResetCoolingDown == true)
+                    {
+                        AddPlayerMessage("Set ComboDurationCooldown");
+                        BufferDuration = 0;
+                        ComboResetDuration = CurrentComboICounter / 2;
+
+                        ComboCoolingDown = false;
+                        ComboCoolingDown = true;
+                    }
+                    else if (ComboResetDuration > 0 && ComboCoolingDown == false && ComboResetCoolingDown == true)
+                    {
+                        AddPlayerMessage("Depricate ComboSystem");
+                        --ComboResetDuration;
+                    }
+                    else if (ComboResetDuration <= 0 && ComboResetCoolingDown == true && ComboCoolingDown == true)
+                    {
+                        AddPlayerMessage("set current combo counter to 0");
+                        CurrentComboICounter = 0;
+                        ComboResetCoolingDown = false;
+                        ComboCoolingDown = false;
+                        UpdateCounter();
+                    }
+                }
+
+
+            }
+
 
             return base.FireEvent(E);
         }

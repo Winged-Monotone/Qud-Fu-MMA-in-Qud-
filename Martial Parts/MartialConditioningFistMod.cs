@@ -24,17 +24,17 @@ namespace XRL.World.Parts
         {
             if (E.ID == "UpdateFistProperties")
             {
-                AddPlayerMessage("Updating fist?");
+                // AddPlayerMessage("Updating fist?");
                 MeleeWeapon FistProperties = this.ParentObject.GetPart("MeleeWeapon") as MeleeWeapon;
                 FistProperties.BaseDamage = (string)E.GetParameter("Dice");
                 if (!ParentObject.HasPart("KO_On_Finish"))
                 {
                     ParentObject.AddPart<KO_On_Finish>();
 
-                    AddPlayerMessage("Part added to " + ParentObject);
+                    // AddPlayerMessage("Part added to " + ParentObject);
                 }
 
-                AddPlayerMessage(FistProperties.BaseDamage);
+                // AddPlayerMessage(FistProperties.BaseDamage);
             }
             return base.FireEvent(E);
         }
