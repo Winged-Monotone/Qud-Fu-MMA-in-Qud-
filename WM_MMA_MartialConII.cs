@@ -18,20 +18,21 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
+            int parentLevel = ParentObject.Statistics["Level"].BaseValue;
+
             if (E.ID == "ModifyDefendingSave" && E.GetStringParameter("Vs", (string)null).Contains("Stun"))
             {
-                int parentLevel = ParentObject.Statistics["Level"].BaseValue;
-                int roll = E.GetIntParameter("Roll", 0) + (6) + (parentLevel / 3);
+                int roll = E.GetIntParameter("Roll", 0) + (4) + (parentLevel / 10);
                 E.SetParameter("Roll", roll);
             }
             else if (E.ID == "ModifyDefendingSave" && E.GetStringParameter("Vs", (string)null).Contains("Dazed"))
             {
-                int roll = E.GetIntParameter("Roll", 0) + (6);
+                int roll = E.GetIntParameter("Roll", 0) + (4) + (parentLevel / 10);
                 E.SetParameter("Roll", roll);
             }
             else if (E.ID == "ModifyDefendingSave" && E.GetStringParameter("Vs", (string)null).Contains("ApplyProne"))
             {
-                int roll = E.GetIntParameter("Roll", 0) + (3);
+                int roll = E.GetIntParameter("Roll", 0) + (4) + (parentLevel / 10);
                 E.SetParameter("Roll", roll);
             }
             return base.FireEvent(E);
