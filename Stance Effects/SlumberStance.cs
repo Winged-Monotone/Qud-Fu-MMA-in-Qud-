@@ -21,7 +21,7 @@ namespace XRL.World.Effects
             base.DisplayName = "{{red|Way of the Slumberling}}";
         }
 
-        public SlumberStance(int Duration)
+        public SlumberStance(int Duration) : this()
         {
             base.Duration = 1;
             turns = 0;

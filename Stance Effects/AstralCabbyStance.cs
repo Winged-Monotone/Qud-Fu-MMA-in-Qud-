@@ -21,7 +21,7 @@ namespace XRL.World.Effects
             base.DisplayName = "{{lightblue|Way of the Astral Cabby}}";
         }
 
-        public AstralCabbyStance(int Duration)
+        public AstralCabbyStance(int Duration) : this()
         {
             base.Duration = 1;
             turns = 0;

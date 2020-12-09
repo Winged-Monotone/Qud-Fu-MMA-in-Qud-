@@ -21,7 +21,7 @@ namespace XRL.World.Effects
             base.DisplayName = "{{orange|Way of the Salt-Hopper}}";
         }
 
-        public SaltHopperStance(int Duration)
+        public SaltHopperStance(int Duration) : this()
         {
             base.Duration = 1;
             turns = 0;

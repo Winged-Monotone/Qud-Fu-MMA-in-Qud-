@@ -21,7 +21,7 @@ namespace XRL.World.Effects
             base.DisplayName = "{{purple|Way of the Dawnglider}}";
         }
 
-        public DawnStance(int Duration)
+        public DawnStance(int Duration) : this()
         {
             base.Duration = 1;
             turns = 0;

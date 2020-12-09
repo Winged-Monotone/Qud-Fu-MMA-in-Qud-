@@ -21,7 +21,7 @@ namespace XRL.World.Effects
             base.DisplayName = "{{yellow|Way of the Salt-Back}}";
         }
 
-        public SaltbackStance(int Duration)
+        public SaltbackStance(int Duration) : this()
         {
             base.Duration = 1;
             turns = 0;
