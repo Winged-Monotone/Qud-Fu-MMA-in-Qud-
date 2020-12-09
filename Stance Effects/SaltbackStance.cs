@@ -101,7 +101,7 @@ namespace XRL.World.Effects
                 int num = XRLCore.CurrentFrame % 60;
                 if (num > 25 && num < 35)
                 {
-                    E.ColorString = "&y";
+                    E.ColorString = "&w";
                 }
             }
             return base.Render(E);
