@@ -9,11 +9,11 @@ using XRL.UI;
 namespace XRL.World.Parts.Skill
 {
     [Serializable]
-    public class WM_MMA_PathSaltHopper : BaseSkill
+    public class WM_MMA_PathSalthopper : BaseSkill
     {
         public Guid SaltHopperStanceID;
 
-        public WM_MMA_PathSaltHopper()
+        public WM_MMA_PathSalthopper()
         {
             Name = "WM_MMA_PathSaltHopper";
             DisplayName = "Path of the Salt-Hopper";
