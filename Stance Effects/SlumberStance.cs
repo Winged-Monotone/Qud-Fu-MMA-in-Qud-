@@ -18,7 +18,7 @@ namespace XRL.World.Effects
 
         public SlumberStance() : base()
         {
-            base.DisplayName = "{{red|Way of the Slumberling}}";
+            base.DisplayName = "{{dark red|Way of the Slumberling}}";
         }
 
         public SlumberStance(int Duration) : this()
@@ -29,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "You are currently molting your exoskeleton.\n";
+            return "Vicious sweeping attacks that harm all while throwing away all defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage.\n";
         }
 
         public override void Register(GameObject go)

@@ -29,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "You are currently molting your exoskeleton.\n";
+            return "Sudden, high precision strikes that target sensitive areas on the foe; melee damage switches to agility, cannot build combinations strikes and only perform one attack per turn, however each blow has a 10% chance of adding either Immobilize, Confuse, Stun, Daze or Crippled/Hobbled to your enemy.\n";
         }
 
         public override void Register(GameObject go)

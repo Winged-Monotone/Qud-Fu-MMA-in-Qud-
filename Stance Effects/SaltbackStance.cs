@@ -18,7 +18,7 @@ namespace XRL.World.Effects
 
         public SaltbackStance() : base()
         {
-            base.DisplayName = "{{yellow|Way of the Salt-Back}}";
+            base.DisplayName = "{{brown|Way of the Salt-Back}}";
         }
 
         public SaltbackStance(int Duration) : this()
@@ -29,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "You are currently molting your exoskeleton.\n";
+            return "Sacrifice attack power for defensive options, you can now deflect enemies blows with a 20% chance of adding your toughness to your AC on a sucessful block. Successful blocks count towards your Combination Strikes however you now deal 50% less damage and your mability is reduced 10. [Wearing bracers or wristblades increases this chance 10%.]\n";
         }
 
         public override void Register(GameObject go)

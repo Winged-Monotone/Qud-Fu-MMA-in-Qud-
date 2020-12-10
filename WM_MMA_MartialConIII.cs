@@ -35,8 +35,8 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "AdjustSprintDuration")
             {
-                int SprintSpeedBonus = E.GetIntParameter("Duration");
-                SprintSpeedBonus += 40;
+                int SprintSpeedDurationBonus = E.GetIntParameter("Duration");
+                SprintSpeedDurationBonus += 40;
             }
 
             return base.FireEvent(E);

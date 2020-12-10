@@ -18,7 +18,7 @@ namespace XRL.World.Effects
 
         public AstralCabbyStance() : base()
         {
-            base.DisplayName = "{{lightblue|Way of the Astral Cabby}}";
+            base.DisplayName = "{{blue|Way of the Astral Cabby}}";
         }
 
         public AstralCabbyStance(int Duration) : this()
@@ -29,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "You are currently molting your exoskeleton.\n";
+            return "Evasive, untouchable, no matter how many flank you--you move as the void does. When flanked by multiple enemies, you add your agility modifier to your DV per unit surrounding you, successful dodges build your Combination Strike counter and you gain a +5 to movement speed, you however lose your unnarmed damage bonus.\n";
         }
 
         public override void Register(GameObject go)

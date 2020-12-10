@@ -29,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "You are currently molting your exoskeleton.\n";
+            return "A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +1 to hit and + 2 to DV\n";
         }
 
         public override void Register(GameObject go)
