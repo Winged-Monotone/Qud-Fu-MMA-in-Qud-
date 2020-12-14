@@ -66,30 +66,6 @@ namespace XRL.World.Effects
 
             }
 
-            else if (E.ID == "BeginTakeAction")
-            {
-
-            }
-
-            else if (E.ID == "LeaveCell")
-            {
-
-            }
-
-            else if (E.ID == "EndTurn")
-            {
-
-            }
-
-            else if (E.ID == "CanChangeMovementMode")
-            {
-
-            }
-
-            else if (E.ID == "MovementModeChanged")
-            {
-
-            }
 
             return base.FireEvent(E);
         }

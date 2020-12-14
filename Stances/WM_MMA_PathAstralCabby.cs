@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;

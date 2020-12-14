@@ -17,12 +17,29 @@ namespace XRL.World.Parts.Skill
     {
         public string WeaponType = "MartialConditioningFistMod";
         public int AwardSureStrikes;
+        public int FistPenBonus;
         public Guid SureStrikesActivatedAbilityID;
         public GameObject eDefender;
         public WM_MMA_SureStrikes()
         {
             Name = "WM_MMA_SureStrikes";
             DisplayName = "Sure Strikes";
+        }
+        public void UpdateCounter()
+        {
+            var MMAAccess = ParentObject.GetPart<WM_MMA_PathDawnGlider>();
+            int SureStrikeBonus = MMAAccess.BonusSureStrike;
+
+            var AA = MyActivatedAbility(this.SureStrikesActivatedAbilityID);
+
+            if (AA != null && SureStrikeBonus <= 0)
+            {
+                AA.DisplayName = "{{white|Sure Strikes}}";
+            }
+            else
+            {
+                AA.DisplayName = "{{yellow|Sure Strikes x(" + (SureStrikeBonus) + ")}}";
+            }
         }
 
         public override void Register(GameObject Object)
@@ -74,6 +91,7 @@ namespace XRL.World.Parts.Skill
                 AwardSureStrikes = ParentAgi;
                 var eAttacker = _ParentObject;
 
+
                 if (AwardSureStrikes <= 0)
                 {
                     return base.FireEvent(E);
@@ -83,17 +101,23 @@ namespace XRL.World.Parts.Skill
                     ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
+
+                UpdateCounter();
             }
             if (E.ID == "FailedChainingSureStrikes")
             {
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                 var eAttacker = _ParentObject;
 
+                UpdateCounter();
+
                 if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
                 {
                     ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
+
+                UpdateCounter();
             }
             if (E.ID == "ChainingSureStrikes")
             {
@@ -111,6 +135,8 @@ namespace XRL.World.Parts.Skill
                     ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
+
+                UpdateCounter();
             }
             return base.FireEvent(E);
         }
@@ -127,7 +153,7 @@ namespace XRL.World.Parts.Skill
 
             var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
 
-            var FistPenBonus = PrimaryWeaponTraits.PenBonus;
+            FistPenBonus = PrimaryWeaponTraits.PenBonus;
             PrimaryWeaponTraits.AdjustBonusCap(FistPenBonus * 2);
 
             AddPlayerMessage("event changes");
@@ -144,6 +170,7 @@ namespace XRL.World.Parts.Skill
             var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
             ChainFuntion();
+            UpdateCounter();
         }
 
 
@@ -194,6 +221,7 @@ namespace XRL.World.Parts.Skill
             eDefender = Target;
 
             ParentObject.FireEvent(EventHook);
+            UpdateCounter();
             // ParentObject.PerformMeleeAttack(Target);
         }
 

@@ -26,8 +26,9 @@ namespace XRL.World.Parts.Skill
         {
             if (!ParentObject.HasPart("KO_On_Finish"))
             {
+                AddPlayerMessage("AddingKOPart from Skill Tree");
                 ParentObject.AddPart<KO_On_Finish>();
-                AddPlayerMessage("Part added to " + ParentObject);
+                AddPlayerMessage("Part KO added to " + ParentObject);
             }
             if (!ParentObject.HasSkill("WM_MMA_MartialConI"))
             {
@@ -100,8 +101,6 @@ namespace XRL.World.Parts.Skill
             }
             return BasePenMod;
         }
-
-
 
         public void UpdateFistDamage(GameObject parent)
         {

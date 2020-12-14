@@ -11,11 +11,6 @@ namespace XRL.World.Effects
 
     public class DawnStance : Effect
     {
-        public int saveTarget;
-        public int saveTargetTurnDivisor;
-        public int turns;
-
-
         public DawnStance() : base()
         {
             base.DisplayName = "{{purple|Way of the Dawnglider}}";
@@ -24,7 +19,6 @@ namespace XRL.World.Effects
         public DawnStance(int Duration) : this()
         {
             base.Duration = 1;
-            turns = 0;
         }
 
         public override string GetDetails()
@@ -56,37 +50,13 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
+            StatShifter.SetStatShift("DV", 3);
             return true;
         }
 
         public override bool FireEvent(Event E)
         {
             if (E.ID == "IsMobile")
-            {
-
-            }
-
-            else if (E.ID == "BeginTakeAction")
-            {
-
-            }
-
-            else if (E.ID == "LeaveCell")
-            {
-
-            }
-
-            else if (E.ID == "EndTurn")
-            {
-
-            }
-
-            else if (E.ID == "CanChangeMovementMode")
-            {
-
-            }
-
-            else if (E.ID == "MovementModeChanged")
             {
 
             }
@@ -109,6 +79,7 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
+            StatShifter.RemoveStatShifts();
         }
 
     }

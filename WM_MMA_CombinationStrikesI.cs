@@ -12,10 +12,11 @@ namespace XRL.World.Parts.Skill
     {
         public int CurrentComboICounter = 0;
         public int MaximumComboICounter = 20;
+        public int ComboResetDuration;
         public int BufferDuration;
-        public bool ComboCoolingDown = false;
-        public bool ComboResetCoolingDown = false;
-        public bool IsComboResettable = false;
+        public bool ComboBuffering;
+        public bool ComboBufferingCoolingDowne;
+        public bool IsComboResettable;
         public Guid ComboCounterID = Guid.Empty;
         public Guid ResetComboCounterID = Guid.Empty;
         public WM_MMA_CombinationStrikesI()
@@ -178,15 +179,14 @@ namespace XRL.World.Parts.Skill
                 {
                     AddPlayerMessage("Increase ComboCounter");
                     ++CurrentComboICounter;
-
-                    if (ComboCoolingDown != true)
+                    if (ComboBuffering == false)
                     {
-                        ComboCoolingDown = true;
+                        ComboBuffering = true;
                     }
-
                     BufferDuration = 3 + Penetrations;
                     UpdateCounter();
                 }
+
             }
             else if (E.ID == "CommandResetCmbo")
             {
@@ -195,39 +195,23 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "EndTurn")
             {
-                if (BufferDuration > 0 && ComboCoolingDown == true)
+                if (BufferDuration > 0 && ComboBuffering == true)
                 {
-                    int ComboResetDuration = CurrentComboICounter / 2;
                     AddPlayerMessage("depricate bufferduration");
                     --BufferDuration;
-                    if (ComboResetCoolingDown != true)
+                    UpdateCounter();
+                    if (BufferDuration <= 0 && ComboBuffering == true)
                     {
-                        ComboResetCoolingDown = true;
-                    }
-                    else if (BufferDuration <= 0 && ComboCoolingDown == true && ComboResetCoolingDown == true)
-                    {
-                        AddPlayerMessage("Set ComboDurationCooldown");
-                        BufferDuration = 0;
-                        ComboResetDuration = CurrentComboICounter / 2;
-
-                        ComboCoolingDown = false;
-                        ComboCoolingDown = true;
-                    }
-                    else if (ComboResetDuration > 0 && ComboCoolingDown == false && ComboResetCoolingDown == true)
-                    {
-                        AddPlayerMessage("Depricate ComboSystem");
-                        --ComboResetDuration;
-                    }
-                    else if (ComboResetDuration <= 0 && ComboResetCoolingDown == true && ComboCoolingDown == true)
-                    {
-                        AddPlayerMessage("set current combo counter to 0");
+                        AddPlayerMessage("ResetCombos");
+                        ComboBuffering = false;
                         CurrentComboICounter = 0;
-                        ComboResetCoolingDown = false;
-                        ComboCoolingDown = false;
                         UpdateCounter();
                     }
                 }
 
+                AddPlayerMessage("current combo value: " + CurrentComboICounter);
+                AddPlayerMessage("current buffer value: " + BufferDuration);
+                AddPlayerMessage("current Combo Reset value: " + ComboResetDuration);
 
             }
 

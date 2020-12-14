@@ -69,7 +69,7 @@ namespace XRL.World.Effects
             if (Object.FireEvent("ApplyIncapacitate"))
             {
                 ApplyStats();
-                DidX("has been", "incapacitated", "!", null, null, Object);
+                DidX("is", "incapacitated", "!", null, null, Object);
                 Object.ParticleText("&R*KO'd!!!*");
                 return true;
             }
@@ -133,6 +133,7 @@ namespace XRL.World.Effects
             if (num > 15 && num < 30)
             {
                 E.Tile = null;
+                E.RenderString = "X";
                 E.ColorString = "&R^r";
             }
             return true;
