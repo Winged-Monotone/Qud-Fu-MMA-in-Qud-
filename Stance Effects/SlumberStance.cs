@@ -56,37 +56,18 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
+            var ParentAV = Object.Statistics["AV"].BaseValue;
+            var ParentDV = Object.Statistics["DV"].BaseValue;
+
+            StatShifter.SetStatShift("AV", (int)Math.Round(ParentAV * 0.5));
+            StatShifter.SetStatShift("DV", (int)Math.Round(ParentDV * 0.5));
+
             return true;
         }
 
         public override bool FireEvent(Event E)
         {
             if (E.ID == "IsMobile")
-            {
-
-            }
-
-            else if (E.ID == "BeginTakeAction")
-            {
-
-            }
-
-            else if (E.ID == "LeaveCell")
-            {
-
-            }
-
-            else if (E.ID == "EndTurn")
-            {
-
-            }
-
-            else if (E.ID == "CanChangeMovementMode")
-            {
-
-            }
-
-            else if (E.ID == "MovementModeChanged")
             {
 
             }

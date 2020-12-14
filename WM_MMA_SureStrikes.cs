@@ -49,7 +49,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerGetWeaponPenModifier");
             Object.RegisterPartEvent(this, "FailedChainingSureStrikes");
             Object.RegisterPartEvent(this, "GetWeaponPenModifier");
-            Object.RegisterPartEvent(this, "AttackerHit");
+            Object.RegisterPartEvent(this, "EndTurn");
         }
 
         public void ChainFuntion()
@@ -136,6 +136,10 @@ namespace XRL.World.Parts.Skill
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
+                UpdateCounter();
+            }
+            if (E.ID == "EndTurn")
+            {
                 UpdateCounter();
             }
             return base.FireEvent(E);

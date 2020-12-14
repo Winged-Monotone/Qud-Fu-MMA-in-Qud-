@@ -35,27 +35,23 @@ namespace XRL.World.Effects
         public override void Register(GameObject go)
         {
             go.RegisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.RegisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.RegisterEffectEvent((Effect)this, "EndTurn");
-            go.RegisterEffectEvent((Effect)this, "IsMobile");
-            go.RegisterEffectEvent((Effect)this, "LeaveCell");
-            go.RegisterEffectEvent((Effect)this, "BeginTakeAction");
+
             base.Register(Object);
         }
 
         public override void Unregister(GameObject go)
         {
             go.UnregisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.UnregisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.UnregisterEffectEvent((Effect)this, "EndTurn");
-            go.UnregisterEffectEvent((Effect)this, "IsMobile");
-            go.UnregisterEffectEvent((Effect)this, "LeaveCell");
-            go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
+
             base.Unregister(Object);
         }
 
         public override bool Apply(GameObject Object)
         {
+            var ParentMoveSpeed = Object.Statistics["MoveSpeed"].BaseValue;
+
+            StatShifter.SetStatShift("MoveSpeed", 10);
+
             return true;
         }
 
