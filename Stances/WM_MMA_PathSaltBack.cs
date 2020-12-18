@@ -6,12 +6,8 @@ using System.Text;
 using ShieldPart = XRL.World.Parts.Shield;
 
 using XRL.Rules;
-using XRL.Messages;
-using XRL.UI;
+using System.Linq;
 
-using XRL.World.Parts;
-using XRL.World.PartBuilders;
-using XRL.Core;
 
 
 namespace XRL.World.Parts.Skill
@@ -20,7 +16,22 @@ namespace XRL.World.Parts.Skill
     public class WM_MMA_PathSaltBack : BaseSkill
     {
         public Guid SaltBackStanceID;
+        public int PSBArmorBonus;
 
+        private List<string> SpecialFistCollective = new List<string>()
+        {
+            "PsionicFist",
+            "CarbideFist",
+            "FulleriteFist",
+            "FungalInfection",
+            "BaseTierHands3_AV",
+            "BaseTierHands4_AV",
+            "BaseTierHands5_AV",
+            "BaseTierHands6_AV",
+            "BaseTierHands7_AV",
+            "BaseTierHands8_AV",
+            "Spiked Gauntlets",
+        };
         public WM_MMA_PathSaltBack()
         {
             Name = "WM_MMA_PathSaltBack";
@@ -35,17 +46,25 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object);
         }
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return base.WantEvent(ID, cascade)
+            || ID == AttackerDealingDamageEvent.ID
+            || ID == GetAttackerHitDiceEvent.ID;
+        }
+
+        public override bool HandleEvent(AttackerDealingDamageEvent E)
+        {
+            if (E.Actor == ParentObject)
+            { E.Damage.Amount = (E.Damage.Amount / 2); }
+
+            return base.HandleEvent(E);
+        }
+
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "AttackerHit")
-            {
-                AddPlayerMessage("SaltBackHalf Damage");
-                var Damage = E.GetIntParameter("Damage");
-
-                Damage = (Damage / 2);
-            }
-            if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("SaltbackPath"))
+            if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("SaltbackStance"))
             {
                 AddPlayerMessage("SaltBack Defender Block Begins");
                 // GameObject Attacker = E.GetGameObjectParameter("Attacker");
@@ -56,18 +75,13 @@ namespace XRL.World.Parts.Skill
                 List<BodyPart> hands = body.GetPart("Hand");
                 var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultFist", "Hand");
 
-                if (!Owner.HasPart("Shield"))
+                int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 2);
+                if (SpecialFistCollective.Any(Owner.HasEquippedObject))
                 {
-                    AddPlayerMessage("Adding Shield");
-                    Owner.AddPart<ShieldPart>();
+                    PSBArmorBonus = 3;
                 }
 
-                ShieldPart FistShield = hand.RequirePart<ShieldPart>();
-
-                FistShield.AV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 2);
-                FistShield.Blocks = (ParentObject.StatMod("Toughness", 1));
-
-                if (FistShield == null)
+                if (Owner.GetShield() != null)
                 {
                     AddPlayerMessage("SaltBackHalf Shield Returned Null");
                     return true;
@@ -86,13 +100,17 @@ namespace XRL.World.Parts.Skill
                 if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
                 {
                     AddPlayerMessage("SaltBackHalf SaltBack Status");
+
                     var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                     E.SetParameter("ShieldBlocked", true);
                     ++MMAComboAccess.CurrentComboICounter;
+                    MMAComboAccess.UpdateCounter();
+
                     AddPlayerMessage("SaltBackHalf Damage");
+
                     if (Owner.IsPlayer())
                     {
-                        IComponent<GameObject>.AddPlayerMessage("You deflect an attack with your " + base.ParentObject.DisplayName + "!" + "(" + FistShield.AV + " AV)", 'g');
+                        IComponent<GameObject>.AddPlayerMessage("You deflect an attack with your " + ParentObject.Equipped + "!" + "(" + FistShieldAV + " AV)", 'g');
                     }
                     else
                     {
@@ -101,11 +119,11 @@ namespace XRL.World.Parts.Skill
                             "{{",
                             IComponent<GameObject>.ConsequentialColor(Owner, null),
                             "|Block! (+",
-                            FistShield.AV,
+                            FistShieldAV +
                             " AV)}}"
                         }), ' ', false, 1.5f, -8f);
                     }
-                    E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShield.AV);
+                    E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
                 }
             }
             return base.FireEvent(E);

@@ -41,7 +41,7 @@ namespace XRL.World.Parts.Skill
                     { ++BonusSureStrike; }
                 }
             }
-            else if (E.ID == "CommandSureStrikes")
+            else if (E.ID == "CommandSureStrikes" && ParentObject.HasEffect("DawnStance"))
             {
 
                 var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
@@ -49,13 +49,13 @@ namespace XRL.World.Parts.Skill
                 MMAComboAccess.FistPenBonus = +BonusSureStrike;
                 BonusSureStrike = 0;
             }
-            else if (E.ID == "PerformMeleeAttack")
+            else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("DawnStance"))
             {
                 int HitBonus = E.GetIntParameter("HitBonus");
 
                 HitBonus = +2;
             }
-            if (E.ID == "EndTurn")
+            if (E.ID == "EndTurn" && ParentObject.HasEffect("DawnStance"))
             {
                 AddPlayerMessage("SureStrike Stat: " + BonusSureStrike);
             }

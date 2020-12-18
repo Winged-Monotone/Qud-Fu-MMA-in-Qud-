@@ -5,15 +5,17 @@ using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
 
+
+
 namespace XRL.World.Effects
 {
     [Serializable]
 
     public class SlumberStance : Effect
     {
-        public int saveTarget;
-        public int saveTargetTurnDivisor;
-        public int turns;
+        public Guid DawnStanceID;
+
+
 
 
         public SlumberStance() : base()
@@ -24,12 +26,12 @@ namespace XRL.World.Effects
         public SlumberStance(int Duration) : this()
         {
             base.Duration = 1;
-            turns = 0;
+
         }
 
         public override string GetDetails()
         {
-            return "Vicious sweeping attacks that harm all while throwing away all defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage.\n";
+            return "Vicious sweeping attacks that harm any in  the practitioners way while throwing away one's defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage.\n";
         }
 
         public override void Register(GameObject go)
@@ -56,6 +58,9 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
+            AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
+            Object.DilationSplat();
+
             var ParentAV = Object.Statistics["AV"].BaseValue;
             var ParentDV = Object.Statistics["DV"].BaseValue;
 
@@ -65,15 +70,15 @@ namespace XRL.World.Effects
             return true;
         }
 
-        public override bool FireEvent(Event E)
-        {
-            if (E.ID == "IsMobile")
-            {
+        // public override bool FireEvent(Event E)
+        // {
+        //     if (E.ID == "IsMobile")
+        //     {
 
-            }
+        //     }
 
-            return base.FireEvent(E);
-        }
+        //     return base.FireEvent(E);
+        // }
 
         public override bool Render(RenderEvent E)
         {
