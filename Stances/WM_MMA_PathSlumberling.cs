@@ -153,31 +153,29 @@ namespace XRL.World.Parts.Skill
                                 if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
                                 {
                                     ob.Dismember();
-                                    if (o.CurrentCell.HasObjectWithTagAdjacent("Brain"))
+                                    var CheckCells = o.CurrentCell.GetLocalAdjacentCells();
+
+                                    foreach (var c2 in CheckCells)
                                     {
-                                        var CheckCells = o.CurrentCell.GetLocalAdjacentCells();
-
-                                        foreach (var c2 in CheckCells)
+                                        AddPlayerMessage("slumberstarting for each 2");
+                                        if (c2.HasObjectWithTagOrProperty("Brain"))
                                         {
-                                            AddPlayerMessage("slumberstarting for each 2");
-                                            if (c2.HasObjectWithTagOrProperty("Brain"))
+                                            var FrightenedFlankers = c.GetObjectsInCell();
+
+                                            foreach (var o2 in FrightenedFlankers)
                                             {
-                                                var FrightenedFlankers = c.GetObjectsInCell();
-
-                                                foreach (var o2 in FrightenedFlankers)
+                                                if (!o2.MakeSave("Ego", 10 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false))
                                                 {
-                                                    if (!o2.MakeSave("Ego", 10 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false))
-                                                    {
-                                                        AddPlayerMessage("slumberstarting for each 3");
-                                                        string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
-                                                        int num = ParentObject.StatMod("Ego");
+                                                    AddPlayerMessage("slumberstarting for each 3");
+                                                    string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
+                                                    int num = ParentObject.StatMod("Ego");
 
-                                                        wmApplyFearToObject("1d" + 6 + (AttackerLevels / 3), Attacker.StatMod("Ego") + (AttackerLevels / 3), o2, Attacker, null, false, false);
-                                                    }
+                                                    wmApplyFearToObject("1d" + 6 + (AttackerLevels / 3), Attacker.StatMod("Ego") + (AttackerLevels / 3), o2, Attacker, null, false, false);
                                                 }
                                             }
                                         }
                                     }
+
                                 }
                                 else
                                 {
