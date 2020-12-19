@@ -14,7 +14,7 @@ namespace XRL.World.Effects
     public class SlumberStance : Effect
     {
         public Guid DawnStanceID;
-
+        public int ShockwaveCooldown;
 
 
 
@@ -56,13 +56,26 @@ namespace XRL.World.Effects
             base.Unregister(Object);
         }
 
+        public void RageSplat()
+        {
+            Cell currentCell = Object.GetCurrentCell();
+            if (currentCell != null && currentCell.InActiveZone)
+            {
+                for (int i = 0; i < 360; i++)
+                {
+                    float num = (float)XRL.Rules.Stat.RandomCosmetic(1, 1) / 3f;
+                    XRLCore.ParticleManager.Add("@", currentCell.X, currentCell.Y, (float)Math.Sin((double)i * 0.017) / num, (float)Math.Cos((double)i * 0.017) / num);
+                }
+            }
+        }
+
         public override bool Apply(GameObject Object)
         {
             AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
-            Object.DilationSplat();
+            RageSplat();
 
-            var ParentAV = Object.Statistics["AV"].BaseValue;
-            var ParentDV = Object.Statistics["DV"].BaseValue;
+            var ParentAV = Object.Statistics["AV"].Value;
+            var ParentDV = Object.Statistics["DV"].Value;
 
             StatShifter.SetStatShift("AV", (int)Math.Round(ParentAV * 0.5));
             StatShifter.SetStatShift("DV", (int)Math.Round(ParentDV * 0.5));

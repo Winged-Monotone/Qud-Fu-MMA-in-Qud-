@@ -23,7 +23,6 @@ namespace XRL.World.Parts.Skill
     {
         public Guid SlumberStanceID;
         private static List<BodyPart> DismemberableBodyParts = new List<BodyPart>(8);
-
         public bool wmBodyPartIsDismemberable(BodyPart Part, GameObject Actor = null, bool assumeDecapitate = false)
         {
             if (!Part.IsSeverable())
@@ -94,11 +93,28 @@ namespace XRL.World.Parts.Skill
             Name = "WM_MMA_PathSlumberling";
             DisplayName = "Path of the Slumberling";
         }
-
+        public void RageStrikePulse(Cell TargetCell)
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    TargetCell.ParticleText("&R" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                }
+                for (int k = 0; k < 2; k++)
+                {
+                    TargetCell.ParticleText("&k" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                }
+                for (int l = 0; l < 4; l++)
+                {
+                    TargetCell.ParticleText("&r" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                }
+            }
+        }
         public override void Register(GameObject Object)
         {
-            Object.RegisterPartEvent(this, "AttackerHit");
-            Object.RegisterPartEvent(this, "CommandSureStrikes");
+            Object.RegisterPartEvent(this, "AttackerAfterAttack");
+            Object.RegisterPartEvent(this, "SlumberWitnessEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object);
@@ -106,7 +122,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "AttackerHit" && ParentObject.HasEffect("SlumberStance"))
+            if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SlumberStance"))
             {
                 AddPlayerMessage("Execute Attacker hit on Slumberstyle");
 
@@ -128,9 +144,9 @@ namespace XRL.World.Parts.Skill
                 foreach (var c in AttackersAdacentCells)
                 {
                     AddPlayerMessage("slumberstarting for each");
-                    if (c.HasObjectWithPart("Brain") || c.HasObjectWithPart("Combat"))
+                    if (c.HasObjectWithPart("Brain") || c.HasObjectWithPart("Combat") && c.HasCombatObject() && !c.HasObject(ParentObject))
                     {
-                        AddPlayerMessage("{{dark red|slumbering style fires first!}}");
+                        AddPlayerMessage("{{dark red|slumbering style fires second for each!}}");
                         var Flankers = c.GetObjectsInCell();
 
                         foreach (var o in Flankers)
@@ -141,10 +157,11 @@ namespace XRL.World.Parts.Skill
                             {
                                 AddPlayerMessage("slumber pushing");
                                 string KnockBack = Directions.GetRandomDirection();
-                                o.Push(KnockBack, 1 + (AttackerLevels / 5));
+                                o.Push(KnockBack, 2500 * (AttackerLevels / 5));
                             }
 
-                            PlayWorldSound("blade_default", 1f, 1f, true);
+                            RageStrikePulse(c);
+                            PlayWorldSound("Hit_Default", 1f, 1f, true);
 
                             var FlankersBody = o.Body.GetParts();
                             foreach (var ob in FlankersBody)
@@ -152,37 +169,42 @@ namespace XRL.World.Parts.Skill
                                 AddPlayerMessage("slumberstarting for each 1");
                                 if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
                                 {
+
                                     ob.Dismember();
-                                    var CheckCells = o.CurrentCell.GetLocalAdjacentCells();
-
-                                    foreach (var c2 in CheckCells)
-                                    {
-                                        AddPlayerMessage("slumberstarting for each 2");
-                                        if (c2.HasObjectWithTagOrProperty("Brain"))
-                                        {
-                                            var FrightenedFlankers = c.GetObjectsInCell();
-
-                                            foreach (var o2 in FrightenedFlankers)
-                                            {
-                                                if (!o2.MakeSave("Ego", 10 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false))
-                                                {
-                                                    AddPlayerMessage("slumberstarting for each 3");
-                                                    string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
-                                                    int num = ParentObject.StatMod("Ego");
-
-                                                    wmApplyFearToObject("1d" + 6 + (AttackerLevels / 3), Attacker.StatMod("Ego") + (AttackerLevels / 3), o2, Attacker, null, false, false);
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                }
-                                else
-                                {
-
+                                    AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + Defender.The + " " + ob.Name + " from " + Defender.its + " form.}}");
+                                    Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", Defender, "Attacker", Attacker));
                                 }
                             }
+                        }
+                    }
+                }
+            }
+            if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
+            {
+                var Attacker = E.GetGameObjectParameter("Attacker");
+                var Defender = E.GetGameObjectParameter("Defender");
 
+                var AttackerLevels = Attacker.Statistics["Level"].BaseValue;
+
+                var CheckCells = Defender.CurrentCell.GetLocalAdjacentCells();
+
+                foreach (var c2 in CheckCells)
+                {
+                    AddPlayerMessage("slumberstarting for each 2");
+                    if (c2.HasObjectWithTagOrProperty("Brain") || c2.HasObjectWithTagOrProperty("Combat") && c2.HasCombatObject() && !c2.HasObject(Attacker))
+                    {
+                        var FrightenedFlankers = c2.GetObjectsInCell();
+
+                        foreach (var o2 in FrightenedFlankers)
+                        {
+                            if (!o2.MakeSave("Ego", 10 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false))
+                            {
+                                AddPlayerMessage("slumberstarting for each 3");
+                                string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
+                                int num = ParentObject.StatMod("Ego");
+
+                                wmApplyFearToObject("1d" + 6 + (AttackerLevels / 3), Attacker.StatMod("Ego") + (AttackerLevels / 3), o2, Attacker, null, false, false);
+                            }
                         }
                     }
                 }
