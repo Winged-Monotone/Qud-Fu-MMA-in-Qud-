@@ -74,11 +74,11 @@ namespace XRL.World.Effects
             AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
             RageSplat();
 
-            var ParentAV = Object.Statistics["AV"].Value;
-            var ParentDV = Object.Statistics["DV"].Value;
+            var ParentAV = Object.Statistics["AV"].BaseValue;
+            var ParentDV = Object.Statistics["DV"].BaseValue;
 
-            StatShifter.SetStatShift("AV", (int)Math.Round(ParentAV * 0.5));
-            StatShifter.SetStatShift("DV", (int)Math.Round(ParentDV * 0.5));
+            StatShifter.SetStatShift("AV", -(int)Math.Round(ParentAV * 0.5));
+            StatShifter.SetStatShift("DV", -(int)Math.Round(ParentDV * 0.5));
 
             return true;
         }
@@ -108,7 +108,7 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
-
+            StatShifter.RemoveStatShifts();
         }
 
     }

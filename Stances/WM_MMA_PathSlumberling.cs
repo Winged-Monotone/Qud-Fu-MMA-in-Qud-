@@ -15,6 +15,8 @@ using XRL.World;
 using XRL.World.AI.GoalHandlers;
 using XRL.World.Parts.Mutation;
 
+using UnityEngine;
+
 
 namespace XRL.World.Parts.Skill
 {
@@ -23,71 +25,6 @@ namespace XRL.World.Parts.Skill
     {
         public Guid SlumberStanceID;
         private static List<BodyPart> DismemberableBodyParts = new List<BodyPart>(8);
-        public bool wmBodyPartIsDismemberable(BodyPart Part, GameObject Actor = null, bool assumeDecapitate = false)
-        {
-            if (!Part.IsSeverable())
-            {
-                return false;
-            }
-            if (!assumeDecapitate && Part.SeverRequiresDecapitate())
-            {
-                if (Actor == null)
-                {
-                    return false;
-                }
-                if (!Actor.HasSkill("Axe_Decapitate"))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        public BodyPart wmGetDismemberableBodyPart(GameObject obj, GameObject Actor = null, bool assumeDecapitate = false)
-        {
-            if (!obj.HasPart("Body"))
-            {
-                return null;
-            }
-            DismemberableBodyParts.Clear();
-            foreach (BodyPart part in obj.Body.GetParts())
-            {
-                if (wmBodyPartIsDismemberable(part, Actor, assumeDecapitate))
-                {
-                    DismemberableBodyParts.Add(part);
-                }
-            }
-            return DismemberableBodyParts.GetRandomElement();
-        }
-        public bool wmApplyFearToObject(string nDice, int Duration, GameObject GO, GameObject SourceObject, GameObject FearObject = null, bool Panicked = false, bool Mental = false)
-        {
-            if (FearObject == null)
-            {
-                FearObject = SourceObject;
-            }
-            if (FearObject != null)
-            {
-                int combatMA = Stats.GetCombatMA(GO);
-                int num = Stat.RollPenetratingSuccesses(nDice, combatMA);
-                if (Mental && num > 0)
-                {
-                    num = GO.ResistMentalIntrusion("Fear", num, SourceObject);
-                }
-                if (num > 0 && GO.FireEvent(new Event("ApplyFear", "SourceObject", SourceObject, "FearObject", FearObject)) && CanApplyEffectEvent.Check(GO, "Fear"))
-                {
-                    GO.pBrain.Goals.Clear();
-                    GO.pBrain.PushGoal(new Flee(FearObject, Duration, Panicked));
-                    for (int i = 0; i < num; i++)
-                    {
-                        GO.ParticleText("&W!");
-                    }
-                    IComponent<GameObject>.XDidY(GO, "become", "afraid", "!", null, null, GO);
-                    GO.FireEvent(new Event("FearApplied", "SourceObject", SourceObject, "FearObject", FearObject));
-                    return true;
-                }
-            }
-            IComponent<GameObject>.XDidY(GO, "resist", "becoming afraid", "!", null, GO);
-            return false;
-        }
         public WM_MMA_PathSlumberling()
         {
             Name = "WM_MMA_PathSlumberling";
@@ -152,8 +89,9 @@ namespace XRL.World.Parts.Skill
                         foreach (var o in Flankers)
                         {
                             AddPlayerMessage("slumberstarting for each 0");
+
                             o.TakeDamage(Damage.Amount / 2);
-                            if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3)
+                            if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
                             {
                                 AddPlayerMessage("slumber pushing");
                                 string KnockBack = Directions.GetRandomDirection();
@@ -167,12 +105,12 @@ namespace XRL.World.Parts.Skill
                             foreach (var ob in FlankersBody)
                             {
                                 AddPlayerMessage("slumberstarting for each 1");
-                                if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
+                                if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
                                 {
 
                                     ob.Dismember();
-                                    AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + Defender.The + " " + ob.Name + " from " + Defender.its + " form.}}");
-                                    Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", Defender, "Attacker", Attacker));
+                                    AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.Theirs + " " + ob.Name + " from " + o.the + " form.}}");
+                                    Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", o, "Attacker", Attacker));
                                 }
                             }
                         }
@@ -181,29 +119,32 @@ namespace XRL.World.Parts.Skill
             }
             if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
             {
+                AddPlayerMessage("slumberstarting for each 2");
+
                 var Attacker = E.GetGameObjectParameter("Attacker");
                 var Defender = E.GetGameObjectParameter("Defender");
 
                 var AttackerLevels = Attacker.Statistics["Level"].BaseValue;
 
-                var CheckCells = Defender.CurrentCell.GetLocalAdjacentCells();
+                var CheckCells = Attacker.CurrentCell.GetLocalAdjacentCells();
 
                 foreach (var c2 in CheckCells)
                 {
-                    AddPlayerMessage("slumberstarting for each 2");
                     if (c2.HasObjectWithTagOrProperty("Brain") || c2.HasObjectWithTagOrProperty("Combat") && c2.HasCombatObject() && !c2.HasObject(Attacker))
                     {
+                        AddPlayerMessage("slumberstarting for each 3");
                         var FrightenedFlankers = c2.GetObjectsInCell();
 
                         foreach (var o2 in FrightenedFlankers)
                         {
-                            if (!o2.MakeSave("Ego", 10 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false))
+                            if (!o2.MakeSave("Ego", 20 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false) && o2 != Attacker && o2.HasPart("Brain") || o2.HasPart("Combat"))
                             {
-                                AddPlayerMessage("slumberstarting for each 3");
+                                AddPlayerMessage("slumberstarting for each 4");
                                 string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
                                 int num = ParentObject.StatMod("Ego");
 
-                                wmApplyFearToObject("1d" + 6 + (AttackerLevels / 3), Attacker.StatMod("Ego") + (AttackerLevels / 3), o2, Attacker, null, false, false);
+                                o2.pBrain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
+                                AddPlayerMessage(o2.The + " flees in horror of " + Attacker.Its + " torrent of rage.");
                             }
                         }
                     }
@@ -216,10 +157,12 @@ namespace XRL.World.Parts.Skill
 
                 HitBonus = +1;
             }
+
             // if (E.ID == "EndTurn" && ParentObject.HasEffect("SlumberStance"))
             // {
             //     AddPlayerMessage(" ");
             // }
+
             return base.FireEvent(E);
         }
 

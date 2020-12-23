@@ -81,7 +81,7 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
-                    StatShifter.RemoveStatShifts();
+            StatShifter.RemoveStatShifts();
         }
 
     }
