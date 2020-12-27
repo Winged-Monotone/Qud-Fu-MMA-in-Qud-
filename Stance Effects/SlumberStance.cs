@@ -63,8 +63,8 @@ namespace XRL.World.Effects
             {
                 for (int i = 0; i < 360; i++)
                 {
-                    float num = (float)XRL.Rules.Stat.RandomCosmetic(1, 1) / 3f;
-                    XRLCore.ParticleManager.Add("@", currentCell.X, currentCell.Y, (float)Math.Sin((double)i * 0.017) / num, (float)Math.Cos((double)i * 0.017) / num);
+                    float num = (float)XRL.Rules.Stat.RandomCosmetic(1, 10) / 3f;
+                    XRLCore.ParticleManager.Add("&R^r*", currentCell.X, currentCell.Y, (float)Math.Sin((double)i * 0.017) / num, (float)Math.Cos((double)i * 0.017) / num);
                 }
             }
         }

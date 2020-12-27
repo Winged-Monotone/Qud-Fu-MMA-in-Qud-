@@ -1,6 +1,8 @@
 using System;
 using XRL.UI;
 using XRL.Core;
+using XRL.Rules;
+
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
@@ -54,8 +56,50 @@ namespace XRL.World.Effects
             base.Unregister(Object);
         }
 
+
+        // public void PsychicPulse()
+        // {
+        //     for (int i = 0; i < 4; i++)
+        //     {
+        //         for (int j = 0; j < 5; j++)
+        //         {
+        //             ParticleText("&B" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
+        //         }
+        //         for (int k = 0; k < 5; k++)
+        //         {
+        //             ParticleText("&b" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
+        //         }
+        //         for (int l = 0; l < 5; l++)
+        //         {
+        //             ParticleText("&W" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
+        //         }
+        //     }
+        // }
+
+
+        public void SaltHopperPulse(Cell cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int k = 0; k < 5; k++)
+                {
+                    cell.ParticleText("&O" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int l = 0; l < 5; l++)
+                {
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+            }
+        }
+
+
         public override bool Apply(GameObject Object)
         {
+            SaltHopperPulse(Object.CurrentCell);
             return true;
         }
 
@@ -71,26 +115,6 @@ namespace XRL.World.Effects
 
             }
 
-            else if (E.ID == "LeaveCell")
-            {
-
-            }
-
-            else if (E.ID == "EndTurn")
-            {
-
-            }
-
-            else if (E.ID == "CanChangeMovementMode")
-            {
-
-            }
-
-            else if (E.ID == "MovementModeChanged")
-            {
-
-            }
-
             return base.FireEvent(E);
         }
 
@@ -99,7 +123,7 @@ namespace XRL.World.Effects
             if (this.Duration > 0)
             {
                 int num = XRLCore.CurrentFrame % 60;
-                if (num > 25 && num < 35)
+                if (num > 25 && num < 22)
                 {
                     E.ColorString = "&o";
                 }

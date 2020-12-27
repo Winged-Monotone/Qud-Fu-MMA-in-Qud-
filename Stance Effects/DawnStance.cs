@@ -1,5 +1,6 @@
 using System;
 using XRL.UI;
+using XRL.Rules;
 using XRL.Core;
 using System.Collections.Generic;
 using System.Text;
@@ -47,9 +48,29 @@ namespace XRL.World.Effects
             go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
             base.Unregister(Object);
         }
+        public void DawnPulse(Cell cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    cell.ParticleText("&M" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int k = 0; k < 5; k++)
+                {
+                    cell.ParticleText("&m" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int l = 0; l < 5; l++)
+                {
+                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+            }
+        }
 
         public override bool Apply(GameObject Object)
         {
+            DawnPulse(Object.CurrentCell);
+
             StatShifter.SetStatShift("DV", 3);
             return true;
         }
@@ -81,6 +102,8 @@ namespace XRL.World.Effects
         {
             StatShifter.RemoveStatShifts();
         }
+
+
 
     }
 }

@@ -30,6 +30,12 @@ namespace XRL.World.Parts.Skill
                 ParentObject.AddPart<KO_On_Finish>();
                 AddPlayerMessage("Part KO added to " + ParentObject);
             }
+            if (!ParentObject.HasPart("MartialBody"))
+            {
+                AddPlayerMessage("Adding MartialbodPart from Skill Tree");
+                ParentObject.AddPart<MartialBody>();
+                AddPlayerMessage("Part MB added to " + ParentObject);
+            }
             if (!ParentObject.HasSkill("WM_MMA_MartialConI"))
             {
                 ParentObject.AddSkill("WM_MMA_MartialConI");

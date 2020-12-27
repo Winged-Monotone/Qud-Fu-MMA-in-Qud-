@@ -11,39 +11,21 @@ namespace XRL.World.Effects
     [Serializable]
     public class PsiSupression : Effect
     {
-        public int DVPenalty;
-        public int DVPenalty;
-        public int SaveTarget;
 
         public PsiSupression()
         {
             base.DisplayName = "{{M|psi-supression}}";
         }
 
-        public Incapacitated(int Duration, int SaveTarget)
+        public PsiSupression(int Duration)
             : this()
         {
-            this.SaveTarget = SaveTarget;
             base.Duration = Duration;
         }
 
         public override int GetEffectType()
         {
             return 117440516;
-        }
-
-        public override bool SameAs(Effect e)
-        {
-            PsiSupression PsiSupression = e as PsiSupression;
-            if (PsiSupression.DVPenalty != DVPenalty)
-            {
-                return false;
-            }
-            if (PsiSupression.SaveTarget != SaveTarget)
-            {
-                return false;
-            }
-            return base.SameAs(e);
         }
 
         public override string GetDetails()
@@ -54,20 +36,14 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
-            if (Object.HasEffect("Incapacitated"))
+            StatShifter.SetStatShift("Ego", -2);
+            if (Object.HasEffect("PsiSupression"))
             {
-                Incapacitated incapacitated = Object.GetEffect("Incapacitated") as Incapacitated;
-                if (Duration > incapacitated.Duration)
+                PsiSupression PsiSupression = Object.GetEffect("PsiSupression") as PsiSupression;
+                if (Duration > PsiSupression.Duration)
                 {
-                    incapacitated.Duration = Duration;
+                    PsiSupression.Duration = Duration;
                 }
-                return true;
-            }
-            if (Object.FireEvent("ApplyIncapacitate"))
-            {
-                ApplyStats();
-                DidX("is", "incapacitated", "!", null, null, Object);
-                Object.ParticleText("&R*KO'd!!!*");
                 return true;
             }
             return false;
@@ -75,54 +51,10 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
-            UnapplyStats();
+            StatShifter.RemoveStatShifts();
             base.Remove(Object);
         }
 
-        private void ApplyStats()
-        {
-            int combatDV = Stats.GetCombatDV(base.Object);
-            if (combatDV > 0)
-            {
-                DVPenalty += combatDV;
-                base.StatShifter.SetStatShift(base.Object, "DV", -DVPenalty);
-            }
-            else
-            {
-                DVPenalty = 0;
-            }
-        }
-
-        private void UnapplyStats()
-        {
-            DVPenalty = 0;
-            base.StatShifter.RemoveStatShifts(base.Object);
-        }
-
-        public override void Register(GameObject Object)
-        {
-            Object.RegisterEffectEvent(this, "AfterDeepCopyWithoutEffects");
-            Object.RegisterEffectEvent(this, "BeforeDeepCopyWithoutEffects");
-            Object.RegisterEffectEvent(this, "BeginTakeAction");
-            Object.RegisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.RegisterEffectEvent(this, "CanChangeMovementMod");
-            Object.RegisterEffectEvent(this, "CanMoveExtremities");
-            Object.RegisterEffectEvent(this, "IsMobile");
-            base.Register(Object);
-        }
-
-        public override void Unregister(GameObject Object)
-        {
-            Object.UnregisterEffectEvent(this, "AfterDeepCopyWithoutEffects");
-            Object.UnregisterEffectEvent(this, "BeforeDeepCopyWithoutEffects");
-            Object.UnregisterEffectEvent(this, "BeginTakeAction");
-            Object.UnregisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.UnregisterEffectEvent(this, "CanChangeMovementMod");
-            Object.UnregisterEffectEvent(this, "CanMoveExtremities");
-            Object.UnregisterEffectEvent(this, "IsConversationallyResponsive");
-            Object.UnregisterEffectEvent(this, "IsMobile");
-            base.Unregister(Object);
-        }
 
         public override bool Render(RenderEvent E)
         {
@@ -131,52 +63,10 @@ namespace XRL.World.Effects
             {
                 E.Tile = null;
                 E.RenderString = "X";
-                E.ColorString = "&R^r";
+                E.ColorString = "&M^m";
             }
             return true;
         }
 
-        public override bool FireEvent(Event E)
-        {
-            if (E.ID == "BeginTakeAction")
-            {
-                if (Duration > 0)
-                {
-                    if (base.Object.IsPlayer())
-                    {
-                        IComponent<GameObject>.AddPlayerMessage("You are {{r|incapacitated}}.");
-                    }
-                    Duration--;
-                    return false;
-                }
-            }
-            else if (E.ID == "IsMobile" || E.ID == "IsConversationallyResponsive")
-            {
-                if (Duration > 0)
-                {
-                    return false;
-                }
-            }
-            else if (E.ID == "CanChangeBodyPosition" || E.ID == "CanChangeMovementMode" || E.ID == "CanMoveExtremities")
-            {
-                if (Duration > 0 && !E.HasFlag("Involuntary"))
-                {
-                    if (E.HasFlag("ShowMessage") && base.Object.IsPlayer())
-                    {
-                        Popup.Show("You are {{R|incapacitated}}!");
-                    }
-                    return false;
-                }
-            }
-            else if (E.ID == "BeforeDeepCopyWithoutEffects")
-            {
-                UnapplyStats();
-            }
-            else if (E.ID == "AfterDeepCopyWithoutEffects")
-            {
-                ApplyStats();
-            }
-            return base.FireEvent(E);
-        }
     }
 }

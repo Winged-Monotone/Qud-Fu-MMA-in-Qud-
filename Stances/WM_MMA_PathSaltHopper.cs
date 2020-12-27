@@ -13,49 +13,22 @@ namespace XRL.World.Parts.Skill
     public class WM_MMA_PathSalthopper : BaseSkill
     {
         public Guid SaltHopperStanceID;
-        public struct NegEffConstruct
-        {
-            public bool IsActive;
-            public Action<GameObject> Effect;
-        }
-        private List<string> NegEffectsCollectiveTI = new List<string>()
+
+        public List<string> NegEffectsCollectiveTI = new List<string>()
         {
             "Dazed",
-            "Supressed",
+            "PsiSupression",
         };
-        private List<string> NegEffectsCollectiveTII = new List<string>()
+        public List<string> NegEffectsCollectiveTII = new List<string>()
         {
             "Cripple",
             "Prone",
         };
-        private List<string> NegEffectsCollectiveTIII = new List<string>()
+        public List<string> NegEffectsCollectiveTIII = new List<string>()
         {
             "Paralyzed",
             "Stun",
         };
-        private Dictionary<string, NegEffConstruct> NegEffectsSection = new Dictionary<string, NegEffConstruct>
-        {
-            {
-               "NegEffectsCollectiveI" , new NegEffConstruct
-            {
-                Effect = (ParentObject) =>
-            {
-
-            }}},
-            {
-                "NegEffectsCollectiveII" , new NegEffConstruct
-            {
-                Effect = (ParentObject) =>
-            {
-
-            }}},
-            {
-                "NegEffectsCollectiveIII", new NegEffConstruct
-            {
-                Effect = (ParentObject) =>
-            {
-            }
-            }}};
 
         public WM_MMA_PathSalthopper()
         {
@@ -65,6 +38,7 @@ namespace XRL.World.Parts.Skill
 
         public override void Register(GameObject Object)
         {
+            Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerAfterAttack");
             Object.RegisterPartEvent(this, "SlumberWitnessEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
@@ -74,20 +48,51 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
+            if (E.ID == "AtttackerHit" && ParentObject.HasEffect("SaltHopperStance"))
+            {
+                Damage Damage = E.GetParameter<Damage>("Damage");
+                var Attacker = ParentObject;
+
+                var ComboSI = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+
+                if (NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                }
+                if (NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                }
+                if (NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                }
+                else
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 0.75f);
+                }
+            }
             if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SaltHopperStance"))
             {
-                AddPlayerMessage("Execute Attacker hit on Slumberstyle");
+
+                var ComboSI = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+
+                ComboSI.CurrentComboICounter = 0;
+                ComboSI.UpdateCounter();
+                AddPlayerMessage("Execute Attacker hit on Salthopperstyle");
 
                 Damage Damage = E.GetParameter<Damage>("Damage");
                 var Attacker = ParentObject;
                 var Defender = E.GetGameObjectParameter("Defender");
                 var Weapon = E.GetGameObjectParameter("Weapon");
 
-                AddPlayerMessage("var check 1");
-
                 var AttackerLevels = Attacker.Statistics["Level"].BaseValue;
 
-                if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) == 3 + AttackerLevels)
+                AddPlayerMessage("var check 1");
+
+
+
+                if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
@@ -95,32 +100,36 @@ namespace XRL.World.Parts.Skill
                     }
                     else
                     {
-                        Defender.ApplyEffect(new Supressed(10 + (ParentObject.Statistics["Level"].Value)));
+                        Defender.ApplyEffect(new PsiSupression(10 + (ParentObject.Statistics["Level"].Value)));
                     }
                 }
-                if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) == 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
+               else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
-                        ParentObject.ApplyEffect(new Cripple(10 + (ParentObject.Statistics["Level"].Value)));
+                        Defender.ApplyEffect(new Cripple(10 + (ParentObject.Statistics["Level"].Value)));
                     }
                     else
                     {
-                        ParentObject.ApplyEffect(new Prone());
+                        Defender.ApplyEffect(new Prone());
                     }
                 }
-                if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) == 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
+                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
-                        ParentObject.ApplyEffect(new Paralyzed(10 + (ParentObject.Statistics["Level"].Value),
+                        Defender.ApplyEffect(new Paralyzed(10 + (ParentObject.Statistics["Level"].Value),
                                                                 10 + (ParentObject.Statistics["Level"].Value)));
                     }
                     else
                     {
-                        ParentObject.ApplyEffect(new Stun(10 + (ParentObject.Statistics["Level"].Value),
+                        Defender.ApplyEffect(new Stun(10 + (ParentObject.Statistics["Level"].Value),
                                                             10 + (ParentObject.Statistics["Level"].Value)));
                     }
+                }
+                else if (Stat.Random(1, 100) >= 2 + (AttackerLevels / 5))
+                {
+                    Defender.UseEnergy(25);
                 }
 
             }

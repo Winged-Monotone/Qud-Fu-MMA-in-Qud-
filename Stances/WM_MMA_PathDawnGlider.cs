@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Linq;
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
@@ -33,12 +33,36 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "AttackerHit")
+            if (E.ID == "AttackerHit" && ParentObject.HasEffect("DawnStance"))
             {
-                if (ParentObject.HasEffect("DawnStance"))
+                var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+
+                //Handles damage scaling.
+
+                if (BonusSureStrike < 10)
+                { ++BonusSureStrike; }
+                MMAComboAccess.UpdateCounter();
+
+                var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                Damage Damage = E.GetParameter<Damage>("Damage");
+                var Attacker = ParentObject;
+
+
+                if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
                 {
-                    if (BonusSureStrike < 10)
-                    { ++BonusSureStrike; }
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                }
+                else if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.45f);
+                }
+                else if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                }
+                else
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
                 }
             }
             else if (E.ID == "CommandSureStrikes" && ParentObject.HasEffect("DawnStance"))
@@ -48,6 +72,7 @@ namespace XRL.World.Parts.Skill
 
                 MMAComboAccess.FistPenBonus = +BonusSureStrike;
                 BonusSureStrike = 0;
+                MMAComboAccess.UpdateCounter();
             }
             else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("DawnStance"))
             {

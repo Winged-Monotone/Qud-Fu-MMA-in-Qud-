@@ -125,7 +125,7 @@ namespace XRL.World.Parts.Skill
                             {
                                 var FistDamage = E.Damage.Amount;
 
-                                FistDamage = (int)Math.Round(FistDamage + (FistDamage / ((0.05) * (ParentsLevel))) * CurrentComboICounter);
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
                             }
                             if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
@@ -174,6 +174,13 @@ namespace XRL.World.Parts.Skill
                 var Parent = E.GetGameObjectParameter("Attacker") == ParentObject;
                 var Defender = E.GetGameObjectParameter("Defender");
                 var DeezHands = E.GetGameObjectParameter("Weapon");
+                if (Penetrations == 0)
+                {
+                    if (CurrentComboICounter >= 0)
+                    {
+                        --CurrentComboICounter;
+                    }
+                }
 
                 if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultFist")
                 {
@@ -209,9 +216,9 @@ namespace XRL.World.Parts.Skill
                     }
                 }
 
-                AddPlayerMessage("current combo value: " + CurrentComboICounter);
-                AddPlayerMessage("current buffer value: " + BufferDuration);
-                AddPlayerMessage("current Combo Reset value: " + ComboResetDuration);
+                // AddPlayerMessage("current combo value: " + CurrentComboICounter);
+                // AddPlayerMessage("current buffer value: " + BufferDuration);
+                // AddPlayerMessage("current Combo Reset value: " + ComboResetDuration);
 
             }
 

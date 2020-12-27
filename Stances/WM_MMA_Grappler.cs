@@ -14,7 +14,7 @@ namespace XRL.World.Parts.Skill
         public WM_MMA_Grappler()
         {
             Name = "WM_MMA_Grappler";
-            DisplayName = "Grappler";
+            DisplayName = "Path of the Jilted-Lover";
         }
 
         public override bool AddSkill(GameObject GO)

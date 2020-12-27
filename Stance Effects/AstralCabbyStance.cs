@@ -1,9 +1,12 @@
 using System;
-using XRL.UI;
 using XRL.Core;
+using XRL.Rules;
+
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
+using XRL.UI;
+
 
 namespace XRL.World.Effects
 {
@@ -54,8 +57,28 @@ namespace XRL.World.Effects
             base.Unregister(Object);
         }
 
+        public void AstralCabbyPulse(Cell cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    cell.ParticleText("&B" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int k = 0; k < 5; k++)
+                {
+                    cell.ParticleText("&b" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int l = 0; l < 5; l++)
+                {
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+            }
+        }
+
         public override bool Apply(GameObject Object)
         {
+            AstralCabbyPulse(Object.CurrentCell);
             return true;
         }
 

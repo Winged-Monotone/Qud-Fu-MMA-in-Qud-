@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using XRL.Rules;
@@ -50,6 +51,7 @@ namespace XRL.World.Parts.Skill
         }
         public override void Register(GameObject Object)
         {
+            Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerAfterAttack");
             Object.RegisterPartEvent(this, "SlumberWitnessEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
@@ -59,14 +61,40 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SlumberStance"))
+            if (E.ID == "AttackerHit" && ParentObject.HasEffect("SlumberStance"))
             {
+                var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                Damage Damage = E.GetParameter<Damage>("Damage");
+                var Attacker = ParentObject;
+
+
+                if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                }
+                if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                }
+                if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                }
+                else
+                {
+                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                }
+            }
+            else if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SlumberStance"))
+            {
+
                 AddPlayerMessage("Execute Attacker hit on Slumberstyle");
 
                 Damage Damage = E.GetParameter<Damage>("Damage");
-                var Attacker = E.GetGameObjectParameter("Attacker");
+                var Attacker = ParentObject;
                 var Defender = E.GetGameObjectParameter("Defender");
                 var Weapon = E.GetGameObjectParameter("Weapon");
+
 
                 AddPlayerMessage("var check 1");
 
@@ -107,17 +135,23 @@ namespace XRL.World.Parts.Skill
                                 AddPlayerMessage("slumberstarting for each 1");
                                 if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
                                 {
+                                    if (ob.IsRegenerable() || ob.IsSeverable())
+                                    {
+                                        ob.Dismember();
+                                        AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.theirs + " " + ob.Name + " from " + o.the + " form.}}");
+                                        Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", o, "Attacker", Attacker));
+                                    }
+                                    else
+                                    {
 
-                                    ob.Dismember();
-                                    AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.Theirs + " " + ob.Name + " from " + o.the + " form.}}");
-                                    Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", o, "Attacker", Attacker));
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-            if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
+            else if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
             {
                 AddPlayerMessage("slumberstarting for each 2");
 
@@ -143,6 +177,7 @@ namespace XRL.World.Parts.Skill
                                 string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
                                 int num = ParentObject.StatMod("Ego");
 
+                                o2.pBrain.Goals.Clear();
                                 o2.pBrain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
                                 AddPlayerMessage(o2.The + " flees in horror of " + Attacker.Its + " torrent of rage.");
                             }
@@ -150,8 +185,7 @@ namespace XRL.World.Parts.Skill
                     }
                 }
             }
-
-            if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("SlumberStance"))
+            else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("SlumberStance"))
             {
                 int HitBonus = E.GetIntParameter("HitBonus");
 

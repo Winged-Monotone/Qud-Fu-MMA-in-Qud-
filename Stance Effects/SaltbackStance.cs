@@ -4,6 +4,7 @@ using XRL.Core;
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
+using XRL.Rules;
 
 namespace XRL.World.Effects
 {
@@ -46,10 +47,30 @@ namespace XRL.World.Effects
             base.Unregister(Object);
         }
 
+        public void SaltBackPulse(Cell cell)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int k = 0; k < 5; k++)
+                {
+                    cell.ParticleText("&w" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+                for (int l = 0; l < 5; l++)
+                {
+                    cell.ParticleText("&W" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                }
+            }
+        }
+
         public override bool Apply(GameObject Object)
         {
             var ParentMoveSpeed = Object.Statistics["MoveSpeed"].BaseValue;
 
+            SaltBackPulse(Object.CurrentCell);
             StatShifter.SetStatShift("MoveSpeed", 10);
 
             return true;
