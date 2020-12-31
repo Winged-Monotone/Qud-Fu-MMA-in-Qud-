@@ -26,14 +26,18 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(InventoryActionEvent E)
         {
+            AddPlayerMessage("Wine Inventory Action Event");
             if (E.Command == "Drink" && E.Item != null)
             {
+                AddPlayerMessage("Drink Found?");
                 LiquidVolume lv = E.Item.GetPart<LiquidVolume>();
                 if (lv != null)
                 {
+                    AddPlayerMessage("Liquid Var Set");
                     if (lv.ContainsLiquid("wine"))
                     {
-                        E.Actor.ApplyEffect(new Drunken(1));
+                        E.Actor.ApplyEffect(new Drunken(10));
+                        AddPlayerMessage("Drunken Applied");
                     }
                 }
             }
