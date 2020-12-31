@@ -4,6 +4,7 @@ using System.Text;
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
+using XRL.World.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -26,15 +27,15 @@ namespace XRL.World.Parts.Skill
         {
             if (!ParentObject.HasPart("KO_On_Finish"))
             {
-                AddPlayerMessage("AddingKOPart from Skill Tree");
+                // AddPlayerMessage("AddingKOPart from Skill Tree");
                 ParentObject.AddPart<KO_On_Finish>();
-                AddPlayerMessage("Part KO added to " + ParentObject);
+                // AddPlayerMessage("Part KO added to " + ParentObject);
             }
             if (!ParentObject.HasPart("MartialBody"))
             {
-                AddPlayerMessage("Adding MartialbodPart from Skill Tree");
+                // AddPlayerMessage("Adding MartialbodPart from Skill Tree");
                 ParentObject.AddPart<MartialBody>();
-                AddPlayerMessage("Part MB added to " + ParentObject);
+                // AddPlayerMessage("Part MB added to " + ParentObject);
             }
             if (!ParentObject.HasSkill("WM_MMA_MartialConI"))
             {
@@ -141,6 +142,33 @@ namespace XRL.World.Parts.Skill
 
             }
             return base.FireEvent(E);
+        }
+
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return base.WantEvent(ID, cascade)
+            || ID == InventoryActionEvent.ID;
+        }
+
+        public override bool HandleEvent(InventoryActionEvent E)
+        {
+            AddPlayerMessage("Wine Inventory Action Event");
+            if (E.Actor == ParentObject && E.Command == "Drink" && E.Item != null)
+            {
+                AddPlayerMessage("Drink Found?");
+                LiquidVolume lv = E.Item.GetPart<LiquidVolume>();
+                if (lv != null)
+                {
+                    AddPlayerMessage("Liquid Var Set");
+                    if (lv.ContainsLiquid("wine"))
+                    {
+                        ParentObject.ApplyEffect(new Drunken(10));
+                        AddPlayerMessage("Drunken");
+                    }
+                }
+            }
+
+            return base.HandleEvent(E);
         }
     }
 }

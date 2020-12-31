@@ -27,9 +27,19 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
-            Duration = (Object.Statistics["Toughness"].Modifier * 10);
-            return false;
+            if (Object.HasEffect("Drunken"))
+            {
+                Drunken Drunken = Object.GetEffect("Drunken") as Drunken;
+                if (Duration > Drunken.Duration)
+                {
+                    Drunken.Duration = Duration;
+                }
+                return true;
+            }
+            return true;
         }
+
+
 
         public override string GetDetails()
         {

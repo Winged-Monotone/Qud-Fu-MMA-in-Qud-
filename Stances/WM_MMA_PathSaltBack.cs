@@ -66,7 +66,7 @@ namespace XRL.World.Parts.Skill
         {
             if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("SaltbackStance"))
             {
-                AddPlayerMessage("SaltBack Defender Block Begins");
+                // AddPlayerMessage("SaltBack Defender Block Begins");
                 // GameObject Attacker = E.GetGameObjectParameter("Attacker");
                 var Owner = ParentObject;
 
@@ -83,30 +83,30 @@ namespace XRL.World.Parts.Skill
 
                 if (Owner.GetShield() != null)
                 {
-                    AddPlayerMessage("SaltBackHalf Shield Returned Null");
+                    // AddPlayerMessage("SaltBackHalf Shield Returned Null");
                     return true;
                 }
                 if (E.HasParameter("ShieldBlocked"))
                 {
-                    AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
+                    // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
                     return true;
                 }
                 if (!Owner.CanMoveExtremities(null, false, false, false))
                 {
-                    AddPlayerMessage("SaltBackHalf CanMove Check");
+                    // AddPlayerMessage("SaltBackHalf CanMove Check");
                     return true;
                 }
-                AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
+                // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
                 if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
                 {
-                    AddPlayerMessage("SaltBackHalf SaltBack Status");
+                    // AddPlayerMessage("SaltBackHalf SaltBack Status");
 
                     var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                     E.SetParameter("ShieldBlocked", true);
                     ++MMAComboAccess.CurrentComboICounter;
                     MMAComboAccess.UpdateCounter();
 
-                    AddPlayerMessage("SaltBackHalf Damage");
+                    // AddPlayerMessage("SaltBackHalf Damage");
 
                     if (Owner.IsPlayer())
                     {

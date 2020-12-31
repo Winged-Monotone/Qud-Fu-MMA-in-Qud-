@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<populations>
+
+    <population Name="StartingGear_Brave">
+        <group Name="Items" Style="pickeach">
+            <table Name="StartingGear_Common" />
+
+            <object Blueprint="HalfFullWaterskin" Number="1" />
+            <object Blueprint="HalfFullCanteen" Number="1" />
+            <object Blueprint="EmptyWaterskin" Number="2" />
+            <object Blueprint="Dagger" Number="1" />
+            <object Blueprint="Spiked Gauntlets" Number="1" />
+            <object Blueprint="Goat Jerky" Number="1-5" />
+            <object Blueprint="Smiling Sun Mask" Number="1" />
+            <object Blueprint="Croccasins" Number="1" />
+            <object Blueprint="WineWaterskin" Number="1" />
+
+            <table Name="#Junk 1" Number="3-4" />
+        </group>
+    </population>
+
+</populations>
+

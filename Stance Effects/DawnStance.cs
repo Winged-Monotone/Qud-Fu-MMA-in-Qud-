@@ -54,21 +54,22 @@ namespace XRL.World.Effects
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    cell.ParticleText("&M" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&M" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int k = 0; k < 5; k++)
                 {
-                    cell.ParticleText("&m" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&m" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int l = 0; l < 5; l++)
                 {
-                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
             }
         }
 
         public override bool Apply(GameObject Object)
         {
+            PlayWorldSound("swapstance", PitchVariance: 0f);
             DawnPulse(Object.CurrentCell);
 
             StatShifter.SetStatShift("DV", 3);

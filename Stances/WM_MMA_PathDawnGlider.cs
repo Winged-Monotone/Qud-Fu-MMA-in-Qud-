@@ -35,44 +35,60 @@ namespace XRL.World.Parts.Skill
         {
             if (E.ID == "AttackerHit" && ParentObject.HasEffect("DawnStance"))
             {
-                var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
-
-                //Handles damage scaling.
-
-                if (BonusSureStrike < 10)
-                { ++BonusSureStrike; }
-                MMAComboAccess.UpdateCounter();
-
-                var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
-                Damage Damage = E.GetParameter<Damage>("Damage");
-                var Attacker = ParentObject;
-
-
-                if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                if (ParentObject.HasPart("WM_MMA_SureStrikes"))
                 {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
-                }
-                else if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.45f);
-                }
-                else if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                    var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+
+                    //Handles damage scaling.
+
+                    if (BonusSureStrike < 10)
+                    { ++BonusSureStrike; }
+                    MMAComboAccess.UpdateCounter();
                 }
                 else
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
-                }
+                    try
+                    {
+                        var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                        Damage Damage = E.GetParameter<Damage>("Damage");
+                        var Attacker = ParentObject;
+
+
+                        if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                        }
+                        else if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.45f);
+                        }
+                        else if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                        }
+                        else
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
             }
             else if (E.ID == "CommandSureStrikes" && ParentObject.HasEffect("DawnStance"))
             {
+                try
+                {
+                    var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
 
-                var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+                    MMAComboAccess.FistPenBonus = +BonusSureStrike;
+                    BonusSureStrike = 0;
+                    MMAComboAccess.UpdateCounter();
+                }
+                catch
+                {
 
-                MMAComboAccess.FistPenBonus = +BonusSureStrike;
-                BonusSureStrike = 0;
-                MMAComboAccess.UpdateCounter();
+                }
             }
             else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("DawnStance"))
             {
@@ -82,7 +98,7 @@ namespace XRL.World.Parts.Skill
             }
             if (E.ID == "EndTurn" && ParentObject.HasEffect("DawnStance"))
             {
-                AddPlayerMessage("SureStrike Stat: " + BonusSureStrike);
+                // AddPlayerMessage("SureStrike Stat: " + BonusSureStrike);
             }
             return base.FireEvent(E);
         }

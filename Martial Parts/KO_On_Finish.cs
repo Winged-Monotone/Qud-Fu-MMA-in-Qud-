@@ -37,7 +37,7 @@ namespace XRL.World.Parts
         {
             if (E.ID == "CommandToggleMercy")
             {
-                AddPlayerMessage("CommandToggleMercy");
+                // AddPlayerMessage("CommandToggleMercy");
                 ToggleMyActivatedAbility(ActivatedAbilityID);
                 if (IsMyActivatedAbilityToggledOn(ActivatedAbilityID))
                 {
@@ -72,15 +72,15 @@ namespace XRL.World.Parts
                 var damage = E.GetParameter<Damage>("Damage");
                 if (attacker.IsPlayer() && (weapon.HasPart("KO_On_Finish") || attacker.HasPart("KO_On_Finish")) && ShowMercy == true)
                 {
-                    AddPlayerMessage("mercy start mercy");
+                    // AddPlayerMessage("mercy start mercy");
 
                     if (damage.Amount >= defender.hitpoints)
                     {
-                        AddPlayerMessage("mercy recalculates damage");
+                        // AddPlayerMessage("mercy recalculates damage");
 
                         damage.Amount = (int)Math.Min(1, defender.hitpoints - 1); //Set damage equal to what we need to drop them to 1 HP
                     }
-                    AddPlayerMessage("KO in deal damage event");
+                    // AddPlayerMessage("KO in deal damage event");
                     var KOdToughness = defender.StatMod("Toughness");
                     var SaveDC = 40 - (KOdToughness * 10);
 
@@ -97,10 +97,10 @@ namespace XRL.World.Parts
         {
             var ActorAbilities = E.Actor.GetActivatedAbility(ActivatedAbilityID);
 
-            AddPlayerMessage("checking for mercy");
+            // AddPlayerMessage("checking for mercy");
             if (E.Actor.IsPlayer() && ActorAbilities == null)
             {
-                AddPlayerMessage("adding for mercy");
+                // AddPlayerMessage("adding for mercy");
                 this.ActivatedAbilityID = base.AddMyActivatedAbility("Mercy", "CommandToggleMercy", "Skill", "Activate to show mercy to your opponents, knocking them unconscious instead of killing them. You will not gain xp from {{red|KO'd!}} enemies.", ">", null, true, false, false, false, false, false, false, -1, null);
             }
             return base.HandleEvent(E);

@@ -148,7 +148,7 @@ namespace XRL.World.Parts.Skill
             // AddPlayerMessage("Is anything working?");
             if (E.ID == "AttackerMeleeMiss")
             {
-                AddPlayerMessage("Decrease ComboCounter starting");
+                // AddPlayerMessage("Decrease ComboCounter starting");
                 Body body = ParentObject.GetPart("Body") as Body;
                 List<BodyPart> hands = body.GetPart("Hand");
 
@@ -158,7 +158,7 @@ namespace XRL.World.Parts.Skill
 
                 if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultFist")
                 {
-                    AddPlayerMessage("Decrease ComboCounter");
+                    // AddPlayerMessage("Decrease ComboCounter");
                     if (CurrentComboICounter < 0)
                         CurrentComboICounter = 0;
                     UpdateCounter();
@@ -166,7 +166,7 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "AttackerHit")
             {
-                AddPlayerMessage("Increase ComboCounter starting");
+                // AddPlayerMessage("Increase ComboCounter starting");
                 Body body = ParentObject.GetPart("Body") as Body;
                 List<BodyPart> hands = body.GetPart("Hand");
 
@@ -184,7 +184,7 @@ namespace XRL.World.Parts.Skill
 
                 if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultFist")
                 {
-                    AddPlayerMessage("Increase ComboCounter");
+                    // AddPlayerMessage("Increase ComboCounter");
                     ++CurrentComboICounter;
                     if (ComboBuffering == false)
                     {
@@ -197,19 +197,19 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "CommandResetCmbo")
             {
-                AddPlayerMessage("Reset Combo");
+                // AddPlayerMessage("Reset Combo");
                 CurrentComboICounter = 0;
             }
             else if (E.ID == "EndTurn")
             {
                 if (BufferDuration > 0 && ComboBuffering == true)
                 {
-                    AddPlayerMessage("depricate bufferduration");
+                    // AddPlayerMessage("depricate bufferduration");
                     --BufferDuration;
                     UpdateCounter();
                     if (BufferDuration <= 0 && ComboBuffering == true)
                     {
-                        AddPlayerMessage("ResetCombos");
+                        // AddPlayerMessage("ResetCombos");
                         ComboBuffering = false;
                         CurrentComboICounter = 0;
                         UpdateCounter();

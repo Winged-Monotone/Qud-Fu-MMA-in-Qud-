@@ -79,7 +79,7 @@ namespace XRL.World.Parts.Skill
 
                 ComboSI.CurrentComboICounter = 0;
                 ComboSI.UpdateCounter();
-                AddPlayerMessage("Execute Attacker hit on Salthopperstyle");
+                // AddPlayerMessage("Execute Attacker hit on Salthopperstyle");
 
                 Damage Damage = E.GetParameter<Damage>("Damage");
                 var Attacker = ParentObject;
@@ -88,7 +88,7 @@ namespace XRL.World.Parts.Skill
 
                 var AttackerLevels = Attacker.Statistics["Level"].BaseValue;
 
-                AddPlayerMessage("var check 1");
+                // AddPlayerMessage("var check 1");
 
 
 
@@ -103,7 +103,7 @@ namespace XRL.World.Parts.Skill
                         Defender.ApplyEffect(new PsiSupression(10 + (ParentObject.Statistics["Level"].Value)));
                     }
                 }
-               else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
+                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {

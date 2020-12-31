@@ -63,7 +63,7 @@ namespace XRL.World.Parts.Skill
             if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
             {
                 --AwardSureStrikes;
-                AddPlayerMessage("inititate chaining strike event");
+                // AddPlayerMessage("inititate chaining strike event");
                 Attacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
             }
             else
@@ -79,7 +79,7 @@ namespace XRL.World.Parts.Skill
         {
             if (E.ID == "CommandSureStrikes")
             {
-                AddPlayerMessage("Firing Sure strike commandsurestrikes");
+                // AddPlayerMessage("Firing Sure strike commandsurestrikes");
 
                 AwardSureStrikes = 0;
 
@@ -121,7 +121,7 @@ namespace XRL.World.Parts.Skill
             }
             if (E.ID == "ChainingSureStrikes")
             {
-                AddPlayerMessage("Chaining strike fires");
+                // AddPlayerMessage("Chaining strike fires");
 
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
@@ -147,10 +147,10 @@ namespace XRL.World.Parts.Skill
 
         public void ChainingSureStrike(GameObject Target)
         {
-            AddPlayerMessage("Chaining Strikes Method Fires");
-            PlayWorldSound("refract", 100f, 0, true);
+            // AddPlayerMessage("Chaining Strikes Method Fires");
+            PlayWorldSound("swiftstrikes", 0.5f, 0, true);
 
-            AddPlayerMessage("chaining eventhook?");
+            // AddPlayerMessage("chaining eventhook?");
             Event EventHook = null;
 
             var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
@@ -160,14 +160,14 @@ namespace XRL.World.Parts.Skill
             FistPenBonus = PrimaryWeaponTraits.PenBonus;
             PrimaryWeaponTraits.AdjustBonusCap(FistPenBonus * 2);
 
-            AddPlayerMessage("event changes");
+            // AddPlayerMessage("event changes");
             EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
             EventHook.SetParameter("PenBonus", FistPenBonus * 2);
             EventHook.SetParameter("PenCapBonus", ParentObject);
             EventHook.SetParameter("Attacker", ParentObject);
             EventHook.SetParameter("Defender", Target);
 
-            AddPlayerMessage("fire eventhook?");
+            // AddPlayerMessage("fire eventhook?");
             ParentObject.FireEvent(EventHook);
 
             var eAttacker = Target;
@@ -207,7 +207,7 @@ namespace XRL.World.Parts.Skill
                 AddPlayerMessage("Invalid Weapon type.");
                 return;
             }
-            AddPlayerMessage("passed clears, throwing attack");
+            // AddPlayerMessage("passed clears, throwing attack");
 
             PlayWorldSound("refract", 100f, 0, true);
 

@@ -115,37 +115,37 @@ namespace XRL.World.Parts.Skill
             if (E.ID == "DismissStanceCommand")
             {
                 StanceReplacement();
-                // NoviceStancer();
+                NoviceStancer();
             }
             else if (E.ID == "DawngliderStanceCommand")
             {
                 StanceReplacement();
                 ParentObject.ApplyEffect(new DawnStance(Effect.DURATION_INDEFINITE));
-                // NoviceStancer();
+                NoviceStancer();
             }
             else if (E.ID == "AstralCabbyStanceCommand")
             {
                 StanceReplacement();
                 ParentObject.ApplyEffect(new AstralCabbyStance(Effect.DURATION_INDEFINITE));
-                // NoviceStancer();
+                NoviceStancer();
             }
             else if (E.ID == "SaltBackStanceCommand")
             {
                 StanceReplacement();
                 ParentObject.ApplyEffect(new SaltbackStance(Effect.DURATION_INDEFINITE));
-                // NoviceStancer();
+                NoviceStancer();
             }
             else if (E.ID == "SlumberlingStanceCommand")
             {
                 StanceReplacement();
                 ParentObject.ApplyEffect(new SlumberStance(Effect.DURATION_INDEFINITE));
-                // NoviceStancer();
+                NoviceStancer();
             }
             else if (E.ID == "SaltHopperStanceCommand")
             {
                 StanceReplacement();
                 ParentObject.ApplyEffect(new SaltHopperStance(Effect.DURATION_INDEFINITE));
-                // NoviceStancer();
+                NoviceStancer();
             }
 
             return base.FireEvent(E);

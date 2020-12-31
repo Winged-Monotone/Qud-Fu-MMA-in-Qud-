@@ -57,41 +57,21 @@ namespace XRL.World.Effects
         }
 
 
-        // public void PsychicPulse()
-        // {
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         for (int j = 0; j < 5; j++)
-        //         {
-        //             ParticleText("&B" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
-        //         }
-        //         for (int k = 0; k < 5; k++)
-        //         {
-        //             ParticleText("&b" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
-        //         }
-        //         for (int l = 0; l < 5; l++)
-        //         {
-        //             ParticleText("&W" + (char)(219 + Stat.Random(0, 4)), 4.9f, 5);
-        //         }
-        //     }
-        // }
-
-
         public void SaltHopperPulse(Cell cell)
         {
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int k = 0; k < 5; k++)
                 {
-                    cell.ParticleText("&O" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&O" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int l = 0; l < 5; l++)
                 {
-                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
             }
         }
@@ -99,6 +79,7 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
+            PlayWorldSound("swapstance", PitchVariance: 0f);
             SaltHopperPulse(Object.CurrentCell);
             return true;
         }

@@ -53,15 +53,15 @@ namespace XRL.World.Effects
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int k = 0; k < 5; k++)
                 {
-                    cell.ParticleText("&w" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&w" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int l = 0; l < 5; l++)
                 {
-                    cell.ParticleText("&W" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&W" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
             }
         }
@@ -70,8 +70,9 @@ namespace XRL.World.Effects
         {
             var ParentMoveSpeed = Object.Statistics["MoveSpeed"].BaseValue;
 
+            PlayWorldSound("swapstance", PitchVariance: 0f);
             SaltBackPulse(Object.CurrentCell);
-            StatShifter.SetStatShift("MoveSpeed", 10);
+            StatShifter.SetStatShift("MoveSpeed", -10);
 
             return true;
         }

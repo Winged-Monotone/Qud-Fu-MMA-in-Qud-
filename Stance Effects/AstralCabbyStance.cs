@@ -63,21 +63,23 @@ namespace XRL.World.Effects
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    cell.ParticleText("&B" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&B" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int k = 0; k < 5; k++)
                 {
-                    cell.ParticleText("&b" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&b" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
                 for (int l = 0; l < 5; l++)
                 {
-                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 5);
+                    cell.ParticleText("&Y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
             }
         }
 
         public override bool Apply(GameObject Object)
         {
+            PlayWorldSound("swapstance", PitchVariance: 0f);
+
             AstralCabbyPulse(Object.CurrentCell);
             return true;
         }
