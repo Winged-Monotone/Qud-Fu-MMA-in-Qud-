@@ -142,10 +142,24 @@ namespace XRL.World.Parts.Skill
                                 // AddPlayerMessage("slumberstarting for each 1");
                                 if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
                                 {
-                                    if (ob.IsRegenerable() || ob.IsSeverable())
+                                    if (ob.IsRegenerable() || ob.IsSeverable() && ob.IsRecoverable() && ob.ParentBody != ParentObject.Body)
                                     {
-                                        ob.Dismember();
-                                        AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.theirs + " " + ob.Name + " from " + o.the + " form.}}");
+                                        if (ob.AnyMortalParts() || ob.Mortal)
+                                        {
+                                            if (ob.Name == "Head")
+                                            {
+                                                ob.Dismember();
+                                                o.Die(ParentObject, ParentObject.its + " lobs " + o.its + ob.Name + ", killing it!", false);
+                                            }
+                                            else
+                                            {
+                                                ob.Dismember();
+                                                o.Die(ParentObject, ParentObject.Its + " strike obliterates " + o.the + "!");
+                                            }
+                                        }
+                                        else
+                                            ob.Dismember();
+                                        AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.The + " " + ob.Name + " from " + o.The + " form.}}");
                                         Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", o, "Attacker", Attacker));
                                     }
                                     else

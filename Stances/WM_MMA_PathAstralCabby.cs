@@ -11,7 +11,7 @@ namespace XRL.World.Parts.Skill
     public class WM_MMA_PathAstralCabby : BaseSkill
     {
         public Guid AstralCabbyStanceID;
-        private int FlankersAbound;
+        private int FlankersAboundDuration;
 
         public WM_MMA_PathAstralCabby()
         {
@@ -68,7 +68,7 @@ namespace XRL.World.Parts.Skill
                 {
                     if (C.HasCombatObject())
                     {
-                        FlankersAbound = 7;
+                        FlankersAboundDuration = 7;
 
                         StatShifter.SetStatShift("DV", +1);
                     }
@@ -76,9 +76,9 @@ namespace XRL.World.Parts.Skill
             }
             if (E.ID == "EndTurn" && ParentObject.HasEffect("AstralCabbyStance"))
             {
-                if (FlankersAbound > 0)
+                if (FlankersAboundDuration > 0)
                 {
-                    --FlankersAbound;
+                    --FlankersAboundDuration;
                 }
                 else
                 {

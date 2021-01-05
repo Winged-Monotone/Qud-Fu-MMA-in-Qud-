@@ -127,7 +127,7 @@ namespace XRL.World.Parts.Skill
 
                                 E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
                             }
-                            if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                            else if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
                                 E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
                             }

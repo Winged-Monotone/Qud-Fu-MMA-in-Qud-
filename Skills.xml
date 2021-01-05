@@ -8,13 +8,13 @@
 
         <power Name="Combination Strikes I" Cost="50" Attribute="Strength" Minimum="18" Class="WM_MMA_CombinationStrikesI" Description="Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your damage in increments of 5% up to 150% per successful hit, this refreshes after leaving combat or missing/failing to penetrate with your attack."></power>
 
-        <power Name="Martial Conditioning II" Cost="75" Attribute="Toughness" Minimum="17" Class="WM_MMA_MartialConII" Prereq="WM_MMA_CombinationStrikesI" Description="Your body is conditioned to take blows and your combat experience allows you to react more strategically to taking a hit, you are more 20% more resistant to being stunned and dazed, and harder to knock prone. This resistance scales as you increase in level. You gain +10 to your Quickness permanently."></power>
+        <power Name="Martial Conditioning II" Cost="75" Attribute="Toughness" Minimum="17" Class="WM_MMA_MartialConII" Prereq="WM_MMA_CombinationStrikesI" Description="Your body is conditioned to take blows and your combat experience allows you to react more strategically to taking a hit, you are 20% more resistant to being stunned and dazed, and harder to knock prone. This resistance scales as you increase in level. You gain +10 to your Quickness permanently."></power>
 
         <power Name="Combination Strikes II" Cost="75" Attribute="Strength" Minimum="19" Class="WM_MMA_CombinationStrikesII" Prereq="WM_MMA_CombinationStrikesI" Description="Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your chance for a critical by 2% up to 20% per successful hit, this refreshes after leaving combat, or missing/failing to penetrate with your attack."></power>
 
-        <power Name="Sure Strikes" Cost="100" Attribute="Strength" Minimum="17" Class="WM_MMA_SureStrikes" Prereq="WM_MMA_MartialConII" Description="You can deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike."></power>
+        <power Name="Sure Strikes" Cost="50" Attribute="Strength" Minimum="17" Class="WM_MMA_SureStrikes" Prereq="WM_MMA_MartialConII" Description="You can deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike."></power>
 
-        <power Name="Martial Stances" Cost="200" Attribute="Intelligence" Minimum="16" Class="WM_MMA_MartialStances" Prereq="WM_MMA_MartialConII" Description="Gain access to special stances that grant their user incredible prowess."></power>
+        <power Name="Martial Forms" Cost="200" Attribute="Intelligence" Minimum="16" Class="WM_MMA_MartialStances" Prereq="WM_MMA_MartialConII" Description="Gain access to special stances that grant their user incredible prowess."></power>
 
         <power Name="Path of the Dawnglider" Cost="25" Attribute="Strength" Minimum="16" Class="WM_MMA_PathDawnGlider" Prereq="WM_MMA_MartialStances" Description="A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +2 to hit and + 3 to DV."></power>
 
@@ -26,11 +26,11 @@
 
         <power Name="Path of the Astral Cabby" Cost="50" Attribute="Agility" Minimum="19" Class="WM_MMA_PathAstralCabby" Prereq="WM_MMA_MartialStances" Description="Evasive, untouchable, no matter how many flank you--you move as the void does. When flanked by multiple enemies, you gain a bonus to your DV per unit surrounding you, successful dodges build your Combination Strike counter and you gain a +10 to movement speed, you however you deliver reduced damage."></power>
 
-        <power Name="Master of Stances" Cost="400" Attribute="Agility" Minimum="18" Class="WM_MMA_MasterStanceSwap" Prereq="WM_MMA_MartialStances" Description="Switching stances happens instantly."></power>
+        <power Name="Master of Stances" Cost="300" Attribute="Agility" Minimum="18" Class="WM_MMA_MasterStanceSwap" Prereq="WM_MMA_MartialStances" Description="Switching stances happens instantly."></power>
 
-        <power Name="Combination Strikes III" Cost="300" Attribute="Agility" Minimum="18" Class="WM_MMA_CombinationStrikesIII" Prereq="WM_MMA_CombinationStrikesII" Description="Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your Penetration by 1 per successful consecutive hits, this refreshes after leaving combat, or missing/failing to penetrate with your attack."></power>
+        <power Name="Combination Strikes III" Cost="200" Attribute="Agility" Minimum="18" Class="WM_MMA_CombinationStrikesIII" Prereq="WM_MMA_CombinationStrikesII" Description="Dealing consecutive strikes while unnarmed or wielding a natural weapon increases your Penetration by 1 per successful consecutive hits, this refreshes after leaving combat, or missing/failing to penetrate with your attack."></power>
 
-        <power Name="Martial Conditioning III" Cost="300" Attribute="Toughness" Minimum="17" Class="WM_MMA_MartialConIII" Prereq="WM_MMA_MartialConII" Description="You are at the prime of your both your mental and physical conditioning, while meditating you now regain extra HP up to your toughness modifier. You sprint for 40 more turns. You gain a +3 to AV and DV."></power>
+        <power Name="Martial Conditioning III" Cost="200" Attribute="Toughness" Minimum="17" Class="WM_MMA_MartialConIII" Prereq="WM_MMA_MartialConII" Description="You are at the prime of your both your mental and physical conditioning, while meditating you now regain extra HP up to your toughness modifier. You sprint for 40 more turns. You gain a +3 to AV and DV."></power>
 
     </skill>
 </skills>

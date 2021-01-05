@@ -72,13 +72,12 @@ namespace XRL.World.Effects
         public override bool Apply(GameObject Object)
         {
             AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
-            PlayWorldSound("swapstance", PitchVariance: 0f);
             RageSplat();
 
             var ParentAV = Object.Statistics["AV"].BaseValue;
             var ParentDV = Object.Statistics["DV"].BaseValue;
 
-            PlayWorldSound("swapstance", PitchVariance: 2.5f);
+            PlayWorldSound("swapstance", PitchVariance: 0.5f);
 
             StatShifter.SetStatShift("AV", -(int)Math.Round(ParentAV * 0.5));
             StatShifter.SetStatShift("DV", -(int)Math.Round(ParentDV * 0.5));

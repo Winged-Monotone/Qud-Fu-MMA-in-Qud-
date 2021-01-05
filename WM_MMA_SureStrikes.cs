@@ -180,7 +180,7 @@ namespace XRL.World.Parts.Skill
 
         public void SureStrike()
         {
-            var TargetCell = ParentObject.PickDirection();
+            // var TargetCell = ParentObject.PickDirection();
 
             TextConsole _TextConsole = UI.Look._TextConsole;
             ScreenBuffer Buffer = TextConsole.ScrapBuffer;

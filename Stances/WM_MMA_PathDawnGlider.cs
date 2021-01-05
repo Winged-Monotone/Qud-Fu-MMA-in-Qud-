@@ -14,7 +14,7 @@ namespace XRL.World.Parts.Skill
     {
         public Guid DawnStanceID;
         public int BonusSureStrike;
-
+        public int FlankersAboundBnsDuration;
 
         public WM_MMA_PathDawnGlider()
         {
@@ -27,6 +27,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "CommandSureStrikes");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
+            Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object);
         }
@@ -96,9 +97,90 @@ namespace XRL.World.Parts.Skill
 
                 HitBonus = +2;
             }
+            if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathSaltBack"))
+            {
+                // AddPlayerMessage("dawnSaltBack Defender Block Begins");
+                // GameObject Attacker = E.GetGameObjectParameter("Attacker");
+                var Owner = ParentObject;
+
+                var SaltBackBlockSystem = ParentObject.GetPart<WM_MMA_PathSaltBack>();
+
+                Body body = Owner.GetPart("Body") as Body;
+                List<BodyPart> hands = body.GetPart("Hand");
+                var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultFist", "Hand");
+
+                int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 4);
+                if (SaltBackBlockSystem.SpecialFistCollective.Any(Owner.HasEquippedObject))
+                {
+                    SaltBackBlockSystem.PSBArmorBonus = 1;
+                }
+
+                if (Owner.GetShield() != null)
+                {
+                    // AddPlayerMessage("SaltBackHalf Shield Returned Null");
+                    return true;
+                }
+                if (E.HasParameter("ShieldBlocked"))
+                {
+                    // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
+                    return true;
+                }
+                if (!Owner.CanMoveExtremities(null, false, false, false))
+                {
+                    // AddPlayerMessage("SaltBackHalf CanMove Check");
+                    return true;
+                }
+                // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
+                if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
+                {
+                    // AddPlayerMessage("SaltBackHalf SaltBack Status");
+
+                    E.SetParameter("ShieldBlocked", true);
+
+                    // AddPlayerMessage("SaltBackHalf Damage");
+
+                    if (Owner.IsPlayer())
+                    {
+                        IComponent<GameObject>.AddPlayerMessage("You deflect an attack with your " + ParentObject.Equipped + "!" + "(" + FistShieldAV + " AV)", 'g');
+                    }
+                    else
+                    {
+                        Owner.ParticleText(string.Concat(new object[]
+                        {
+                            "{{",
+                            IComponent<GameObject>.ConsequentialColor(Owner, null),
+                            "|Block! (+",
+                            FistShieldAV +
+                            " AV)}}"
+                        }), ' ', false, 1.5f, -8f);
+                    }
+                    E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
+                }
+            }
+            if (E.ID == "BeginTakeAction" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathAstralCabby"))
+            {
+                var ParentCell = ParentObject.CurrentCell.GetLocalAdjacentCells();
+
+                foreach (var C in ParentCell)
+                {
+                    if (C.HasCombatObject())
+                    {
+                        FlankersAboundBnsDuration = 7;
+
+                        StatShifter.SetStatShift("Speed", -2);
+                    }
+                }
+            }
             if (E.ID == "EndTurn" && ParentObject.HasEffect("DawnStance"))
             {
-                // AddPlayerMessage("SureStrike Stat: " + BonusSureStrike);
+                if (FlankersAboundBnsDuration > 0)
+                {
+                    --FlankersAboundBnsDuration;
+                }
+                else
+                {
+                    StatShifter.RemoveStatShifts();
+                }
             }
             return base.FireEvent(E);
         }

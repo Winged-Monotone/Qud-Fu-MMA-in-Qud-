@@ -18,7 +18,7 @@ namespace XRL.World.Parts.Skill
         public Guid SaltBackStanceID;
         public int PSBArmorBonus;
 
-        private List<string> SpecialFistCollective = new List<string>()
+        public List<string> SpecialFistCollective = new List<string>()
         {
             "PsionicFist",
             "CarbideFist",
@@ -64,6 +64,37 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
+            if (E.ID == "AttackerHit" && ParentObject.HasEffect("SaltBackStance"))
+            {
+                try
+                {
+                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                    Damage Damage = E.GetParameter<Damage>("Damage");
+                    var Attacker = ParentObject;
+
+
+                    if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                    }
+                    if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                    }
+                    if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                    }
+                    else
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                    }
+                }
+                catch
+                {
+
+                }
+            }
             if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("SaltbackStance"))
             {
                 // AddPlayerMessage("SaltBack Defender Block Begins");
