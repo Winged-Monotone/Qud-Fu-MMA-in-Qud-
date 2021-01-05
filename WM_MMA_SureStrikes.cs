@@ -27,19 +27,23 @@ namespace XRL.World.Parts.Skill
         }
         public void UpdateCounter()
         {
-            var MMAAccess = ParentObject.GetPart<WM_MMA_PathDawnGlider>();
-            int SureStrikeBonus = MMAAccess.BonusSureStrike;
-
-            var AA = MyActivatedAbility(this.SureStrikesActivatedAbilityID);
-
-            if (AA != null && SureStrikeBonus <= 0)
+            try
             {
-                AA.DisplayName = "{{white|Sure Strikes}}";
+                var MMAAccess = ParentObject.GetPart<WM_MMA_PathDawnGlider>();
+                int SureStrikeBonus = MMAAccess.BonusSureStrike;
+
+                var AA = MyActivatedAbility(this.SureStrikesActivatedAbilityID);
+
+                if (AA != null && SureStrikeBonus <= 0)
+                {
+                    AA.DisplayName = "{{white|Sure Strikes}}";
+                }
+                else
+                {
+                    AA.DisplayName = "{{yellow|Sure Strikes x(" + (SureStrikeBonus) + ")}}";
+                }
             }
-            else
-            {
-                AA.DisplayName = "{{yellow|Sure Strikes x(" + (SureStrikeBonus) + ")}}";
-            }
+            catch { }
         }
 
         public override void Register(GameObject Object)
@@ -209,7 +213,7 @@ namespace XRL.World.Parts.Skill
             }
             // AddPlayerMessage("passed clears, throwing attack");
 
-            PlayWorldSound("refract", 100f, 0, true);
+            PlayWorldSound("swiftstrikes", 0.5f, 0, true);
 
 
             var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
