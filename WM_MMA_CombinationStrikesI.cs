@@ -4,6 +4,7 @@ using System.Text;
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
+using XRL.World.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -81,6 +82,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "EndSegment");
             Object.RegisterPartEvent(this, "CommandResetCmbo");
             Object.RegisterPartEvent(this, "EndTurn");
+            Object.RegisterPartEvent(this, "DrinkingFrom");
             base.Register(Object);
         }
 

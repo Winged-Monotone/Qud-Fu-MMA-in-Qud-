@@ -17,5 +17,35 @@ namespace XRL.World.Parts
         {
             return true;
         }
+
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return base.WantEvent(ID, cascade)
+            || ID == InventoryActionEvent.ID;
+        }
+
+        public override void Register(GameObject Object)
+        {
+            Object.RegisterPartEvent(this, "DrinkingFrom");
+            base.Register(Object);
+        }
+
+        public override bool HandleEvent(InventoryActionEvent E)
+        {
+
+            return base.HandleEvent(E);
+        }
+
+        public override bool FireEvent(Event E)
+        {
+            AddPlayerMessage("Wine Inventory Action Event");
+            if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine"))
+            {
+                AddPlayerMessage("Drunken");
+                ParentObject.ApplyEffect(new Drunken(10));
+            }
+
+            return base.FireEvent(E);
+        }
     }
 }

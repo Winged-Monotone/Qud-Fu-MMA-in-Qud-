@@ -10,6 +10,7 @@ namespace XRL.World.Parts.Skill
     [Serializable]
     public class WM_MMA_PathAstralCabby : BaseSkill
     {
+        public bool Targeted = false;
         public Guid AstralCabbyStanceID;
         private int FlankersAboundDuration;
 
@@ -38,6 +39,8 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerMeleeMiss");
             Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "EndTurn");
+            Object.RegisterPartEvent(this, "TargetedForMissileWeapon");
+
             base.Register(Object);
         }
 
@@ -74,6 +77,17 @@ namespace XRL.World.Parts.Skill
                     }
                 }
             }
+            if (E.ID == "TargetedForMissileWeapon" && ParentObject.HasEffect("AstralCabbyStance"))
+            {
+                GameObject Attacker = E.GetGameObjectParameter("Attacker");
+                GameObject Defender = E.GetGameObjectParameter("Defender");
+
+                if (Defender == ParentObject)
+                {
+                    Targeted = true;
+                    StatShifter.SetStatShift("DV", +ParentObject.Statistics["Agility"].Modifier + ParentObject.Statistics["Level"].BaseValue);
+                }
+            }
             if (E.ID == "EndTurn" && ParentObject.HasEffect("AstralCabbyStance"))
             {
                 if (FlankersAboundDuration > 0)
@@ -82,6 +96,11 @@ namespace XRL.World.Parts.Skill
                 }
                 else
                 {
+                    StatShifter.RemoveStatShifts();
+                }
+                if (Targeted)
+                {
+                    Targeted = false;
                     StatShifter.RemoveStatShifts();
                 }
             }

@@ -2,7 +2,7 @@
 
     <class ID="Callings" ChargenTitle="Choose Calling" SingularTitle="calling" Load="Merge">
 
-        <subtype Name="Brave" Code="a" Gear="StartingGear_Brave" Tile="creatures/caste_contender.png" DetailColor="o">
+        <subtype Name="Brave" Code="a" Gear="StartingGear_Brave" Tile="creatures/caste_contender.png" DetailColor="g">
             <stat Name="Agility" Bonus="2" />
 
             <skills>

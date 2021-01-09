@@ -52,6 +52,7 @@ namespace XRL.World.Parts.Skill
         public override void Register(GameObject Object)
         {
             Object.RegisterPartEvent(this, "BeginTakeAction");
+            Object.RegisterPartEvent(this, "DrinkingFrom");
         }
 
         public string GetLevelValueBaseDamage(int Level)
@@ -141,34 +142,14 @@ namespace XRL.World.Parts.Skill
                 return true;
 
             }
+            // else if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine"))
+            // {
+            //     AddPlayerMessage("Drunken");
+            //     ParentObject.ApplyEffect(new Drunken(10));
+            // }
             return base.FireEvent(E);
         }
 
-        public override bool WantEvent(int ID, int cascade)
-        {
-            return base.WantEvent(ID, cascade)
-            || ID == InventoryActionEvent.ID;
-        }
 
-        public override bool HandleEvent(InventoryActionEvent E)
-        {
-            AddPlayerMessage("Wine Inventory Action Event");
-            if (E.Actor == ParentObject && E.Command == "Drink" && E.Item != null)
-            {
-                AddPlayerMessage("Drink Found?");
-                LiquidVolume lv = E.Item.GetPart<LiquidVolume>();
-                if (lv != null)
-                {
-                    AddPlayerMessage("Liquid Var Set");
-                    if (lv.ContainsLiquid("wine"))
-                    {
-                        ParentObject.ApplyEffect(new Drunken(10));
-                        AddPlayerMessage("Drunken");
-                    }
-                }
-            }
-
-            return base.HandleEvent(E);
-        }
     }
 }

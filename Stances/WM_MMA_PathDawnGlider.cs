@@ -88,7 +88,7 @@ namespace XRL.World.Parts.Skill
                 }
                 catch
                 {
-
+                    BonusSureStrike = 0;
                 }
             }
             else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("DawnStance"))
@@ -181,6 +181,10 @@ namespace XRL.World.Parts.Skill
                 {
                     StatShifter.RemoveStatShifts();
                 }
+
+                var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+                MMAComboAccess.UpdateCounter();
+
             }
             return base.FireEvent(E);
         }

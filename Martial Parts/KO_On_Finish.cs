@@ -83,8 +83,8 @@ namespace XRL.World.Parts
                     // AddPlayerMessage("KO in deal damage event");
                     var KOdToughness = defender.StatMod("Toughness");
                     var SaveDC = 40 - (KOdToughness * 10);
-
-                    defender.ApplyEffect(new Incapacitated(2400, SaveDC));
+                    if (!defender.HasEffect("Incapacitated"))
+                    { defender.ApplyEffect(new Incapacitated(2400, SaveDC)); }
 
                     return true;
                 }

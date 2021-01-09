@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using XRL.Core;
 using XRL.Rules;
 using XRL.UI;
 using XRL.World;
 using XRL.Liquids;
 using XRL.World.Parts;
+using System.Linq;
 
 
 
@@ -40,6 +42,31 @@ namespace XRL.World.Effects
         }
 
 
+        public List<string> SpecialStance = new List<string>()
+        {
+            "SlumberStance",
+            "DawnStance",
+            "SaltbackStance",
+            "SalthopperStance",
+            "AstralCabbyStance",
+        };
+        public void GetDrunkenEffects()
+        {
+            if (!SpecialStance.Any(Object.HasEffect))
+            {
+
+
+
+            }
+        }
+
+        public override bool FireEvent(Event E)
+        {
+
+
+            return base.FireEvent(E);
+
+        }
 
         public override string GetDetails()
         {

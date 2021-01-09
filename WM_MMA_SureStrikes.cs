@@ -206,11 +206,11 @@ namespace XRL.World.Parts.Skill
                 AddPlayerMessage("Invalid Target.");
                 return;
             }
-            if (IsPlayer() && Target != null && PrimaryWeapon.Blueprint != "DefaultFist")
-            {
-                AddPlayerMessage("Invalid Weapon type.");
-                return;
-            }
+            // if (IsPlayer() && Target != null && PrimaryWeapon.Blueprint != "DefaultFist")
+            // {
+            //     AddPlayerMessage("Invalid Weapon type.");
+            //     return;
+            // }
             // AddPlayerMessage("passed clears, throwing attack");
 
             PlayWorldSound("swiftstrikes", 0.5f, 0, true);
@@ -227,6 +227,8 @@ namespace XRL.World.Parts.Skill
             EventHook.SetParameter("Defender", Target);
 
             eDefender = Target;
+
+            AddPlayerMessage(ParentObject.it + " throws focused, percussive strikes at " + eDefender.it);
 
             ParentObject.FireEvent(EventHook);
             UpdateCounter();

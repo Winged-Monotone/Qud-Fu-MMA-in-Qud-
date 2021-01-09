@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<factions>
+
+
+    <faction Name="Bravers" DisplayName="Braver of the Dawning Fist" InitialPlayerReputation="0">
+        <waterritual Skill="WM_MMASkillTree" />
+
+
+        <partreputation About="Multiple Arms" Value="100" />
+
+
+        <feeling About="Contenders" Value="-450" />
+
+        <interests>
+
+            <interest Tags="Strangers,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
+
+    <faction Name="Contenders" DisplayName="contender" InitialPlayerReputation="-450">
+
+        <partreputation About="Multiple Arms" Value="50" />
+
+        <feeling About="Bravers" Value="-450" />
+
+        <interests>
+
+            <interest Tags="Strangers,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
+
+
+
+
+</factions>
