@@ -13,7 +13,7 @@ namespace XRL.World.Effects
 
     public class SlumberStance : Effect
     {
-        public Guid DawnStanceID;
+        public Guid SlumberID;
         public int ShockwaveCooldown;
 
 
@@ -50,10 +50,24 @@ namespace XRL.World.Effects
             go.UnregisterEffectEvent((Effect)this, "MovementModeChanged");
             go.UnregisterEffectEvent((Effect)this, "CanChangeMovementMode");
             go.UnregisterEffectEvent((Effect)this, "EndTurn");
-            go.UnregisterEffectEvent((Effect)this, "IsMobile");
+            go.UnregisterEffectEvent((Effect)this, "SlumberSleepCommand");
             go.UnregisterEffectEvent((Effect)this, "LeaveCell");
             go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
             base.Unregister(Object);
+        }
+
+        public override bool FireEvent(Event E)
+        {
+            if (E.ID == "SlumberSleepCommand")
+            {
+                if (!Object.HasEffect("Asleep"))
+                {
+                    Object.ApplyEffect(new Asleep(1200 - (Object.Statistics["Toughness"].Modifier * 10), forced: false, quicksleep: false, voluntary: true));
+                    AddPlayerMessage("You fall into a deep slumber ...");
+                }
+            }
+
+            return base.FireEvent(E);
         }
 
         public void RageSplat()
@@ -82,18 +96,10 @@ namespace XRL.World.Effects
             StatShifter.SetStatShift("AV", -(int)Math.Round(ParentAV * 0.5));
             StatShifter.SetStatShift("DV", -(int)Math.Round(ParentDV * 0.5));
 
+            this.SlumberID = base.AddMyActivatedAbility("Slumber", "SlumberSleepCommand", "Power", "Fall into a deep slumber, regenerating your hitpoints.", "Z", null, false, false, true);
+
             return true;
         }
-
-        // public override bool FireEvent(Event E)
-        // {
-        //     if (E.ID == "IsMobile")
-        //     {
-
-        //     }
-
-        //     return base.FireEvent(E);
-        // }
 
         public override bool Render(RenderEvent E)
         {
@@ -110,6 +116,7 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
+            this.RemoveMyActivatedAbility(ref SlumberID, Object);
             StatShifter.RemoveStatShifts();
         }
 

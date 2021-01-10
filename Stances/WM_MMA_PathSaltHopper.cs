@@ -92,7 +92,7 @@ namespace XRL.World.Parts.Skill
 
 
 
-                if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels)
+                if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
@@ -103,7 +103,7 @@ namespace XRL.World.Parts.Skill
                         Defender.ApplyEffect(new PsiSupression(10 + (ParentObject.Statistics["Level"].Value)));
                     }
                 }
-                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
+                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
@@ -114,7 +114,7 @@ namespace XRL.World.Parts.Skill
                         Defender.ApplyEffect(new Prone());
                     }
                 }
-                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) >= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
+                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
                 {
                     if (Stat.Random(1, 100) >= 50)
                     {
@@ -127,7 +127,7 @@ namespace XRL.World.Parts.Skill
                                                             10 + (ParentObject.Statistics["Level"].Value)));
                     }
                 }
-                else if (Stat.Random(1, 100) >= 2 + (AttackerLevels / 5))
+                else if (Stat.Random(1, 100) <= 2 + (AttackerLevels / 5))
                 {
                     Defender.UseEnergy(25);
                 }

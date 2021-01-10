@@ -85,7 +85,7 @@ namespace XRL.World.Parts.Skill
                 if (Defender == ParentObject)
                 {
                     Targeted = true;
-                    StatShifter.SetStatShift("DV", +ParentObject.Statistics["Agility"].Modifier + ParentObject.Statistics["Level"].BaseValue);
+                    StatShifter.SetStatShift("DV", +ParentObject.Statistics["Agility"].Modifier + (ParentObject.Statistics["Level"].BaseValue / 8));
                 }
             }
             if (E.ID == "EndTurn" && ParentObject.HasEffect("AstralCabbyStance"))
