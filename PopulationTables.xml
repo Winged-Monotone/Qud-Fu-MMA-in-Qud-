@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <populations>
-
     <population Name="StartingGear_Brave">
         <group Name="Items" Style="pickeach">
             <table Name="StartingGear_Common" />
@@ -21,14 +20,14 @@
 
     <population Name="GenericFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Braver" Weight="1" />
+            <object Blueprint="Bravers" Weight="1" />
             <object Blueprint="Contenders" Weight="1" />
         </group>
     </population>
 
     <population Name="SafeFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Braver" Weight="1" />
+            <object Blueprint="Bravers" Weight="1" />
         </group>
     </population>
 
@@ -85,20 +84,22 @@
             <object Blueprint="WM_MMA_CombinationStrikesII" />
             <object Blueprint="WM_MMA_MartialConII" />
             <object Blueprint="WM_MMA_SureStrikes" />
+            <object Blueprint="WM_MMA_CombinationStrikesIII" />
+            <object Blueprint="WM_MMA_MartialConIII" />
+
         </group>
     </population>
 
     <population Name="SkillPowers_MartialStyles">
         <group Name="Options" Style="pickone">
-            <object Blueprint="WM_MMASkillTree" />
-            <object Blueprint="WM_MMA_CombinationStrikesI" />
-            <object Blueprint="WM_MMA_MartialConI" />
-            <object Blueprint="WM_MMA_FlurryOfBlows" />
-            <object Blueprint="WM_MMA_CombinationStrikesII" />
-            <object Blueprint="WM_MMA_MartialConII" />
-            <object Blueprint="WM_MMA_SureStrikes" />
+            <object Blueprint="WM_MMA_MartialStances" />
+            <object Blueprint="WM_MMA_PathDawnGlider" />
+            <object Blueprint="WM_MMA_PathDawnSaltHopper" />
+            <object Blueprint="WM_MMA_PathSaltBack" />
+            <object Blueprint="WM_MMA_PathSlumberling" />
+            <object Blueprint="WM_MMA_PathAstralCabby" />
+            <object Blueprint="WM_MMA_MasterStanceSwap" />
         </group>
     </population>
-
 </populations>
 

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objects>
+
+
     <object Name="DefaultFist" Load="Merge">
-        <tag Name="MMAHooks"></tag>
-        <part Name="MartialConditioningFistMod"></part>
-    </object>
-    <object Name="PsionicFist" Load="Merge">
         <tag Name="MMAHooks"></tag>
         <part Name="MartialConditioningFistMod"></part>
     </object>
@@ -18,14 +16,16 @@
         <tag Name="MMAHooks"></tag>
     </object>
 
+    <!-- // snapjawpack1 - this is a cs part that is used to create the possy that follows snapjaw hero characters. note that this option will require scripting to modify for your own entities but it is rather simple. -->
+    <!-- Hero's also require a cs script possibly? -->
 
-
-    <object Name="Braver" Inherits="BaseHumanoid">
-        <part Name="Brain" Hostile="false" Factions="Braver-100" />
-        <part Name="Render" Tile="creatures/caste_contender.png" DetailColor="w" />
+    <object Name="BaseBraver" Inherits="Humanoid">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" />
+        <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
         <stat Name="DV" Value="3" />
+        <tag Name="WaterRitualLiquid" Value="wine" />
         <part Name="Description" Short="The bravers seek only one thing, to perfect their martial forms and and find struggles worth pushing through in order to harden their resolves. They make long journey's across Qud, and with each struggle, they mark their victory and earnestly await another." />
         <tag Name="HeroNamePrefixes" Value="Phi,Pho,Pha,Phe,Ho,Ha,Hu,Jedi,Jodi,Solo,Sulu,Sala,Aba,Abba,Abi,Ag,Alexa,Ash,Bartho,Bartha,Benu,Benja,Benju,Ca,Cale,Casto,Che,Cor,Damasca,Debo,Dorca,Eben,Eli,Elo,Ephra,Ephri,Gabri,Haga,Hero,Icha,Jeho,Jeha,Laza,Memphi,Matthi,Meno,Morde,Natha,Noa,Ode,Rache,Rhea,Ru,Sapha,Sephe,Sethe,Stephe,Tobi" />
         <tag Name="HeroNamePrefixAmount" Value="1" />
@@ -34,6 +34,9 @@
         <tag Name="HeroNamePostfixAmount" Value="1" />
         <tag Name="HeroTwoNameChance" Value="101" />
         <tag Name="HeroNameHyphenationChance" Value="0" />
+        <property Name="HeroNameTitleWiseDescriptor" Value="Master,Sage,Fist-Worthy,Foot-Worthy,Great,Elder" />
+        <property Name="HeroNameTitleMayorSyn" Value="legendary master,historic braver,elder braver" />
+        <property Name="HeroNameTitleMayorSynCap" Value="Legendary Master,Historic Braver,Elder Braver" />
         <tag Name="HeroHPBoost" Value="2" />
         <tag Name="HeroIntBoost" Value="2" />
         <tag Name="HeroNameTitlePariah" Value="Shamed" />
@@ -41,9 +44,19 @@
         <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
     </object>
 
-    <object Name="BraverJourneyer" Inherits="Braver">
-        <part Name="Brain" Hostile="false" Factions="Braver-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender.png" RenderString="m" ColorString="&amp;y" DetailColor="C" />
+    <object Name="Braver Hero" Inherits="BraverMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverJourneyer" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender.png_flipped" RenderString="m" ColorString="&amp;y" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -54,7 +67,6 @@
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
-        <property Name="Role" Value="Brute" />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
@@ -71,9 +83,9 @@
         <tag Name="DynamicObjectsTable:Saltdunes_Creatures" />
     </object>
 
-    <object Name="BraverMaster" Inherits="Braver">
-        <part Name="Brain" Hostile="false" Factions="Braver-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender.png" RenderString="m" ColorString="&amp;0" DetailColor="C" />
+    <object Name="BraverMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="Y" ColorString="&amp;0" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -81,25 +93,24 @@
         <stat Name="Willpower" sValue="16,1d3" />
         <stat Name="Ego" sValue="11,1d3" />
         <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="8" />
+        <stat Name="Level" Value="30" />
         <stat Name="AV" Value="3" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
-        <property Name="Role" Value="Brute" />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
-        <part Name="AIPilgrim" TargetObject="StiltWell" />
-        <!-- <part Name="ConversationScript" ConversationID="MechanimistPilgrim" /> -->
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
-        <part Name="AIShopper" />
         <tag Name="DynamicObjectsTable:Saltdunes_Creatures" />
     </object>
 

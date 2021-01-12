@@ -38,11 +38,11 @@ namespace XRL.World.Parts
 
         public override bool FireEvent(Event E)
         {
-            AddPlayerMessage("Wine Inventory Action Event");
-            if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine"))
+            // AddPlayerMessage("Wine Inventory Action Event");
+            if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine") && !ParentObject.HasEffect("Drunken"))
             {
-                AddPlayerMessage("Drunken");
-                ParentObject.ApplyEffect(new Drunken(10));
+                // AddPlayerMessage("Drunken");
+                ParentObject.ApplyEffect(new Drunken(25 + (10 * ParentObject.Statistics["Level"].BaseValue / 5)));
             }
 
             return base.FireEvent(E);

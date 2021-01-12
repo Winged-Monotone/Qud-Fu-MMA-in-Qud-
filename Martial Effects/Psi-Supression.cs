@@ -1,4 +1,4 @@
-// XRL.World.Effects.Paralyzed
+// boilered from XRL.World.Effects.Paralyzed
 using System;
 using XRL.Core;
 using XRL.Rules;
@@ -55,6 +55,31 @@ namespace XRL.World.Effects
             base.Remove(Object);
         }
 
+        public override void Register(GameObject Object)
+        {
+
+            Object.RegisterEffectEvent(this, "EndTurn");
+            base.Register(Object);
+        }
+
+        public override void Unregister(GameObject Object)
+        {
+
+            Object.UnregisterEffectEvent(this, "EndTurn");
+            base.Unregister(Object);
+        }
+
+        public override bool FireEvent(Event E)
+        {
+            if (E.ID == "EndTurn")
+            {
+                if (Duration > 0)
+                { Duration--; }
+            }
+
+            return base.FireEvent(E);
+
+        }
 
         public override bool Render(RenderEvent E)
         {

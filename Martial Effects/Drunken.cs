@@ -44,7 +44,7 @@ namespace XRL.World.Effects
                 return true;
             }
 
-            return true;
+            return base.Apply(Object);
         }
 
 
@@ -89,6 +89,8 @@ namespace XRL.World.Effects
         {
             if (E.ID == "BeginTakeAction")
             {
+                if (Duration > 0)
+                { Duration--; }
                 if (Object.HasEffect("DawnStance"))
                 {
 

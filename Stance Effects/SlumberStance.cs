@@ -26,7 +26,6 @@ namespace XRL.World.Effects
         public SlumberStance(int Duration) : this()
         {
             base.Duration = 1;
-
         }
 
         public override string GetDetails()
