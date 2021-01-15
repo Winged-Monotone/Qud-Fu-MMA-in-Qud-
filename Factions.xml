@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <factions>
-
-
-    <faction Name="Bravers" DisplayName="Bravers of The Dawning Fist" InitialPlayerReputation="0">
+    <faction Name="Bravers" DisplayName="Bravers" InitialPlayerReputation="0">
         <waterritual Skill="WM_MMASkillTree" />
 
-
         <partreputation About="Multiple Arms" Value="100" />
-        <waterritual Skill="WM_MMA_PathSaltHopper" />
-        <waterritual Skill="WM_MMA_PathsaltBack" />
-        <waterritual Skill="WM_MMA_PathAstralCabby" />
-        <waterritual Skill="WM_MMA_PathSlumberling" />
         <waterritual Skill="WM_MMA_MasterStanceSwap" />
 
         <feeling About="Contenders" Value="-450" />
@@ -25,17 +18,98 @@
         </interests>
     </faction>
 
-    <faction Name="Contenders" DisplayName="contender" InitialPlayerReputation="-450">
+    <faction Name="BraversDawn" DisplayName="Bravers of The Dawning Fist" InitialPlayerReputation="0">
 
-        <partreputation About="Multiple Arms" Value="50" />
+        <partreputation About="Multiple Arms" Value="100" />
+        <waterritual Skill="WM_MMA_MasterStanceSwap" />
 
-        <feeling About="Bravers" Value="-450" />
-        <feeling About="Apes" Value="-450" />
+        <feeling About="Contenders" Value="-450" />
+        <feeling About="BraversAstralCabby" Value="-100" />
+        <feeling About="BraversSaltHopper" Value="100" />
 
         <interests>
 
+            <interest Tags="Contenders,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
 
-            <interest Tags="oboroqoru,lair" />
+        </interests>
+    </faction>
+
+    <faction Name="BraversSaltBack" DisplayName="Bravers of The Amethyst Shell" InitialPlayerReputation="0">
+
+        <partreputation About="Multiple Arms" Value="100" />
+        <waterritual Skill="WM_MMA_PathSaltBack" />
+
+        <feeling About="Contenders" Value="-450" />
+        <feeling About="BraversSlumber" Value="-100" />
+        <feeling About="BraversDawnGlider" Value="100" />
+
+        <interests>
+
+            <interest Tags="Contenders,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
+
+    <faction Name="BraversSaltHopper" DisplayName="Bravers of The Scythe-Strike" InitialPlayerReputation="0">
+
+        <partreputation About="Multiple Arms" Value="100" />
+
+        <waterritual Skill="WM_MMA_PathSaltHopper" />
+
+        <feeling About="Contenders" Value="-450" />
+        <feeling About="BraversSaltBack" Value="-100" />
+        <feeling About="BraversSlumber" Value="100" />
+
+        <interests>
+
+            <interest Tags="Contenders,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
+
+    <faction Name="BraversAstralCabby" DisplayName="Bravers of The Void Claw" InitialPlayerReputation="0">
+
+        <partreputation About="Multiple Arms" Value="100" />
+
+        <waterritual Skill="WM_MMA_PathAstralCabby" />
+
+        <feeling About="Contenders" Value="-450" />
+        <feeling About="BraversSaltHopper" Value="-100" />
+        <feeling About="BraversSaltBack" Value="100" />
+
+        <interests>
+
+            <interest Tags="Contenders,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
+
+    <faction Name="BraversSlumber" DisplayName="Bravers of The Slumbering Fury" InitialPlayerReputation="0">
+
+
+
+        <partreputation About="Multiple Arms" Value="100" />
+        <waterritual Skill="WM_MMA_PathSlumberling" />
+
+        <feeling About="Contenders" Value="-450" />
+        <feeling About="BraversDawnGlider" Value="-100" />
+        <feeling About="BraversAstralCabby" Value="100" />
+
+        <interests>
+
+            <interest Tags="Contenders,lair" />
             <interest Tags="gossip" />
             <interest Tags="sultan" WillBuy="true" WillSell="true" />
             <interest Tags="wine,weep" />
@@ -45,5 +119,20 @@
 
 
 
+    <faction Name="Contenders" DisplayName="contender" InitialPlayerReputation="-450">
 
+        <partreputation About="Multiple Arms" Value="50" />
+
+        <feeling About="Bravers" Value="-450" />
+        <feeling About="Apes" Value="-450" />
+
+        <interests>
+
+            <interest Tags="oboroqoru,lair" />
+            <interest Tags="gossip" />
+            <interest Tags="sultan" WillBuy="true" WillSell="true" />
+            <interest Tags="wine,weep" />
+
+        </interests>
+    </faction>
 </factions>

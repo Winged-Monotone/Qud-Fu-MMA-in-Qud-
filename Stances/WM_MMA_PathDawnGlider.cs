@@ -107,7 +107,7 @@ namespace XRL.World.Parts.Skill
 
                 Body body = Owner.GetPart("Body") as Body;
                 List<BodyPart> hands = body.GetPart("Hand");
-                var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultFist", "Hand");
+                var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultMartialFist", "Hand");
 
                 int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 4);
                 if (SaltBackBlockSystem.SpecialFistCollective.Any(Owner.HasEquippedObject))

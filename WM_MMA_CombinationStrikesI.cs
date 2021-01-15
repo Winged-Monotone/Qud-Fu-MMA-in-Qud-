@@ -158,7 +158,7 @@ namespace XRL.World.Parts.Skill
                 var Defender = E.GetGameObjectParameter("Defender");
                 var DeezHands = E.GetGameObjectParameter("Weapon");
 
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultFist")
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultMartialFist")
                 {
                     // AddPlayerMessage("Decrease ComboCounter");
                     if (CurrentComboICounter < 0)
@@ -183,8 +183,7 @@ namespace XRL.World.Parts.Skill
                         --CurrentComboICounter;
                     }
                 }
-
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultFist")
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultMartialFist")
                 {
                     // AddPlayerMessage("Increase ComboCounter");
                     ++CurrentComboICounter;

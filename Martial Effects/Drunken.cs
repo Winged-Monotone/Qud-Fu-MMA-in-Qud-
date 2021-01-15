@@ -97,11 +97,11 @@ namespace XRL.World.Effects
                     if (Stat.Random(1, 100) <= 10)
                     {
                         Object.Firesplatter();
-                        MutationPart.Cast(null, "5-6");
+                        AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}");
+                        MutationPart.Cast(null, "5-" + 6 + (Object.Statistics["Level"].BaseValue));
                         if (!Object.HasEffect("Blaze_Tonic"))
                         {
                             Object.ApplyEffect(new Blaze_Tonic());
-
                         }
                     }
                 }

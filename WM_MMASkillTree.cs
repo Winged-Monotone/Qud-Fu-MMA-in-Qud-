@@ -5,6 +5,16 @@ using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
 using XRL.World.Effects;
+using XRL.World.Parts;
+using static XRL.World.GameObjectFactory;
+using ConsoleLib.Console;
+using System.Linq;
+using System.Security;
+using XRL.Core;
+using XRL.World;
+
+
+using ObjectPart = XRL.World.GameObjectFactory;
 
 namespace XRL.World.Parts.Skill
 {
@@ -124,6 +134,15 @@ namespace XRL.World.Parts.Skill
                         var ObjectDamageLevel = GetLevelValueBaseDamage(this.ParentObject.Statistics["Level"].BaseValue);
 
                         hand.DefaultBehavior.FireEvent(Event.New("UpdateFistProperties", "Dice", ObjectDamageLevel));
+                    }
+                    if (hand.DefaultBehavior.HasPropertyOrTag("UndesireableWeapon"))
+                    {
+                        GameObject ConditionFist = GameObject.create("DefaultMartialFist");
+
+                        // hand.DefaultBehaviorBlueprint.Remove(1, 1);
+                        hand.DefaultBehavior.UnequipAndRemove();
+                        // hand.DefaultBehaviorBlueprint = "DefaultMartialFist";
+                        hand.DefaultBehavior = ConditionFist;
                     }
                 }
                 catch

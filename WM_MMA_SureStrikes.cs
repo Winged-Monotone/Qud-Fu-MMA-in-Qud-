@@ -206,12 +206,12 @@ namespace XRL.World.Parts.Skill
                 AddPlayerMessage("Invalid Target.");
                 return;
             }
-            if (IsPlayer() && Target != null && !PrimaryWeapon.HasPart("MartialConditioningFistMod"))
-            {
-                AddPlayerMessage("Invalid Weapon type.");
-                return;
-            }
-            AddPlayerMessage("passed clears, throwing attack");
+            // if (IsPlayer() && Target != null && !PrimaryWeapon.HasPart("MartialConditioningFistMod") || !PrimaryWeapon.HasPart("MartialConditioningFistMod"))
+            // {
+            //     AddPlayerMessage("Invalid Weapon type.");
+            //     return;
+            // }
+            // AddPlayerMessage("passed clears, throwing attack");
 
             PlayWorldSound("swiftstrikes", 0.5f, 0, true);
 

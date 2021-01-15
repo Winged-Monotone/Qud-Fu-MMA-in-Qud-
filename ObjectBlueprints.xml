@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objects>
 
+    <object Name="DefaultMartialFist" Inherits="NaturalWeapon">
+        <part Name="Render" DisplayName="conditioned fist" />
+        <part Name="MartialConditioningFistMod"></part>
+        <part Name="MeleeWeapon" MaxStrengthBonus="1000" BaseDamage="1d2-1" Skill="Cudgel" Stat="Strength" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
 
     <object Name="DefaultFist" Load="Merge">
         <tag Name="MMAHooks"></tag>
         <part Name="MartialConditioningFistMod"></part>
     </object>
+
     <object Name="CarbideFist" Load="Merge">
         <tag Name="MMAHooks"></tag>
     </object>
@@ -19,14 +26,26 @@
     <!-- // snapjawpack1 - this is a cs part that is used to create the possy that follows snapjaw hero characters. note that this option will require scripting to modify for your own entities but it is rather simple. -->
     <!-- Hero's also require a cs script possibly? -->
 
-    <object Name="BaseBraver" Inherits="Humanoid">
+    <object Name="Doru" Inherits="DromadTrader_Village0" Load="Merge">
+        <inventoryobject Blueprint="MartialForms" Number="1" />
+    </object>
+
+    <object Name="MartialForms" Inherits="Book">
+        <part Name="Render" DisplayName="{{P|The Paths of the Contenders}}" ColorString="&amp;p" RenderString="=" RenderLayer="5" Tile="Items/sw_book2.bmp" TileColor="&amp;b" DetailColor="G" />
+        <part Name="Description" Short="Naught but a few pages, a humble collection of waxed paper-sheets and leather-binding." />
+        <part Name="Book" ID="MartialForms" />
+        <part Name="Commerce" Value="75" />
+    </object>
+
+    <object Name="BaseBraver" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" />
         <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
         <stat Name="DV" Value="3" />
+        <tag Name="BaseObject" Value="*noinherit" />
         <tag Name="WaterRitualLiquid" Value="wine" />
-        <part Name="Description" Short="The bravers seek only one thing, to perfect their martial forms and and find struggles worth pushing through in order to harden their resolves. They make long journey's across Qud, and with each struggle, they mark their victory and earnestly await another." />
+        <part Name="Description" Short="The bravers seek only one thing, to perfect their martial forms and find struggles worth pushing through in order to harden their resolves. They make long journey's across Qud, and with each struggle, they mark their victory and earnestly await another." />
         <tag Name="HeroNamePrefixes" Value="Phi,Pho,Pha,Phe,Ho,Ha,Hu,Jedi,Jodi,Solo,Sulu,Sala,Aba,Abba,Abi,Ag,Alexa,Ash,Bartho,Bartha,Benu,Benja,Benju,Ca,Cale,Casto,Che,Cor,Damasca,Debo,Dorca,Eben,Eli,Elo,Ephra,Ephri,Gabri,Haga,Hero,Icha,Jeho,Jeha,Laza,Memphi,Matthi,Meno,Morde,Natha,Noa,Ode,Rache,Rhea,Ru,Sapha,Sephe,Sethe,Stephe,Tobi" />
         <tag Name="HeroNamePrefixAmount" Value="1" />
         <tag Name="HeroNameInfixAmount" Value="0" />
@@ -35,26 +54,16 @@
         <tag Name="HeroTwoNameChance" Value="101" />
         <tag Name="HeroNameHyphenationChance" Value="0" />
         <property Name="HeroNameTitleWiseDescriptor" Value="Master,Sage,Fist-Worthy,Foot-Worthy,Great,Elder" />
-        <property Name="HeroNameTitleMayorSyn" Value="legendary master,historic braver,elder braver" />
+        <property Name="HeroNameTitleMayorSyn" Value="master,historic braver,elder braver" />
         <property Name="HeroNameTitleMayorSynCap" Value="Legendary Master,Historic Braver,Elder Braver" />
         <tag Name="HeroHPBoost" Value="2" />
         <tag Name="HeroIntBoost" Value="2" />
-        <tag Name="HeroNameTitlePariah" Value="Shamed" />
+        <tag Name="HeroNameTitlePariah" Value="Forgotten Master" />
         <tag Name="NoHateFactions" Value="Wardens,Dromad" />
         <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
     </object>
 
-    <object Name="Braver Hero" Inherits="BraverMaster">
-        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
-        <property Name="Role" Value="Hero" />
-        <part Name="GivesRep" />
-        <xtagGrammar Proper="true"></xtagGrammar>
-        <tag Name="Noclone" />
-        <tag Name="DynamicObjectsTable:Braver" />
-    </object>
-
-    <object Name="BraverJourneyer" Inherits="BaseBraver">
+    <object Name="BraverDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
         <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender.png_flipped" RenderString="m" ColorString="&amp;y" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
@@ -80,11 +89,157 @@
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
-        <tag Name="DynamicObjectsTable:Saltdunes_Creatures" />
+        <tag Name="DynamicObjectsTable:Braver" />
     </object>
 
-    <object Name="BraverMaster" Inherits="BaseBraver">
+    <object Name="BraverDawnDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="creatures/caste_contender.png_flipped" RenderString="M" ColorString="&amp;y" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="8" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <part Name="AIShopper" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverAstralDisciple" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="creatures/caste_contender.png_flipped" RenderString="B" ColorString="&amp;y" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="8" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <part Name="AIShopper" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSaltHopDisciple" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="creatures/caste_contender.png_flipped" RenderString="Y" ColorString="&amp;y" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="8" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <part Name="AIShopper" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSaltBackDisciple" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="creatures/caste_contender.png_flipped" RenderString="y" ColorString="&amp;y" DetailColor="M" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="8" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <part Name="AIShopper" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSlumberDisciple" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
+        <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fist Way" Tile="creatures/caste_contender.png_flipped" RenderString="R" ColorString="&amp;y" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="8" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <part Name="AIShopper" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+
+    <object Name="BraverMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-400" Wanders="false" />
         <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="Y" ColorString="&amp;0" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -111,8 +266,222 @@
         <inventoryobject Blueprint="BaseTierFace4" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
-        <tag Name="DynamicObjectsTable:Saltdunes_Creatures" />
+        <tag Name="DynamicObjectsTable:Braver" />
     </object>
 
+    <object Name="BraverDawnMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="BraversDawn-400" Wanders="false" />
+        <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="M" ColorString="&amp;0" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="30" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverAstralMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="BraversAstralCabby-400" Wanders="false" />
+        <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/caste_contender_flipped.png" RenderString="B" ColorString="&amp;0" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="30" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSaltHopMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="BraversSaltHopper-400" Wanders="false" />
+        <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/caste_contender_flipped.png" RenderString="W" ColorString="&amp;0" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="30" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSaltBackMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="BraversSaltBack-400" Wanders="false" />
+        <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/caste_contender_flipped.png" RenderString="B" ColorString="&amp;0" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="30" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="BraverSlumberMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="BraversSlumber-400" Wanders="false" />
+        <part Name="Render" DisplayName="braver-master of Slumbering-Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="R" ColorString="&amp;0" DetailColor="C" />
+        <stat Name="Strength" sValue="19,1d3" />
+        <stat Name="Agility" sValue="19,1d3" />
+        <stat Name="Toughness" sValue="19,1d3" />
+        <stat Name="Intelligence" sValue="11,1d3" />
+        <stat Name="Willpower" sValue="16,1d3" />
+        <stat Name="Ego" sValue="11,1d3" />
+        <stat Name="Hitpoints" Value="23" />
+        <stat Name="Level" Value="30" />
+        <stat Name="AV" Value="3" />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <skill Name="WM_MMASkillTree" />
+        <skill Name="WM_MMA_MartialConI" />
+        <skill Name="WM_MMA_MartialConII" />
+        <skill Name="WM_MMA_MartialConIII" />
+        <skill Name="WM_MMA_FlurryOfBlows" />
+        <skill Name="WM_MMA_CombinationStrikesI" />
+        <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_CombinationStrikesIII" />
+        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <inventoryobject Blueprint="Croccasins" Number="1" />
+        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
+        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="*Junk 1" Number="1d4" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero" Inherits="BraverMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero Dawn" Inherits="BraverDawnMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero Astral" Inherits="BraverAstralMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero SaltHop" Inherits="BraverSaltHopMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero SaltBack" Inherits="BraverSaltBackMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
+
+    <object Name="Braver Hero Slumber" Inherits="BraverSlumberMaster">
+        <part Name="Render" DisplayName="braver journey-master" ColorString="&amp;M" />
+        <stat Name="Hitpoints" Value="25" />
+        <property Name="Role" Value="Hero" />
+        <part Name="GivesRep" />
+        <xtagGrammar Proper="true"></xtagGrammar>
+        <tag Name="Noclone" />
+        <tag Name="DynamicObjectsTable:Braver" />
+    </object>
 
 </objects>
