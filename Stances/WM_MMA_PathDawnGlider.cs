@@ -157,7 +157,7 @@ namespace XRL.World.Parts.Skill
                     E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
                 }
             }
-            if (E.ID == "BeginTakeAction" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathAstralCabby"))
+            if (E.ID == "BeginTakeAction" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathAstralTabby"))
             {
                 var ParentCell = ParentObject.CurrentCell.GetLocalAdjacentCells();
 

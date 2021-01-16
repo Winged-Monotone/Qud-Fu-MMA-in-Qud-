@@ -19,7 +19,7 @@ namespace XRL.World.Parts.Skill
     {
         private List<string> StanceCollective = new List<string>()
         {
-            "AstralCabbyStance",
+            "AstralTabbyStance",
             "DawnStance",
             "SaltbackStance",
             "SaltHopperStance",
@@ -31,7 +31,7 @@ namespace XRL.World.Parts.Skill
         public Guid SaltBackStanceID;
         public Guid SlumberStanceID;
         public Guid SaltHopperStanceID;
-        public Guid AstralCabbyStanceID;
+        public Guid AstralTabbyStanceID;
         public Guid JiltedLoverStanceID;
 
 
@@ -68,7 +68,7 @@ namespace XRL.World.Parts.Skill
             GO.RemoveActivatedAbility(ref SaltBackStanceID);
             GO.RemoveActivatedAbility(ref SlumberStanceID);
             GO.RemoveActivatedAbility(ref SaltHopperStanceID);
-            GO.RemoveActivatedAbility(ref AstralCabbyStanceID);
+            GO.RemoveActivatedAbility(ref AstralTabbyStanceID);
             return true;
         }
 
@@ -76,7 +76,7 @@ namespace XRL.World.Parts.Skill
         {
             Object.RegisterPartEvent(this, "DismissStanceCommand");
             Object.RegisterPartEvent(this, "DawngliderStanceCommand");
-            Object.RegisterPartEvent(this, "AstralCabbyStanceCommand");
+            Object.RegisterPartEvent(this, "AstralTabbyStanceCommand");
             Object.RegisterPartEvent(this, "SaltBackStanceCommand");
             Object.RegisterPartEvent(this, "SlumberlingStanceCommand");
             Object.RegisterPartEvent(this, "SaltHopperStanceCommand");
@@ -123,10 +123,10 @@ namespace XRL.World.Parts.Skill
                 ParentObject.ApplyEffect(new DawnStance(Effect.DURATION_INDEFINITE));
                 NoviceStancer();
             }
-            else if (E.ID == "AstralCabbyStanceCommand")
+            else if (E.ID == "AstralTabbyStanceCommand")
             {
                 StanceReplacement();
-                ParentObject.ApplyEffect(new AstralCabbyStance(Effect.DURATION_INDEFINITE));
+                ParentObject.ApplyEffect(new AstralTabbyStance(Effect.DURATION_INDEFINITE));
                 NoviceStancer();
             }
             else if (E.ID == "SaltBackStanceCommand")
