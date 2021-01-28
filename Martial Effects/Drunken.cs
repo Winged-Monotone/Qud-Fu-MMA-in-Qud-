@@ -54,7 +54,7 @@ namespace XRL.World.Effects
             "DawnStance",
             "SaltbackStance",
             "SalthopperStance",
-            "AstralCabbyStance",
+            "AstralTabbyStance",
         };
         public void GetDrunkenEffects()
         {
@@ -129,7 +129,7 @@ namespace XRL.World.Effects
                 // {
 
                 // }
-                // else if (Object.HasEffect("AstralCabbyStance"))
+                // else if (Object.HasEffect("AstralTabbyStance"))
                 // {
 
                 // }

@@ -112,66 +112,73 @@ namespace XRL.World.Parts.Skill
                 var AttackerCell = Attacker.GetCurrentCell();
                 var AttackersAdacentCells = AttackerCell.GetLocalAdjacentCells();
 
+                var CellQuery = AttackersAdacentCells.Where(Cell => Cell.HasObjectWithPart("Brain") || Cell.HasObjectWithPart("Combat") && Cell.HasCombatObject() && !Cell.HasObject(ParentObject));
+
+
                 // AddPlayerMessage("slumberstyle initiated vars");
-                foreach (var c in AttackersAdacentCells)
+                foreach (var c in CellQuery)
                 {
                     // AddPlayerMessage("slumberstarting for each");
-                    if (c.HasObjectWithPart("Brain") || c.HasObjectWithPart("Combat") && c.HasCombatObject() && !c.HasObject(ParentObject))
+                    // AddPlayerMessage("{{dark red|slumbering style fires second for each!}}");
+                    var Flankers = c.GetObjectsInCell();
+                    RageStrikePulse(c);
+                    PlayWorldSound("Hit_Default", 1f, 1f, true);
+                    foreach (var obj1 in Flankers)
                     {
-                        // AddPlayerMessage("{{dark red|slumbering style fires second for each!}}");
-                        var Flankers = c.GetObjectsInCell();
-
-                        foreach (var o in Flankers)
+                        var ForceQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
+                        // AddPlayerMessage("slumberstarting for each 0");
+                        obj1.TakeDamage(Damage.Amount / 2);
+                        foreach (var objForced in ForceQuery)
                         {
-                            // AddPlayerMessage("slumberstarting for each 0");
-
-                            o.TakeDamage(Damage.Amount / 2);
-                            if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
+                            if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3)
                             {
                                 // AddPlayerMessage("slumber pushing");
                                 string KnockBack = Directions.GetRandomDirection();
-                                o.Push(KnockBack, 2500 * (AttackerLevels / 5));
+                                objForced.Push(KnockBack, 2500 * (AttackerLevels / 5));
                             }
+                        }
 
-                            RageStrikePulse(c);
-                            PlayWorldSound("Hit_Default", 1f, 1f, true);
+                        var FlankersBody = obj1.Body.GetParts();
 
-                            var FlankersBody = o.Body.GetParts();
-                            foreach (var ob in FlankersBody)
+                        foreach (var ob in FlankersBody)
+                        {
+                            var SeveringQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
+
+                            // AddPlayerMessage("slumberstarting for each 1");
+                            foreach (var objpart in SeveringQuery)
                             {
-                                // AddPlayerMessage("slumberstarting for each 1");
-                                if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3 && o != ParentObject && o.HasPart("Brain") || o.HasPart("Combat"))
+                                if (Stat.Random(1, 100) <= 3 + AttackerLevels / 10)
                                 {
-                                    if (ob.IsRegenerable() || ob.IsSeverable() && ob.IsRecoverable() && ob.ParentBody != ParentObject.Body)
+                                    var SeveredPartsQuery = Flankers.Where(Obj => ob.IsRegenerable() || ob.IsSeverable() && ob.IsRecoverable() && ob.ParentBody != ParentObject.Body);
+                                    foreach (var target in SeveredPartsQuery)
                                     {
-                                        if (ob.AnyMortalParts() || ob.Mortal)
+                                        var SeveringPartsQuery = SeveredPartsQuery.Where(Obj => ob.AnyMortalParts() || ob.Mortal);
+
+                                        foreach (var targetbodypart in SeveredPartsQuery)
                                         {
                                             if (ob.Name == "Head")
                                             {
                                                 ob.Dismember();
-                                                o.Die(ParentObject, ParentObject.its + " lobs " + o.its + ob.Name + ", killing it!", false);
+                                                target.Die(ParentObject, ParentObject.its + " lobs " + target.its + ob.Name + ", killing it!", false);
                                             }
                                             else
                                             {
                                                 ob.Dismember();
-                                                o.Die(ParentObject, ParentObject.Its + " strike obliterates " + o.the + "!");
+                                                target.Die(ParentObject, ParentObject.Its + " strike obliterates " + target.the + "!");
                                             }
                                         }
-                                        else
-                                            ob.Dismember();
-                                        AddPlayerMessage("{{red|" + ParentObject.Its + " vicious strike cleaves " + o.The + " " + ob.Name + " from " + o.The + " form.}}");
-                                        Attacker.FireEvent(Event.New("SlumberWitnessEvent", "Defender", o, "Attacker", Attacker));
                                     }
-                                    else
-                                    {
+                                }
+                                else
+                                {
 
-                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+
             else if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
             {
                 // AddPlayerMessage("slumberstarting for each 2");
@@ -183,27 +190,25 @@ namespace XRL.World.Parts.Skill
 
                 var CheckCells = Attacker.CurrentCell.GetLocalAdjacentCells();
 
-                foreach (var c2 in CheckCells)
+                var CellQuery = CheckCells.Where(C => C.HasObjectWithTagOrProperty("Brain") || C.HasObjectWithTagOrProperty("Combat") && C.HasCombatObject() && !C.HasObject(Attacker));
+
+                foreach (var c2 in CellQuery)
                 {
-                    if (c2.HasObjectWithTagOrProperty("Brain") || c2.HasObjectWithTagOrProperty("Combat") && c2.HasCombatObject() && !c2.HasObject(Attacker))
+                    // AddPlayerMessage("slumberstarting for each 3");
+                    var FrightenedFlankers = c2.GetObjectsInCell();
+                    var FrightQuery = FrightenedFlankers.Where(Obj => !Obj.MakeSave("Ego", 20 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false) && Obj != Attacker && Obj.HasPart("Brain") || Obj.HasPart("Combat"));
+
+                    foreach (var o2 in FrightenedFlankers)
                     {
-                        // AddPlayerMessage("slumberstarting for each 3");
-                        var FrightenedFlankers = c2.GetObjectsInCell();
+                        // AddPlayerMessage("slumberstarting for each 4");
+                        string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
+                        int num = ParentObject.StatMod("Ego");
 
-                        foreach (var o2 in FrightenedFlankers)
-                        {
-                            if (!o2.MakeSave("Ego", 20 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false) && o2 != Attacker && o2.HasPart("Brain") || o2.HasPart("Combat"))
-                            {
-                                // AddPlayerMessage("slumberstarting for each 4");
-                                string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
-                                int num = ParentObject.StatMod("Ego");
-
-                                o2.pBrain.Goals.Clear();
-                                o2.pBrain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
-                                // AddPlayerMessage(o2.The + " flees in horror of " + Attacker.Its + " torrent of rage.");
-                            }
-                        }
+                        o2.pBrain.Goals.Clear();
+                        o2.pBrain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
+                        // AddPlayerMessage(o2.The + " flees in horror of " + Attacker.Its + " torrent of rage.");
                     }
+
                 }
             }
             else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("SlumberStance"))
