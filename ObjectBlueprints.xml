@@ -85,7 +85,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -114,7 +114,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -143,7 +143,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -172,7 +172,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -201,7 +201,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -230,7 +230,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace3" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -263,7 +263,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
@@ -294,7 +294,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
@@ -325,7 +325,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
@@ -356,7 +356,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
@@ -387,7 +387,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
@@ -418,7 +418,7 @@
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="BaseTierFace4" Number="1" />
+        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <tag Name="DynamicObjectsTable:Braver" />
