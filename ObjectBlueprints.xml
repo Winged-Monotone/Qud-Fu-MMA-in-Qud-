@@ -14,12 +14,15 @@
     </object>
 
     <object Name="CarbideFist" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
     <object Name="FulleriteFist" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
     <object Name="FungalInfection" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
 
@@ -34,7 +37,7 @@
         <part Name="Render" DisplayName="{{P|The Paths of the Contenders}}" ColorString="&amp;p" RenderString="=" RenderLayer="5" Tile="Items/sw_book2.bmp" TileColor="&amp;b" DetailColor="G" />
         <part Name="Description" Short="Naught but a few pages, a humble collection of waxed paper-sheets and leather-binding." />
         <part Name="Book" ID="MartialForms" />
-        <part Name="Commerce" Value="75" />
+        <part Name="Commerce" Value="15" />
     </object>
 
     <object Name="BaseBraver" Inherits="BaseHumanoid">
@@ -104,7 +107,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve. This one wear's a purple tinted bandanna" />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />

@@ -20,7 +20,7 @@
 
     <faction Name="BraversDawn" DisplayName="Bravers of The Dawning Fist" InitialPlayerReputation="0">
 
-        <partreputation About="Multiple Arms" Value="100" />
+        <partreputation About="MultipleArms" Value="100" />
         <waterritual Skill="WM_MMA_MasterStanceSwap" />
 
         <feeling About="Contenders" Value="-450" />

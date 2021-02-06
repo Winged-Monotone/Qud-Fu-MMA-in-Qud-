@@ -20,7 +20,7 @@
 
     <population Name="GenericFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="8" />
+            <object Blueprint="Bravers" Weight="2" />
             <object Blueprint="BraversDawnGlider" Weight="1" />
             <object Blueprint="BraversSaltHopper" Weight="1" />
             <object Blueprint="BraversAstralCabby" Weight="1" />
@@ -33,7 +33,7 @@
 
     <population Name="SafeFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="8" />
+            <object Blueprint="Bravers" Weight="4" />
         </group>
     </population>
 

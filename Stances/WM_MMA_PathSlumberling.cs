@@ -127,7 +127,7 @@ namespace XRL.World.Parts.Skill
                     {
                         var ForceQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
                         // AddPlayerMessage("slumberstarting for each 0");
-                        obj1.TakeDamage(Damage.Amount / 2);
+                        obj1.TakeDamage(Damage.Amount / 2, null, "Slumberling way's fury.");
                         foreach (var objForced in ForceQuery)
                         {
                             if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3)
