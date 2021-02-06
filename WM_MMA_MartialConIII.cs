@@ -45,7 +45,6 @@ namespace XRL.World.Parts.Skill
         {
             StatShifter.SetStatShift("AV", 3);
             StatShifter.SetStatShift("DV", 3);
-
             return true;
         }
 

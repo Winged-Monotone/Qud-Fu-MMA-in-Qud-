@@ -43,7 +43,7 @@ namespace XRL.World.Parts.Skill
         }
         public override bool AddSkill(GameObject GO)
         {
-
+            StatShifter.SetStatShift("Speed", 10);
             return true;
         }
 
