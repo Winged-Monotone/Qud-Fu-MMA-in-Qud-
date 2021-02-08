@@ -54,6 +54,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerAfterAttack");
             Object.RegisterPartEvent(this, "SlumberWitnessEvent");
+            Object.RegisterPartEvent(this, "SlumberCleaveEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "EndTurn");
             base.Register(Object);
@@ -102,6 +103,18 @@ namespace XRL.World.Parts.Skill
                 var Defender = E.GetGameObjectParameter("Defender");
                 var Weapon = E.GetGameObjectParameter("Weapon");
 
+                Event E2 = Event.New("SlumberCleaveEvent");
+                E2.SetParameter("Attacker", ParentObject);
+                E2.SetParameter("Defender", Defender);
+                E2.SetParameter("Damage", Damage);
+
+                ParentObject.FireEvent(E2);
+            }
+            else if (E.ID == "SlumberCleaveEvent" && ParentObject.HasEffect("SlumberStance"))
+            {
+                GameObject Attacker = E.GetGameObjectParameter("Attacker");
+                GameObject Defender = E.GetGameObjectParameter("Defender");
+                Damage Damage = E.GetParameter<Damage>("Damage");
 
                 // AddPlayerMessage("var check 1");
 
@@ -137,9 +150,7 @@ namespace XRL.World.Parts.Skill
                                 objForced.Push(KnockBack, 2500 * (AttackerLevels / 5));
                             }
                         }
-
                         var FlankersBody = obj1.Body.GetParts();
-
                         foreach (var ob in FlankersBody)
                         {
                             var SeveringQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
@@ -147,7 +158,7 @@ namespace XRL.World.Parts.Skill
                             // AddPlayerMessage("slumberstarting for each 1");
                             foreach (var objpart in SeveringQuery)
                             {
-                                if (Stat.Random(1, 100) <= 3 + AttackerLevels / 10)
+                                if (Stat.Random(1, 100) <= 2 + AttackerLevels / 10)
                                 {
                                     var SeveredPartsQuery = Flankers.Where(Obj => ob.IsRegenerable() || ob.IsSeverable() && ob.IsRecoverable() && ob.ParentBody != ParentObject.Body);
                                     foreach (var target in SeveredPartsQuery)
@@ -168,6 +179,12 @@ namespace XRL.World.Parts.Skill
                                             }
                                         }
                                     }
+
+                                    Event E3 = Event.New("SlumberCleaveEvent");
+                                    E3.SetParameter("Attacker", ParentObject);
+                                    E3.SetParameter("Defender", Defender);
+
+                                    ParentObject.FireEvent("SlumberCleaveEvent");
                                 }
                                 else
                                 {
@@ -178,7 +195,6 @@ namespace XRL.World.Parts.Skill
                     }
                 }
             }
-
             else if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))
             {
                 // AddPlayerMessage("slumberstarting for each 2");
