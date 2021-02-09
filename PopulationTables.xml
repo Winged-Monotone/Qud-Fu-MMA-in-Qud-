@@ -26,14 +26,12 @@
             <object Blueprint="BraversAstralCabby" Weight="1" />
             <object Blueprint="BraversSaltBack" Weight="1" />
             <object Blueprint="BraversSlumber" Weight="1" />
-
-            <object Blueprint="Contenders" Weight="1" />
         </group>
     </population>
 
     <population Name="SafeFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="4" />
+            <object Blueprint="Bravers" Weight="3" />
         </group>
     </population>
 

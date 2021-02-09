@@ -143,7 +143,7 @@ namespace XRL.World.Parts.Skill
                         obj1.TakeDamage(Damage.Amount / 2, null, "Slumberling way's fury.");
                         foreach (var objForced in ForceQuery)
                         {
-                            if (Stat.Random(1, 100) <= 10 + AttackerLevels / 3)
+                            if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
                             {
                                 // AddPlayerMessage("slumber pushing");
                                 string KnockBack = Directions.GetRandomDirection();
