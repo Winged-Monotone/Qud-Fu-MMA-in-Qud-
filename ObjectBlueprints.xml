@@ -26,6 +26,157 @@
         <tag Name="MMAHooks"></tag>
     </object>
 
+    <!-- OBJECTS - ITEMS -->
+
+    <!-- Dawnglider Way Stuff -->
+
+    <object Name="DawningFistTierHelmet1" Inherits="BaseHelmet">
+        <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="M" />
+        <part Name="Commerce" Value="100" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="1" />
+        <tag Name="Tier" Value="5" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="DawningFistTierHelmet2" Inherits="BaseHelmet">
+        <part Name="Armor" AV="1" DV="1" Heat="10" WornOn="Head" />
+        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;K" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="M" />
+        <part Name="Commerce" Value="500" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="1" />
+        <tag Name="Tier" Value="6" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="DawningFistTierArmor1" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="2" Heat="5" Cold="0" Acid="0" Elec="0" WornOn="Body" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Commerce" Value="200" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="5" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="DawningFistTierArmor2" Inherits="Armor">
+        <part Name="Armor" AV="1" DV="2" Heat="10" Cold="0" Acid="0" Elec="0" WornOn="Body" />
+        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} keikogi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Commerce" Value="550" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="7" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="DawningFistTierBracers1" Inherits="BaseGauntlet">
+        <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="M" />
+        <part Name="Commerce" Value="250" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="6" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <!-- Astral Way Stuff -->
+
+    <object Name="VoidClawTierArmor1" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="2" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keiko" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Commerce" Value="600" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="2" />
+        <tag Name="Tier" Value="5" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="VoidClawTierArmor2" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="3" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keiko" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Commerce" Value="550" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="7" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="VoidClawTierBoot1" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="1" WornOn="Feet" />
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} tabi" Tile="Items/sw_slippers.bmp" RenderString="]" ColorString="&amp;Y" DetailColor="W"/>
+        <part Name="Commerce" Value="250" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="1" />
+        <part Name="MoveCostMultiplier" Amount="-15" />
+        <tag Name="Tier" Value="4" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="Gender" Value="plural" />
+    </object>
+
+    <object Name="VoidClawTierBoot2" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="2" WornOn="Feet" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} tabi" Tile="Items/sw_slippers.bmp" RenderString="]" olorString="&amp;K" DetailColor="W" />
+        <part Name="Commerce" Value="600" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="1" />
+        <part Name="MoveCostMultiplier" Amount="-20" />
+        <tag Name="Tier" Value="4" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="Gender" Value="plural" />
+    </object>
+
+    <!-- salthop/Scythe-Strike Way Stuff -->
+
+    <object Name="ScytheStrikeTierBracers1" Inherits="BaseGauntlet">
+        <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
+        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="G" />
+        <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1d4" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
+        <part Name="Commerce" Value="350" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="6" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="ScytheStrikeTierBracers2" Inherits="BaseGauntlet">
+        <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
+        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;K" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="G" />
+        <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="1d8" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
+        <part Name="Commerce" Value="750" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="6" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+
+
+    <!-- Way Stuff -->
+
+    <object Name="WineGourd" Inherits="WaterContainer">
+        <part Name="LiquidVolume" MaxVolume="34" Volume="34" StartVolume="1d34-1" InitialLiquid="wine-1000" ManualSeal="true" />
+        <part Name="Render" DisplayName="{{M|wine}}-gourd" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <stat Name="Hitpoints" sValue="100" />
+        <intproperty Name="Inorganic" Value="0" />
+    </object>
+
+
+
+
+
     <!-- // snapjawpack1 - this is a cs part that is used to create the possy that follows snapjaw hero characters. note that this option will require scripting to modify for your own entities but it is rather simple. -->
     <!-- Hero's also require a cs script possibly? -->
 
@@ -78,7 +229,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve. The headband they wear is strikingly pale, a sign of a new initiate who has not perfected the contenders' ways." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve. The headband they wear is strikingly pale, a sign of a new initiate who has not perfected the contenders' ways."/>
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
@@ -114,10 +265,10 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="DawningFistTierArmor1" Number="1" />
+        <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
+        <inventoryobject Blueprint="DawningFistTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
     </object>
@@ -142,10 +293,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="VoidClawTierArmor1" Number="1" />
+        <inventoryobject Blueprint="VoidClawTierBoot1" Number="1"/>
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
     </object>
@@ -173,7 +323,7 @@
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
     </object>
@@ -201,7 +351,7 @@
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
     </object>
@@ -229,7 +379,7 @@
         <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
     </object>
@@ -261,7 +411,7 @@
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1d4" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -288,10 +438,10 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="DawningFistTierArmor2" Number="1" />
+        <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
+        <inventoryobject Blueprint="DawningFistTierHelmet2" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1d4" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -318,10 +468,9 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="VoidClawTierArmor1" Number="1" />
+        <inventoryobject Blueprint="VoidClawTierBoot1" Number="1"/>
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -351,7 +500,7 @@
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -381,7 +530,7 @@
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -411,7 +560,7 @@
         <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
         <inventoryobject Blueprint="BaseTierHead3_DV" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
-        <inventoryobject Blueprint="Waterskin" Number="1" />
+        <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
