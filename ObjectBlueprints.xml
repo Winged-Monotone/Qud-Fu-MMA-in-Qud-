@@ -54,7 +54,7 @@
 
     <object Name="DawningFistTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" Heat="5" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
         <part Name="Commerce" Value="200" />
         <part Name="Description" Short="[Awaiting Description]" />
         <part Name="Physics" Weight="3" />
@@ -65,7 +65,7 @@
 
     <object Name="DawningFistTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="1" DV="2" Heat="10" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} keikogi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
         <part Name="Commerce" Value="550" />
         <part Name="Description" Short="[Awaiting Description]" />
         <part Name="Physics" Weight="3" />
@@ -89,7 +89,7 @@
 
     <object Name="VoidClawTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keiko" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="600" />
         <part Name="Description" Short="[Awaiting Description]" />
         <part Name="Physics" Weight="2" />
@@ -100,7 +100,7 @@
 
     <object Name="VoidClawTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="0" DV="3" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keiko" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keikogi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="550" />
         <part Name="Description" Short="[Awaiting Description]" />
         <part Name="Physics" Weight="3" />
@@ -139,7 +139,7 @@
 
     <object Name="ScytheStrikeTierBracers1" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="G" />
+        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gaun_bladed.png" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1d4" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
         <part Name="Commerce" Value="350" />
         <part Name="Description" Short="[Awaiting Description]" />
@@ -151,7 +151,7 @@
 
     <object Name="ScytheStrikeTierBracers2" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;K" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="G" />
+        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="Items/sw_gaun_bladed.png" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="1d8" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
         <part Name="Commerce" Value="750" />
         <part Name="Description" Short="[Awaiting Description]" />
@@ -166,14 +166,44 @@
     <!-- Way Stuff -->
 
     <object Name="WineGourd" Inherits="WaterContainer">
-        <part Name="LiquidVolume" MaxVolume="34" Volume="34" StartVolume="1d34-1" InitialLiquid="wine-1000" ManualSeal="true" />
-        <part Name="Render" DisplayName="{{M|wine}}-gourd" />
+        <part Name="LiquidVolume" MaxVolume="34" Volume="34" StartVolume="1d34-1+5" InitialLiquid="wine-1000" ManualSeal="true" />
+        <part Name="Render" DisplayName="{{M|wine}}-gourd" Tile="Items/sw_gourd" DetailColor="w" TileColor="y"/>
         <part Name="Description" Short="[Awaiting Description]" />
         <stat Name="Hitpoints" sValue="100" />
+        <part Name="Physics" Weight="3" />
         <intproperty Name="Inorganic" Value="0" />
     </object>
 
+    <object Name="GiantWineGourd" Inherits="WaterContainer">
+        <part Name="LiquidVolume" MaxVolume="200" Volume="200" StartVolume="1d200+5" InitialLiquid="wine-1000" ManualSeal="true" />
+        <part Name="Render" DisplayName="giant {{M|wine}}-gourd" Tile="Items/sw_giantgourd.png" DetailColor="w" TileColor="y"/>
+        <part Name="Description" Short="[Awaiting Description]" />
+        <stat Name="Hitpoints" sValue="100" />
+        <part Name="Physics" Weight="40" />
+        <intproperty Name="Inorganic" Value="0" />
+    </object>
 
+    <object Name="ContenderTierHelmet1" Inherits="BaseHelmet">
+        <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
+        <part Name="Render" DisplayName="dashing bandanna" ColorString="&amp;w" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="Y" />
+        <part Name="Commerce" Value="100" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="1" />
+        <tag Name="Tier" Value="5" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
+
+    <object Name="ContenderTierArmor1" Inherits="Armor">
+        <part Name="Armor" AV="0" DV="2" Heat="5" Cold="0" Acid="0" Elec="0" WornOn="Body" />
+        <part Name="Render" DisplayName="martial keiko" ColorString="&amp;y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="w" />
+        <part Name="Commerce" Value="200" />
+        <part Name="Description" Short="[Awaiting Description]" />
+        <part Name="Physics" Weight="3" />
+        <tag Name="Tier" Value="5" />
+        <tag Name="Mods" Value="None" />
+        <tag Name="BaseObject" Value="*noinherit" />
+    </object>
 
 
 
@@ -237,8 +267,8 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="Waterskin" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
@@ -320,9 +350,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
+        <inventoryobject Blueprint="ScytheStrikeTierBracers1" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
         <part Name="AIShopper" />
@@ -348,8 +378,8 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
@@ -376,8 +406,8 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody3_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
@@ -408,10 +438,11 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1d4" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -442,6 +473,7 @@
         <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
         <inventoryobject Blueprint="DawningFistTierHelmet2" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1d4" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -471,6 +503,7 @@
         <inventoryobject Blueprint="VoidClawTierArmor1" Number="1" />
         <inventoryobject Blueprint="VoidClawTierBoot1" Number="1"/>
         <inventoryobject Blueprint="WineGourd" Number="1" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -497,10 +530,11 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
-        <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
+        <inventoryobject Blueprint="ScytheStrikeTierBracers2" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -527,10 +561,11 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
@@ -557,10 +592,11 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="BaseTierBody4_DV" Number="1" />
-        <inventoryobject Blueprint="BaseTierHead3_DV" />
+        <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
+        <inventoryobject Blueprint="ContenderTierArmor1" />
         <inventoryobject Blueprint="Smiling Sun Mask" Number="1" />
         <inventoryobject Blueprint="WineGourd" Number="1" />
+        <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
