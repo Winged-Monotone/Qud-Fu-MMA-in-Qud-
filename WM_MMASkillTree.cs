@@ -122,7 +122,7 @@ namespace XRL.World.Parts.Skill
 
         public void UpdateFistDamage(GameObject parent)
         {
-            Body body = parent.GetPart("Body") as Body;
+            Body body = parent.GetPart<Body>();
             List<BodyPart> hands = body.GetPart("Hand");
 
             foreach (BodyPart hand in hands)

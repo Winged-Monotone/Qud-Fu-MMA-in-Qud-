@@ -42,26 +42,33 @@ namespace XRL.World.Parts.Skill
 
         public void UpdateCounter()
         {
-            var AA = MyActivatedAbility(this.ComboCounterID);
-            if (AA != null && CurrentComboICounter <= MaximumComboICounter * 0.2)
+            if (IsPlayer())
             {
-                AA.DisplayName = "{{white|Combo x(" + (CurrentComboICounter) + ")}}";
+                var AA = MyActivatedAbility(this.ComboCounterID);
+                if (AA != null && CurrentComboICounter <= MaximumComboICounter * 0.2)
+                {
+                    AA.DisplayName = "{{white|Combo x(" + (CurrentComboICounter) + ")}}";
+                }
+                else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.8)
+                {
+                    AA.DisplayName = "{{purple|Combo x(" + (CurrentComboICounter) + ")}}";
+                }
+                else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.6)
+                {
+                    AA.DisplayName = "{{red|Combo x(" + (CurrentComboICounter) + ")}}";
+                }
+                else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.4)
+                {
+                    AA.DisplayName = "{{orange|Combo x(" + (CurrentComboICounter) + ")}}";
+                }
+                else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.2)
+                {
+                    AA.DisplayName = "{{yellow|Combo x(" + (CurrentComboICounter) + ")}}";
+                }
             }
-            else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.8)
+            else
             {
-                AA.DisplayName = "{{purple|Combo x(" + (CurrentComboICounter) + ")}}";
-            }
-            else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.6)
-            {
-                AA.DisplayName = "{{red|Combo x(" + (CurrentComboICounter) + ")}}";
-            }
-            else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.4)
-            {
-                AA.DisplayName = "{{orange|Combo x(" + (CurrentComboICounter) + ")}}";
-            }
-            else if (AA != null && CurrentComboICounter >= MaximumComboICounter * 0.2)
-            {
-                AA.DisplayName = "{{yellow|Combo x(" + (CurrentComboICounter) + ")}}";
+
             }
         }
 

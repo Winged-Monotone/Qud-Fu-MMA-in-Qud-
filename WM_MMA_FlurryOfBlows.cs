@@ -43,7 +43,7 @@ namespace XRL.World.Parts.Skill
                             BodyPart bodyPart = E.GetParameter("BodyPart") as BodyPart;
                             if (bodyPart == null || bodyPart.Category != 6)
                             {
-                                E.SetParameter("Chance", E.GetIntParameter("Chance") + (5 + ParentsAgility) + (5 * (ParentsLevel / 4)));
+                                E.SetParameter("Chance", E.GetIntParameter("Chance") + (1 + ParentsAgility) + (1 * (ParentsLevel / 4)));
                             }
                         }
                     }
