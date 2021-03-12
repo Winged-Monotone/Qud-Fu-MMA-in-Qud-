@@ -43,6 +43,7 @@ namespace XRL.World.Parts
             {
                 // AddPlayerMessage("Drunken");
                 ParentObject.ApplyEffect(new Drunken(25 + (10 * ParentObject.Statistics["Level"].BaseValue / 5)));
+
             }
 
             return base.FireEvent(E);
