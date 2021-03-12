@@ -5,6 +5,7 @@
         <part Name="Render" DisplayName="conditioned fist" />
         <part Name="MartialConditioningFistMod"></part>
         <part Name="MeleeWeapon" MaxStrengthBonus="1000" BaseDamage="1d2-1" Skill="Cudgel" Stat="Strength" />
+        <tag Name="TinkerCategory" Value="melee weapons" />
         <tag Name="BaseObject" Value="*noinherit" />
     </object>
 
@@ -274,7 +275,7 @@
     <!-- <object Name="BaseTester" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" />
         <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
-        <part Name="AutumnEntropyParticleOnCreate" />
+      
         <part Name="JapaneseNameConstructor" />
 
     </object> -->
