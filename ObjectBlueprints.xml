@@ -468,7 +468,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.posessive= whole form, painted scarlet. It has a distinctly fresh almost flawless appearance, missing any show of true combat experience." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.possessive= whole form, painted scarlet. It has a distinctly fresh almost flawless appearance, missing any show of true combat experience." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
