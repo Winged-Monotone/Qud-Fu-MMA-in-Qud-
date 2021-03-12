@@ -11,8 +11,7 @@ using XRL.World.Parts.Mutation;
 using XRL.World.Parts.Skill;
 
 using MutationPart = XRL.World.Parts.Mutation.FlamingHands;
-
-
+using HistoryKit;
 
 namespace XRL.World.Effects
 {
@@ -45,6 +44,20 @@ namespace XRL.World.Effects
             }
 
             return base.Apply(Object);
+        }
+
+        public override void Remove(GameObject Object)
+        {
+            if (Object.HasEffect("Omniphase"))
+            {
+                Object.RemoveEffect("Omniphase");
+            }
+            if (Object.HasEffect("Rubbergum_Tonic"))
+            {
+                Object.RemoveEffect("Rubbergum_Tonic");
+            }
+
+            StatShifter.RemoveStatShifts();
         }
 
 
@@ -97,7 +110,8 @@ namespace XRL.World.Effects
                     if (Stat.Random(1, 100) <= 10)
                     {
                         Object.Firesplatter();
-                        AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}");
+                        if (IsPlayer())
+                        { AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}"); }
                         MutationPart.Cast(null, "5-" + 6 + (Object.Statistics["Level"].BaseValue));
                         if (!Object.HasEffect("Blaze_Tonic"))
                         {
@@ -125,14 +139,34 @@ namespace XRL.World.Effects
 
                     }
                 }
-                // else if (Object.HasEffect("SaltbackStance"))
-                // {
+                else if (Object.HasEffect("AstralTabbyStance"))
+                {
+                    if (!Object.HasEffect("Omniphase"))
+                    {
+                        AddPlayerMessage(Object.Its + " fists can now cross into the aether.");
+                        Object.ApplyEffect(new Omniphase(DURATION_INDEFINITE));
+                    }
+                }
+                else if (Object.HasEffect("SaltbackStance"))
+                {
+                    if (!Object.HasEffect("Rubbergum_Tonic"))
+                    {
+                        Object.ApplyEffect(new Rubbergum_Tonic(DURATION_INDEFINITE));
 
-                // }
-                // else if (Object.HasEffect("AstralTabbyStance"))
-                // {
+                        Rubbergum_Tonic RubberEffect = Object.GetEffect<Rubbergum_Tonic>();
 
-                // }
+                        var NewDescript = RubberEffect.GetDescription();
+                        NewDescript = "{{w|Shellskin}}";
+                        if (RubberEffect.Apply(Object))
+                        {
+                            var Penalty = (int)(Object.Statistics["MoveSpeed"].Value / 1.5);
+                            base.StatShifter.SetStatShift("MoveSpeed", Penalty);
+                        }
+
+                    }
+
+
+                }
 
             }
 
