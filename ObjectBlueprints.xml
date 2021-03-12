@@ -271,13 +271,13 @@
 
 
 
-    <object Name="BaseTester" Inherits="BaseHumanoid">
+    <!-- <object Name="BaseTester" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" />
         <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
-
+        <part Name="AutumnEntropyParticleOnCreate" />
         <part Name="JapaneseNameConstructor" />
 
-    </object>
+    </object> -->
 
 
 
@@ -468,7 +468,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.subjective= whole form, painted scarlet. It has a distinctly fresh almost flawless appearance, missing any show of true combat experience." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.posessive= whole form, painted scarlet. It has a distinctly fresh almost flawless appearance, missing any show of true combat experience." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
@@ -671,7 +671,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="30" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.subjective= whole form, painted scarlet. it is painted in swaths of maroon, a coating a gorish remnants, a sign this is a master of the Slumbering-Fist Way." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.possessive= whole form, painted scarlet. It is painted in swaths of maroon, a coating a gorish remnants, a sign this is a master of the Slumbering-Fist Way." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />

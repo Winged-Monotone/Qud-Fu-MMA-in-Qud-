@@ -12,6 +12,9 @@ using System.Text;
 using System.Collections.Specialized;
 using System.IO.Pipes;
 using JapaneseNameListWW;
+using System.IO;
+using System.Xml;
+using System.Runtime.CompilerServices;
 
 namespace XRL.World.Parts
 {
@@ -31,25 +34,60 @@ namespace XRL.World.Parts
         private string Exception = "NN̄ṈÑ'";
 
         private Dictionary<string, Dictionary<string, int>> JapanesePhonemAdjacency;
+        private Dictionary<string, Dictionary<string, int>> JapaneseSurnamePhonemAdjacency;
         public JapaneseNameConstructor()
         {
             JapanesePhonemAdjacency = new Dictionary<string, Dictionary<string, int>>();
+            JapaneseSurnamePhonemAdjacency = new Dictionary<string, Dictionary<string, int>>();
 
             AddPlayerMessage("PopulatingJapanesePhonems ...");
             // AddPlayerMessage("" + Char.ToUpper('ō'));
-            foreach (string name in JapaneseNameListWW.JapaneseNamelist.JAPANESE_NAMES)
+            foreach (string name in JapaneseNameListWW.JapaneseNamelist.JAPANESE_NAMES_FIRSTNAMES)
             {
                 PopulateJapanesePhonemAdjacency(name);
+            }
+            foreach (string name in JapaneseNameListWW.JapaneseNamelist.JAPANESE_NAMES_SURNAMES)
+            {
+                PopulateJapaneseSurnamePhonemAdjacency(name);
             }
 
             for (int i = 0; i < 30; i++)
             {
-                int Ran = Stat.Random(1, 7);
-                AddPlayerMessage(GenerateJapaneseName(Ran));
+                int Ran = Stat.Random(1, 4);
+                int SurRan = Stat.Random(1, 6);
+                AddPlayerMessage(GenerateJapaneseSurName(Ran) + " " + GenerateJapaneseName(SurRan));
             }
 
             AddPlayerMessage("Name Generation Complete ...");
 
+            AddPlayerMessage("Generating XML Names ...");
+            XMLConversion();
+            AddPlayerMessage("Generated XML Names ...");
+
+        }
+        public void XMLConversion()
+        {
+            var writer = XmlWriter.Create(
+                "JapaneseFirstName",
+            new XmlWriterSettings
+            {
+                Indent = true,
+                CloseOutput = true,
+                CheckCharacters = false,
+                IndentChars = "\t",
+                NewLineChars = Environment.NewLine
+            });
+            writer.WriteStartElement("Stuff");
+            foreach (var str in JapaneseNameListWW.JapaneseNamelist.JAPANESE_NAMES_FIRSTNAMES)
+            {
+                writer.WriteStartElement("Table");
+                writer.WriteAttributeString("Name", str);
+                writer.WriteEndElement();
+            }
+            writer.WriteFullEndElement();
+            writer.Flush();
+            writer.Close();
+            writer.Dispose();
         }
 
         private void PopulateJapanesePhonemAdjacency(string name)
@@ -86,6 +124,99 @@ namespace XRL.World.Parts
                     Adjacency[Phonems[i + 1]] = Occurrence + 1;
                 }
             }
+        }
+        private void PopulateJapaneseSurnamePhonemAdjacency(string surname)
+        {
+            List<string> Phonems = DecomposeName(surname);
+            if (Phonems != null)
+            {
+                for (int i = 0; i < Phonems.Count - 1; i++)
+                {
+                    Dictionary<string, int> Adjacency;
+
+                    // AddPlayerMessage("Before Get Adjacency");
+
+                    if (!JapaneseSurnamePhonemAdjacency.TryGetValue(Phonems[i], out Adjacency))
+                    {
+                        Adjacency = new Dictionary<string, int>();
+                        JapaneseSurnamePhonemAdjacency[Phonems[i]] = Adjacency;
+                    }
+
+                    // AddPlayerMessage("After get adjacency name ...");
+
+                    int Occurrence = 0;
+
+                    // AddPlayerMessage("Get Adjacency Values ...");
+
+                    if (Adjacency.TryGetValue(Phonems[i + 1], out Occurrence))
+                    {
+                        Adjacency[Phonems[i + 1]] = 0;
+                        Occurrence = 0;
+                    }
+
+                    // AddPlayerMessage("After get adjacency values ...");
+
+                    Adjacency[Phonems[i + 1]] = Occurrence + 1;
+                }
+            }
+        }
+        private string GenerateJapaneseSurName(int SoftLimit)
+        {
+            // AddPlayerMessage("Generating Name Begins ...");
+
+            string CurrentPhonem = "Start";
+            string name = "";
+            int counter = 0;
+
+            CurrentPhonem = PickNextPhonem(JapaneseSurnamePhonemAdjacency[CurrentPhonem]);
+            // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
+
+            while (CurrentPhonem != "End")
+            {
+                name += CurrentPhonem;
+                if (counter < SoftLimit || !JapaneseSurnamePhonemAdjacency[CurrentPhonem].ContainsKey("End"))
+                {
+                    CurrentPhonem = PickNextPhonem(JapaneseSurnamePhonemAdjacency[CurrentPhonem]);
+                    ++counter;
+                }
+                else
+                { CurrentPhonem = "End"; }
+                // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
+            }
+
+            // AddPlayerMessage("name " + name);
+
+
+            return name;
+        }
+        private string GenerateJapaneseName(int SoftLimit)
+        {
+            // AddPlayerMessage("Generating Name Begins ...");
+
+            string CurrentPhonem = "Start";
+            string name = "";
+            int counter = 0;
+
+            CurrentPhonem = PickNextPhonem(JapanesePhonemAdjacency[CurrentPhonem]);
+            // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
+
+            while (CurrentPhonem != "End")
+            {
+                name += CurrentPhonem;
+                if (counter < SoftLimit || !JapanesePhonemAdjacency[CurrentPhonem].ContainsKey("End"))
+                {
+                    CurrentPhonem = PickNextPhonem(JapanesePhonemAdjacency[CurrentPhonem]);
+                    ++counter;
+                }
+                else
+                { CurrentPhonem = "End"; }
+                // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
+            }
+
+            // AddPlayerMessage("name " + name);
+
+
+            return name;
         }
 
         private string PickNextPhonem(Dictionary<string, int> Adjacency)
@@ -130,37 +261,6 @@ namespace XRL.World.Parts
 
             return Phonems[index];
         }
-
-        private string GenerateJapaneseName(int SoftLimit)
-        {
-            // AddPlayerMessage("Generating Name Begins ...");
-
-            string CurrentPhonem = "Start";
-            string name = "";
-            int counter = 0;
-
-            CurrentPhonem = PickNextPhonem(JapanesePhonemAdjacency[CurrentPhonem]);
-            // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
-
-            while (CurrentPhonem != "End")
-            {
-                name += CurrentPhonem;
-                if (counter < SoftLimit || !JapanesePhonemAdjacency[CurrentPhonem].ContainsKey("End"))
-                {
-                    CurrentPhonem = PickNextPhonem(JapanesePhonemAdjacency[CurrentPhonem]);
-                    ++counter;
-                }
-                else
-                { CurrentPhonem = "End"; }
-                // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
-            }
-
-            // AddPlayerMessage("name " + name);
-
-
-            return name;
-        }
-
         private bool isException(char c)
         {
             return Exception.Contains(Char.ToUpper(c));
