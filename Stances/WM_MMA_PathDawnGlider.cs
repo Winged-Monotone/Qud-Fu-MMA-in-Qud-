@@ -42,7 +42,7 @@ namespace XRL.World.Parts.Skill
 
                     //Handles damage scaling.
 
-                    if (BonusSureStrike < 10)
+                    if (BonusSureStrike <= 10)
                     { ++BonusSureStrike; }
                     MMAComboAccess.UpdateCounter();
                 }
@@ -77,6 +77,21 @@ namespace XRL.World.Parts.Skill
                     }
             }
             else if (E.ID == "CommandSureStrikes" && ParentObject.HasEffect("DawnStance"))
+            {
+                try
+                {
+                    var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+
+                    MMAComboAccess.FistPenBonus = +BonusSureStrike;
+                    BonusSureStrike = 0;
+                    MMAComboAccess.UpdateCounter();
+                }
+                catch
+                {
+                    BonusSureStrike = 0;
+                }
+            }
+            else if (E.ID == "CommandSureStrikes")
             {
                 try
                 {
