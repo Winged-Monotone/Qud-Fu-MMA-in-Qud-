@@ -43,8 +43,8 @@ namespace XRL.World.Parts.Skill
         }
         public override bool AddSkill(GameObject GO)
         {
-            StatShifter.SetStatShift("AV", 3);
-            StatShifter.SetStatShift("DV", 3);
+            StatShifter.SetStatShift("AV", 2);
+            StatShifter.SetStatShift("DV", 1);
             return true;
         }
 

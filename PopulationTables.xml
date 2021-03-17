@@ -19,25 +19,30 @@
 
             <object Blueprint="GiantWineGourd" Number="1d2-1" />
             <table Name="#Junk 1" Number="1" />
-            <table Name="#Junk 2" Number="1" />
 
         </group>
     </population>
 
     <population Name="GenericFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="2" />
-            <object Blueprint="BraversDawnGlider" Weight="1" />
-            <object Blueprint="BraversSaltHopper" Weight="1" />
-            <object Blueprint="BraversAstralCabby" Weight="1" />
-            <object Blueprint="BraversSaltBack" Weight="1" />
-            <object Blueprint="BraversSlumber" Weight="1" />
+            <object Blueprint="Bravers" Weight="1" />
+            <object Blueprint="BraversDawnGlider" Weight="2" />
+            <object Blueprint="BraversSaltHopper" Weight="2" />
+            <object Blueprint="BraversAstralCabby" Weight="2" />
+            <object Blueprint="BraversSaltBack" Weight="2" />
+            <object Blueprint="BraversSlumber" Weight="2" />
         </group>
     </population>
 
     <population Name="SafeFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="3" />
+            <object Blueprint="Bravers" Weight="1" />
+            <object Blueprint="BraversDawnGlider" Weight="2" />
+            <object Blueprint="BraversSaltHopper" Weight="2" />
+            <object Blueprint="BraversAstralCabby" Weight="2" />
+            <object Blueprint="BraversSaltBack" Weight="2" />
+            <object Blueprint="BraversSlumber" Weight="2" />
+
         </group>
     </population>
 

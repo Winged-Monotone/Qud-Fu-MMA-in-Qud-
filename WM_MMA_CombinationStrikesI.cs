@@ -12,7 +12,7 @@ namespace XRL.World.Parts.Skill
     public class WM_MMA_CombinationStrikesI : BaseSkill
     {
         public int CurrentComboICounter = 0;
-        public int MaximumComboICounter = 20;
+        public int MaximumComboICounter = 30;
         public int ComboResetDuration;
         public int BufferDuration;
         public bool ComboBuffering;
@@ -122,6 +122,7 @@ namespace XRL.World.Parts.Skill
 
             List<BodyPart> hands = body.GetPart("Hand");
 
+
             foreach (BodyPart hand in hands)
             {
                 try
@@ -134,11 +135,11 @@ namespace XRL.World.Parts.Skill
                             {
                                 var FistDamage = E.Damage.Amount;
 
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
                             }
                             else if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.05) * E.Damage.Amount));
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
                             }
                         }
                     }
@@ -165,11 +166,11 @@ namespace XRL.World.Parts.Skill
                 var Defender = E.GetGameObjectParameter("Defender");
                 var DeezHands = E.GetGameObjectParameter("Weapon");
 
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultMartialFist")
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.HasPart("MartialConditioningFistMod"))
                 {
                     // AddPlayerMessage("Decrease ComboCounter");
                     if (CurrentComboICounter < 0)
-                        CurrentComboICounter = 0;
+                        --CurrentComboICounter;
                     UpdateCounter();
                 }
             }
@@ -193,7 +194,10 @@ namespace XRL.World.Parts.Skill
                 if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultMartialFist")
                 {
                     // AddPlayerMessage("Increase ComboCounter");
-                    ++CurrentComboICounter;
+
+                    if (CurrentComboICounter <= MaximumComboICounter)
+                        ++CurrentComboICounter;
+
                     if (ComboBuffering == false)
                     {
                         ComboBuffering = true;

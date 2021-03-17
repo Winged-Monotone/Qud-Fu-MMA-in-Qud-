@@ -110,7 +110,7 @@ namespace XRL.World.Parts.Skill
             {
                 int HitBonus = E.GetIntParameter("HitBonus");
 
-                HitBonus = +2;
+                HitBonus = +1;
             }
             if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathSaltBack"))
             {

@@ -90,7 +90,7 @@ namespace XRL.World.Parts.Skill
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                 var ParentAgi = ParentObject.StatMod("Agility");
 
-                SureStrike();
+                PlayersSurestrike();
 
                 AwardSureStrikes = ParentAgi;
                 var eAttacker = _ParentObject;
@@ -182,14 +182,19 @@ namespace XRL.World.Parts.Skill
         }
 
 
-        public void SureStrike()
+        public void PlayersSurestrike()
         {
-            // var TargetCell = ParentObject.PickDirection();
-
             TextConsole _TextConsole = UI.Look._TextConsole;
             ScreenBuffer Buffer = TextConsole.ScrapBuffer;
             Core.XRLCore.Core.RenderMapToBuffer(Buffer);
-            Cell cell = PickDirection();
+            var cell = PickDirection();
+
+            ThrowSureStrike(cell);
+        }
+
+        public void ThrowSureStrike(Cell cell)
+        {
+            // var TargetCell = ParentObject.PickDirection();
 
             var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
 

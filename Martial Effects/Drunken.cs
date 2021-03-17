@@ -112,7 +112,7 @@ namespace XRL.World.Effects
                         Object.Firesplatter();
                         if (IsPlayer())
                         { AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}"); }
-                        MutationPart.Cast(null, "5-" + 6 + (Object.Statistics["Level"].BaseValue));
+                        MutationPart.Cast(null, "5-" + ((Object.Statistics["Level"].BaseValue) / 2));
                         if (!Object.HasEffect("Blaze_Tonic"))
                         {
                             Object.ApplyEffect(new Blaze_Tonic());

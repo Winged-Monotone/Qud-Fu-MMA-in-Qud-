@@ -72,7 +72,7 @@ namespace XRL.World.Effects
             PlayWorldSound("swapstance", PitchVariance: 0f);
             DawnPulse(Object.CurrentCell);
 
-            StatShifter.SetStatShift("DV", 3);
+            StatShifter.SetStatShift("DV", 1);
             return true;
         }
 

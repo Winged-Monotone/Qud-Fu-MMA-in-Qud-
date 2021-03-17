@@ -27,9 +27,23 @@
         <tag Name="MMAHooks"></tag>
     </object>
 
+
+
+
+
+
+
+
     <!-- OBJECTS - ITEMS -->
 
     <!-- Dawnglider Way Stuff -->
+
+
+
+
+
+
+
 
     <object Name="DawningFistTierHelmet1" Inherits="BaseHelmet">
         <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
@@ -112,7 +126,7 @@
 
     <object Name="VoidClawTierBoot1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="1" WornOn="Feet" />
-        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} tabi" Tile="Items/sw_slippers.bmp" RenderString="]" ColorString="&amp;Y" DetailColor="W"/>
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} tabi" Tile="Items/sw_tabi.png" RenderString="]" ColorString="&amp;Y" DetailColor="W"/>
         <part Name="Commerce" Value="250" />
         <part Name="Description" Short="Sandle-like footwear sporting a shin-guard lined with leather and fur, it is held against the calf with lacquered witchwood wrappings, the sole is cushioned with comfortable cottons allowing for quieted movement." />
         <part Name="Physics" Weight="1" />
@@ -125,9 +139,9 @@
 
     <object Name="VoidClawTierBoot2" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" WornOn="Feet" />
-        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} tabi" Tile="Items/sw_slippers.bmp" RenderString="]" olorString="&amp;K" DetailColor="W" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} tabi" Tile="Items/sw_tabi.png" RenderString="]" ColorString="&amp;K" DetailColor="W" />
         <part Name="Commerce" Value="600" />
-        <part Name="Description" Short="Sandle-like footwear sporting a shin-guard lined with leather and fur, it is held against the calf with lacquered witchwood wrappings, puma teeth exude from its edges. The sole is cushioned with comfortable cottons allowing for quieted movement." />
+        <part Name="Description" Short="Sandle-like footwear sporting a shin-guard lined with leather and fur, it is held against the calf with lacquered witchwood wrappings, puma teeth exude from its edges and the sole is cushioned with comfortable cottons allowing for quieted movement." />
         <part Name="Physics" Weight="1" />
         <part Name="MoveCostMultiplier" Amount="-20" />
         <tag Name="Tier" Value="4" />
@@ -254,8 +268,23 @@
 
 
 
+
+
+
+
+
+
+
     <!-- // snapjawpack1 - this is a cs part that is used to create the possy that follows snapjaw hero characters. note that this option will require scripting to modify for your own entities but it is rather simple. -->
     <!-- Hero's also require a cs script possibly? -->
+
+
+
+
+
+
+
+
 
     <object Name="Doru" Inherits="DromadTrader_Village0" Load="Merge">
         <inventoryobject Blueprint="MartialForms" Number="1" />
@@ -272,6 +301,11 @@
 
 
 
+
+
+
+
+
     <!-- <object Name="BaseTester" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" />
         <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
@@ -283,8 +317,14 @@
 
 
 
+
+
+
+
+
+
     <object Name="BaseBraver" Inherits="BaseHumanoid">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="true"/>
         <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
@@ -292,14 +332,6 @@
         <tag Name="BaseObject" Value="*noinherit" />
         <tag Name="WaterRitualLiquid" Value="wine" />
         <part Name="Description" Short="The bravers seek only one thing, to perfect their martial forms and find struggles worth pushing through in order to harden their resolves. They make long journey's across Qud, and with each struggle, they mark their victory and earnestly await another." />
-        <tag Name="HeroNamePrefixAmount" Value="1" />
-        <tag Name="HeroNamePrefixes" Value="A,I,U,E,O,Ka,Ku,Ke,Ko,Kya,Kyu,Kyo,Sa,Shi,Se,So,Sya,Syu,Syo,Sha,Shu,Sho,Ta,Chi,Tsu,Tu,Te,To,Cha,Chu,Cho,Tya,Tyu,Tyo,Na,Ni,Nu,Ne,No,Nya,Nyu,Nyo,Ha,Hi,Fu,Hu,He,Ho,Hya,Hyu,Hyo,Ma,Mi,Mu,Me,Mo,Mya,Myu,Myo,Ya,Yu,Yo,Ra,Ri,Ru,Re,Ro,Tya,Ryu,Ryo,Wa,I,E,O,N,Ga,Gi,Gu,Ge,Go,Gya,Gyu,Gyo,Za,Zi,Zu,Ze,Zo,Zya,Zyu,Zyo,Da,Ji,Di,Zi,Zu,Du,Zu,De,Do,Ja,Dya,Zya,Ju,Dyu,Zyu,Jo,Dyo,Zyo,Ba,Bi,Bu,Be,Bo,Bya,Byu,Byo,Pa,Pi,Pu,Pe,Po,Pya,Pyu,Pyo,Vu," />
-        <tag Name="HeroNameInfixAmount" Value="0-2" />
-        <tag Name="HeroNameInfixes" Value="a,i,u,e,o,ka,ku,ke,ko,kya,kyu,kyo,sa,shi,se,so,sya,syu,syo,sha,shu,sho,ta,chi,tsu,tu,te,to,cha,chu,cho,tya,tyu,tyo,na,ni,nu,ne,no,nya,nyu,nyo,ha,hi,fu,hu,he,ho,hya,hyu,hyo,ma,mi,mu,me,mo,mya,myu,myo,ya,yu,yo,ra,ri,ru,re,ro,tya,ryu,ryo,wa,i,e,o,nn,n,ga,gi,gu,ge,go,gya,gyu,gyo,za,zi,zu,ze,zo,zya,zyu,zyo,da,ji,di,zi,zu,du,zu,de,do,ja,dya,zya,ju,dyu,zyu,jo,dyo,zyo,ba,bi,bu,be,bo,bya,byu,byo,pa,pi,pu,pe,po,pya,pyu,pyo,vu," />
-        <tag Name="HeroNamePostfixes" Value="a,i,u,e,o,ka,ku,ke,ko,kya,kyu,kyo,sa,shi,se,so,sya,syu,syo,sha,shu,sho,ta,chi,tsu,tu,te,to,cha,chu,cho,tya,tyu,tyo,na,ni,nu,ne,no,nya,nyu,nyo,ha,hi,fu,hu,he,ho,hya,hyu,hyo,ma,mi,mu,me,mo,mya,myu,myo,ya,yu,yo,ra,ri,ru,re,ro,tya,ryu,ryo,wa,i,e,o,n-n,n,ga,gi,gu,ge,go,gya,gyu,gyo,za,zi,zu,ze,zo,zya,zyu,zyo,da,ji,di,zi,zu,du,zu,de,do,ja,dya,zya,ju,dyu,zyu,jo,dyo,zyo,ba,bi,bu,be,bo,bya,byu,byo,pa,pi,pu,pe,po,pya,pyu,pyo,vu," />
-        <tag Name="HeroNamePostfixAmount" Value="0-1" />
-        <tag Name="HeroTwoNameChance" Value="100" />
-        <tag Name="HeroNameHyphenationChance" Value="0" />
         <property Name="HeroNameTitleWiseDescriptor" Value="Master,Sage,Fist-Worthy,Foot-Worthy,Great,Elder" />
         <property Name="HeroNameTitleMayorSyn" Value="master,historic braver,elder braver" />
         <property Name="HeroNameTitleMayorSynCap" Value="Legendary Master,Historic Braver,Elder Braver" />
@@ -320,7 +352,7 @@
 
     <object Name="BraverDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender_flipped.png" RenderString="m" ColorString="&amp;y" DetailColor="C" />
+        <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender_flipped.png" ColorString="&amp;Y" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -347,8 +379,8 @@
     </object>
 
     <object Name="BraverDawnDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversDawn-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="M" ColorString="&amp;y" DetailColor="M" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversDawn-100" />
+        <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="creatures/ryu_dawn_disc.png" ColorString="&amp;m" DetailColor="K" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -375,8 +407,8 @@
     </object>
 
     <object Name="BraverAstralDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversAstralCabby-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="creatures/caste_contender_flipped.png" RenderString="B" ColorString="&amp;y" DetailColor="B" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversAstralCabby-100" />
+        <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="creatures/ryu_astral_master.png" ColorString="&amp;K" RenderString="K" DetailColor="b" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -402,8 +434,8 @@
     </object>
 
     <object Name="BraverSaltHopDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltHopper-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="creatures/caste_contender_flipped.png" RenderString="Y" ColorString="&amp;y" DetailColor="W" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltHopper-100" />
+        <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="creatures/ryu_salthop_disc.png" ColorString="&amp;w" RenderString="w" DetailColor="g" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -430,8 +462,8 @@
     </object>
 
     <object Name="BraverSaltBackDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltBack-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="creatures/caste_contender_flipped.png" RenderString="y" ColorString="&amp;y" DetailColor="w" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltBack-100" />
+        <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="creatures/ryu_saltback_disc.png" ColorString="&amp;y" RenderString="y" DetailColor="w" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -458,8 +490,8 @@
     </object>
 
     <object Name="BraverSlumberDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSlumber-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="R" ColorString="&amp;y" DetailColor="R" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSlumber-100" />
+        <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fury Way" Tile="creatures/ryu_slumber_disc.png" ColorString="&amp;Y" RenderString="R" DetailColor="r" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -507,8 +539,8 @@
 
 
     <object Name="BraverMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;K" DetailColor="C" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400" />
+        <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;Y" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -538,8 +570,8 @@
     </object>
 
     <object Name="BraverDawnMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversDawn-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="m" ColorString="&amp;K" DetailColor="m" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversDawn-400" />
+        <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/ryu_dawn_master.png" ColorString="&amp;m" RenderString="m" DetailColor="K" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -569,8 +601,8 @@
     </object>
 
     <object Name="BraverAstralMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversAstralCabby-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/caste_contender_flipped.png" RenderString="B" ColorString="&amp;K" DetailColor="B" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversAstralCabby-400" />
+        <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/ryu_astral_Disc.png" ColorString="&amp;b" RenderString="B" DetailColor="K" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -591,16 +623,16 @@
         <skill Name="WM_MMA_CombinationStrikesIII" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
-        <inventoryobject Blueprint="VoidClawTierArmor1" Number="1" />
-        <inventoryobject Blueprint="VoidClawTierBoot1" Number="1"/>
+        <inventoryobject Blueprint="VoidClawTierArmor2" Number="1" />
+        <inventoryobject Blueprint="VoidClawTierBoot2" Number="1"/>
         <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
     </object>
 
     <object Name="BraverSaltHopMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltHopper-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/caste_contender_flipped.png" RenderString="W" ColorString="&amp;K" DetailColor="G" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltHopper-400" />
+        <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/ryu_salthop_master.png" ColorString="&amp;K" RenderString="K" DetailColor="g" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -630,8 +662,8 @@
     </object>
 
     <object Name="BraverSaltBackMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltBack-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/caste_contender_flipped.png" RenderString="B" ColorString="&amp;K" DetailColor="w" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltBack-400" />
+        <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/ryu_saltback_master.png" ColorString="&amp;K" RenderString="K" DetailColor="w" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -661,8 +693,8 @@
     </object>
 
     <object Name="BraverSlumberMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSlumber-400" Wanders="false" />
-        <part Name="Render" DisplayName="braver-master of Slumbering-Fist Way" Tile="creatures/caste_contender_flipped.png" RenderString="R" ColorString="&amp;K" DetailColor="r" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSlumber-400" />
+        <part Name="Render" DisplayName="braver-master of Slumbering-Fury Ryu" Tile="creatures/ryu_slumber_master.png" ColorString="&amp;K" RenderString="K" DetailColor="r" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -672,7 +704,7 @@
         <stat Name="Hitpoints" Value="23" />
         <stat Name="Level" Value="30" />
         <stat Name="AV" Value="3" />
-        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.possessive= whole form, painted scarlet. It is painted in swaths of maroon, a coating a gorish remnants, a sign this is a master of the Slumbering-Fist Way." />
+        <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.possessive= whole form, painted scarlet. It is painted in swaths of maroon, a coating a gorish remnants, a sign this is a master of the Slumbering-Fury Way." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
         <skill Name="WM_MMA_MartialConII" />
@@ -713,6 +745,8 @@
     <object Name="Braver Hero" Inherits="BraverMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
@@ -722,6 +756,8 @@
     <object Name="Braver Hero Dawn" Inherits="BraverDawnMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
@@ -731,6 +767,8 @@
     <object Name="Braver Hero Astral" Inherits="BraverAstralMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
@@ -740,6 +778,8 @@
     <object Name="Braver Hero SaltHop" Inherits="BraverSaltHopMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
@@ -749,6 +789,8 @@
     <object Name="Braver Hero SaltBack" Inherits="BraverSaltBackMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
@@ -758,6 +800,8 @@
     <object Name="Braver Hero Slumber" Inherits="BraverSlumberMaster">
         <part Name="Render" ColorString="&amp;M" />
         <stat Name="Hitpoints" Value="25" />
+        <part Name="JapaneseNameConstructor" />
+        <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
