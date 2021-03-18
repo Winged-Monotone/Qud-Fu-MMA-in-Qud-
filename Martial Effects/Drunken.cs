@@ -10,7 +10,9 @@ using System.Linq;
 using XRL.World.Parts.Mutation;
 using XRL.World.Parts.Skill;
 
-using MutationPart = XRL.World.Parts.Mutation.FlamingHands;
+using FlamingHandsMutationPart = XRL.World.Parts.Mutation.FlamingHands;
+using MMA_ComboStrikeI = XRL.World.Parts.Skill.WM_MMA_CombinationStrikesI;
+
 using HistoryKit;
 
 namespace XRL.World.Effects
@@ -109,10 +111,13 @@ namespace XRL.World.Effects
 
                     if (Stat.Random(1, 100) <= 10)
                     {
+                        var ComboSystem = Object.GetPart<WM_MMA_CombinationStrikesI>();
+
                         Object.Firesplatter();
                         if (IsPlayer())
                         { AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}"); }
-                        MutationPart.Cast(null, "5-" + ((Object.Statistics["Level"].BaseValue) / 2));
+                        FlamingHandsMutationPart.Cast(null, "5-" + ((Object.Statistics["Level"].BaseValue) / 2 + ComboSystem.CurrentComboICounter));
+
                         if (!Object.HasEffect("Blaze_Tonic"))
                         {
                             Object.ApplyEffect(new Blaze_Tonic());
@@ -123,7 +128,7 @@ namespace XRL.World.Effects
                 {
                     if (Object.HasEffect<Asleep>())
                     {
-                        Object.Heal(Object.Statistics["Toughness"].Modifier);
+                        Object.Heal(+Object.Statistics["Toughness"].Modifier);
                     }
                 }
                 else if (Object.HasEffect("SaltHopperStance"))

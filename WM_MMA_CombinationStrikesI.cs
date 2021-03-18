@@ -72,7 +72,6 @@ namespace XRL.World.Parts.Skill
             }
         }
 
-
         public override bool WantEvent(int ID, int cascade)
         {
             return base.WantEvent(ID, cascade)
@@ -122,33 +121,33 @@ namespace XRL.World.Parts.Skill
 
             List<BodyPart> hands = body.GetPart("Hand");
 
-
-            foreach (BodyPart hand in hands)
-            {
-                try
+            if (E.Weapon.HasPart("MartialConditioningFistMod") && E.Source == ParentObject)
+                foreach (BodyPart hand in hands)
                 {
-                    if (!hand.Name.Contains("Robo-") && hand.DefaultBehavior != null && hand.DefaultBehavior.HasPart("MartialConditioningFistMod"))
+                    try
                     {
-                        if (hand == null || hand.Category != 6)
+                        if (!hand.Name.Contains("Robo-") && hand.DefaultBehavior != null && hand.DefaultBehavior.HasPart("MartialConditioningFistMod"))
                         {
-                            if (Parent && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                            if (hand == null || hand.Category != 6)
                             {
-                                var FistDamage = E.Damage.Amount;
+                                if (Parent && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                                {
+                                    var FistDamage = E.Damage.Amount;
 
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
-                            }
-                            else if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
-                            {
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
+                                }
+                                else if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                                {
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
+                                }
                             }
                         }
                     }
+                    catch
+                    {
+                        return base.HandleEvent(E);
+                    }
                 }
-                catch
-                {
-                    return base.HandleEvent(E);
-                }
-            }
 
             return base.HandleEvent(E);
         }
