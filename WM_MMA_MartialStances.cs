@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using XRL.World.Effects;
+
 using System.Text;
 using XRL.World;
 using XRL.World.Parts.Mutation;
 using XRL.Rules;
-using System.Linq;
-using XRL.World.Effects;
+
 using XRL.Language;
 using XRL.World.Capabilities;
 using UnityEngine;
@@ -80,6 +82,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "SaltBackStanceCommand");
             Object.RegisterPartEvent(this, "SlumberlingStanceCommand");
             Object.RegisterPartEvent(this, "SaltHopperStanceCommand");
+            Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
 
             base.Register(Object);
         }
@@ -146,6 +149,31 @@ namespace XRL.World.Parts.Skill
                 StanceReplacement();
                 ParentObject.ApplyEffect(new SaltHopperStance(Effect.DURATION_INDEFINITE));
                 NoviceStancer();
+            }
+            else if (E.ID == "AIGetOffensiveMutationList")
+            {
+                WM_MMA_MartialStances GetStances = ParentObject.GetPart<WM_MMA_MartialStances>();
+
+                if (IsMyActivatedAbilityToggledOn(AstralTabbyStanceID, ParentObject) == false && !ParentObject.HasEffect("AstralTabbyStance"))
+                {
+                    E.AddAICommand("AstralTabbyStanceCommand");
+                }
+                else if (IsMyActivatedAbilityToggledOn(DawnStanceID, ParentObject) == false && !ParentObject.HasEffect("DawnStance"))
+                {
+                    E.AddAICommand("DawngliderStanceCommand");
+                }
+                else if (IsMyActivatedAbilityToggledOn(SlumberStanceID, ParentObject) == false && !ParentObject.HasEffect("SlumberStance"))
+                {
+                    E.AddAICommand("SlumberlingStanceCommand");
+                }
+                else if (IsMyActivatedAbilityToggledOn(SaltHopperStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltHopperStance"))
+                {
+                    E.AddAICommand("SaltHopperStanceCommand");
+                }
+                else if (IsMyActivatedAbilityToggledOn(SaltBackStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltbackStance"))
+                {
+                    E.AddAICommand("SaltBackStanceCommand");
+                }
             }
 
             return base.FireEvent(E);

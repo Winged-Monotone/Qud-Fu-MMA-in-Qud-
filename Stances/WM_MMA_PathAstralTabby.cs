@@ -4,6 +4,7 @@ using System.Text;
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
+using XRL.World.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -38,8 +39,8 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerMeleeMiss");
             Object.RegisterPartEvent(this, "BeginTakeAction");
-            Object.RegisterPartEvent(this, "EndTurn");
-            Object.RegisterPartEvent(this, "TargetedForMissileWeapon");
+            Object.RegisterPartEvent(this, "AstralTabbyStanceCommand");
+            Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
 
             base.Register(Object);
         }

@@ -121,7 +121,7 @@ namespace XRL.World.Parts.Skill
 
             List<BodyPart> hands = body.GetPart("Hand");
 
-            if (E.Weapon.HasPart("MartialConditioningFistMod") && E.Source == ParentObject)
+            if (E.Weapon.HasPart("MartialConditioningFistMod") && E.Actor == ParentObject)
                 foreach (BodyPart hand in hands)
                 {
                     try

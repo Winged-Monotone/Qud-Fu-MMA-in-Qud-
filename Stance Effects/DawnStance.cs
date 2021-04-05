@@ -48,6 +48,7 @@ namespace XRL.World.Effects
             go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
             base.Unregister(Object);
         }
+
         public void DawnPulse(Cell cell)
         {
             for (int i = 0; i < 4; i++)

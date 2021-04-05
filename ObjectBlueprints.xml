@@ -397,6 +397,8 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathDawnGlider" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="DawningFistTierArmor1" Number="1" />
         <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
@@ -425,6 +427,8 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathAstralTabby" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="VoidClawTierArmor1" Number="1" />
         <inventoryobject Blueprint="VoidClawTierBoot1" Number="1"/>
@@ -452,6 +456,8 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSaltHopper" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="ContenderTierArmor1" />
@@ -480,6 +486,8 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSaltBack" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="AmethystShellTierArmor1" />
@@ -508,6 +516,8 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSlumberling" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="SlumberFistTierArmor1" />
@@ -590,6 +600,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
+        <skill Name="WM_MMA_MasterStanceSwap"/>
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathDawnGlider" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="DawningFistTierArmor2" Number="1" />
@@ -621,6 +634,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
+        <skill Name="WM_MMA_MasterStanceSwap"/>
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathAstralTabby" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="VoidClawTierArmor2" Number="1" />
@@ -651,6 +667,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
+        <skill Name="WM_MMA_MasterStanceSwap"/>
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSaltHopper" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
@@ -682,6 +701,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
+        <skill Name="WM_MMA_MasterStanceSwap"/>
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSaltBack" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
@@ -713,6 +735,9 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
+        <skill Name="WM_MMA_MasterStanceSwap"/>
+        <skill Name="WM_MMA_MartialStances" />
+        <skill Name="WM_MMA_PathSlumberling" />
         <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />

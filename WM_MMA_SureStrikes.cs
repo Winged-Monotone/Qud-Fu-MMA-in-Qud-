@@ -52,7 +52,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "ChainingSureStrikes");
             Object.RegisterPartEvent(this, "AttackerGetWeaponPenModifier");
             Object.RegisterPartEvent(this, "FailedChainingSureStrikes");
-            Object.RegisterPartEvent(this, "GetWeaponPenModifier");
+            Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
             Object.RegisterPartEvent(this, "EndTurn");
         }
 
@@ -81,7 +81,13 @@ namespace XRL.World.Parts.Skill
 
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "CommandSureStrikes")
+            if (E.ID == "AIGetOffensiveMutationList")
+            {
+                if (IsMyActivatedAbilityAIUsable(SureStrikesActivatedAbilityID, ParentObject))
+                { E.AddAICommand("CommandSureStrikes"); }
+
+            }
+            else if (E.ID == "CommandSureStrikes")
             {
                 // AddPlayerMessage("Firing Sure strike commandsurestrikes");
 
@@ -90,7 +96,8 @@ namespace XRL.World.Parts.Skill
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                 var ParentAgi = ParentObject.StatMod("Agility");
 
-                PlayersSurestrike();
+                if (IsPlayer())
+                    PlayersSurestrike();
 
                 AwardSureStrikes = ParentAgi;
                 var eAttacker = _ParentObject;
@@ -106,14 +113,16 @@ namespace XRL.World.Parts.Skill
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
-                UpdateCounter();
+                if (IsPlayer())
+                { UpdateCounter(); }
             }
-            if (E.ID == "FailedChainingSureStrikes")
+            else if (E.ID == "FailedChainingSureStrikes")
             {
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                 var eAttacker = _ParentObject;
 
-                UpdateCounter();
+                if (IsPlayer())
+                    UpdateCounter();
 
                 if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
                 {
@@ -121,9 +130,10 @@ namespace XRL.World.Parts.Skill
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
-                UpdateCounter();
+                if (IsPlayer())
+                    UpdateCounter();
             }
-            if (E.ID == "ChainingSureStrikes")
+            else if (E.ID == "ChainingSureStrikes")
             {
                 // AddPlayerMessage("Chaining strike fires");
 
@@ -140,11 +150,13 @@ namespace XRL.World.Parts.Skill
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
-                UpdateCounter();
+                if (IsPlayer())
+                    UpdateCounter();
             }
-            if (E.ID == "EndTurn")
+            else if (E.ID == "EndTurn")
             {
-                UpdateCounter();
+                if (IsPlayer())
+                    UpdateCounter();
             }
             return base.FireEvent(E);
         }
@@ -178,9 +190,9 @@ namespace XRL.World.Parts.Skill
             var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
             ChainFuntion();
-            UpdateCounter();
+            if (IsPlayer())
+                UpdateCounter();
         }
-
 
         public void PlayersSurestrike()
         {
@@ -226,7 +238,7 @@ namespace XRL.World.Parts.Skill
             var FistPenBonus = PrimaryWeaponTraits.PenBonus;
 
             EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
-            EventHook.SetParameter("PenBonus", FistPenBonus * 2);
+            EventHook.SetParameter("PenBonus", FistPenBonus + 20);
             EventHook.SetParameter("Attacker", ParentObject);
             EventHook.SetParameter("TargetCell", cell);
             EventHook.SetParameter("Defender", Target);

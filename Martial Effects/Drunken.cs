@@ -62,7 +62,6 @@ namespace XRL.World.Effects
             StatShifter.RemoveStatShifts();
         }
 
-
         public List<string> SpecialStance = new List<string>()
         {
             "SlumberStance",
@@ -80,7 +79,6 @@ namespace XRL.World.Effects
         }
         public override void Register(GameObject Object)
         {
-
             Object.RegisterEffectEvent(this, "BeginTakeAction");
             Object.RegisterEffectEvent(this, "CanChangeBodyPosition");
             Object.RegisterEffectEvent(this, "CanChangeMovementMod");
@@ -91,13 +89,30 @@ namespace XRL.World.Effects
 
         public override void Unregister(GameObject Object)
         {
-
             Object.UnregisterEffectEvent(this, "BeginTakeAction");
             Object.UnregisterEffectEvent(this, "CanChangeBodyPosition");
             Object.UnregisterEffectEvent(this, "CanChangeMovementMod");
             Object.UnregisterEffectEvent(this, "CanMoveExtremities");
             Object.UnregisterEffectEvent(this, "IsMobile");
             base.Unregister(Object);
+        }
+
+        public override bool HandleEvent(AttackerDealingDamageEvent E)
+        {
+            var Parent = E.Actor;
+            var Target = E.Object;
+            var eDamage = E.Damage;
+
+            var ParentsLevel = Parent.Statistics["Level"].BaseValue;
+
+            if (Parent.HasPart("MartialBody") && Parent == Object && Parent.HasEffect("DawnStance") && eDamage.HasAttribute("Fire"))
+            {
+                var ComboSystem = Object.GetPart<WM_MMA_CombinationStrikesI>();
+
+                eDamage.Amount = (int)Math.Round(eDamage.Amount + ((ComboSystem.CurrentComboICounter * 0.025) * E.Damage.Amount));
+            }
+
+            return base.HandleEvent(E);
         }
 
         public override bool FireEvent(Event E)
@@ -114,9 +129,14 @@ namespace XRL.World.Effects
                         var ComboSystem = Object.GetPart<WM_MMA_CombinationStrikesI>();
 
                         Object.Firesplatter();
-                        if (IsPlayer())
+
+
+                        if (FlamingHandsMutationPart.Cast(null, ((Object.Statistics["Level"].BaseValue) / 2 + "-" + ((Object.Statistics["Level"].BaseValue) / 2 + ComboSystem.CurrentComboICounter))))
                         { AddPlayerMessage("{{orange|You belch a great stream of searing flames at your foe.}}"); }
-                        FlamingHandsMutationPart.Cast(null, "5-" + ((Object.Statistics["Level"].BaseValue) / 2 + ComboSystem.CurrentComboICounter));
+                        else
+                        {
+                            return base.FireEvent(E);
+                        }
 
                         if (!Object.HasEffect("Blaze_Tonic"))
                         {

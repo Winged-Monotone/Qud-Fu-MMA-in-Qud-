@@ -30,8 +30,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "An enemies' strike has rendered your thoughtflow weakened."
-            + "- ";
+            return "An enemies' strike has rendered your thoughtflow weakened.";
         }
 
         public override bool Apply(GameObject Object)
