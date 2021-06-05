@@ -8,7 +8,7 @@ using XRL.Language;
 using XRL.Messages;
 using ConsoleLib.Console;
 using UnityEngine;
-
+using XRL.World.Effects;
 
 namespace XRL.World.Parts.Skill
 {
@@ -75,8 +75,6 @@ namespace XRL.World.Parts.Skill
                 --AwardSureStrikes;
                 Attacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
             }
-
-
         }
 
         public override bool FireEvent(Event E)
@@ -93,11 +91,20 @@ namespace XRL.World.Parts.Skill
 
                 AwardSureStrikes = 0;
 
+
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
                 var ParentAgi = ParentObject.StatMod("Agility");
 
-                if (IsPlayer())
+                if (ParentObject.HasPart("WM_MMA_PathDawnGlider") && IsPlayer())
+                {
+                    var MMAComboPathDawnAccess = ParentObject.GetPart<WM_MMA_PathDawnGlider>();
                     PlayersSurestrike();
+                    MMAComboPathDawnAccess.BonusSureStrike = 0;
+                    UpdateCounter();
+                }
+                else if (IsPlayer())
+                    PlayersSurestrike();
+
 
                 AwardSureStrikes = ParentAgi;
                 var eAttacker = _ParentObject;

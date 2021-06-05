@@ -33,11 +33,12 @@ namespace XRL.World.Parts.Skill
             return true;
         }
 
+
         public override void Register(GameObject Object)
         {
             Object.RegisterPartEvent(this, "AttackerCriticalHit");
             Object.RegisterPartEvent(this, "AttackerHit");
-            Object.RegisterPartEvent(this, "AttackerMeleeMiss");
+            Object.RegisterPartEvent(this, "DefenderAfterAttackMissed");
             Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "AstralTabbyStanceCommand");
             Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
@@ -45,18 +46,35 @@ namespace XRL.World.Parts.Skill
             base.Register(Object);
         }
 
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return base.WantEvent(ID, cascade)
+            || ID == GetDefenderHitDiceEvent.ID;
+        }
+        public override bool HandleEvent(AttackerDealingDamageEvent E)
+        {
+            if (E.Actor == ParentObject && ParentObject.HasEffect("AstralTabbyStance"))
+            { E.Damage.Amount = (E.Damage.Amount / 2); }
+
+            return base.HandleEvent(E);
+        }
+
         public override bool FireEvent(Event E)
         {
-            if (E.ID == "AttackerMeleeMiss" && ParentObject.HasEffect("AstralTabbyStance"))
+            if (E.ID == "DefenderAfterAttackMissed" && ParentObject.HasEffect("AstralTabbyStance"))
             {
                 var Defender = E.GetGameObjectParameter("Defender");
                 var Weapon = E.GetGameObjectParameter("Weapon");
+
+                // AddPlayerMessage("Defender: " + Defender);
 
                 if (Defender == ParentObject)
                 {
                     var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
-                    MMAComboAccess.CurrentComboICounter += 1;
+                    MMAComboAccess.CurrentComboICounter++;
+                    // AddPlayerMessage("ComboCounterAmount: " + MMAComboAccess.CurrentComboICounter);
+                    MMAComboAccess.UpdateCounter();
                 }
             }
             if (E.ID == "AttackerHit" && ParentObject.HasEffect("AstralTabbyStance"))
@@ -72,7 +90,7 @@ namespace XRL.World.Parts.Skill
                 {
                     if (C.HasCombatObject())
                     {
-                        FlankersAboundDuration = 7;
+                        FlankersAboundDuration = 3;
 
                         StatShifter.SetStatShift("DV", +1);
                     }

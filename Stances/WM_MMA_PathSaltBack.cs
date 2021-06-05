@@ -55,12 +55,11 @@ namespace XRL.World.Parts.Skill
 
         public override bool HandleEvent(AttackerDealingDamageEvent E)
         {
-            if (E.Actor == ParentObject)
+            if (E.Actor == ParentObject && ParentObject.HasEffect("SaltBackStance"))
             { E.Damage.Amount = (E.Damage.Amount / 2); }
 
             return base.HandleEvent(E);
         }
-
 
         public override bool FireEvent(Event E)
         {
@@ -68,7 +67,7 @@ namespace XRL.World.Parts.Skill
             {
                 try
                 {
-                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
                     Damage Damage = E.GetParameter<Damage>("Damage");
                     var Attacker = ParentObject;
 

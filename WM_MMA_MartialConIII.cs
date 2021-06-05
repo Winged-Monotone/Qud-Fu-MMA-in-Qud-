@@ -23,6 +23,21 @@ namespace XRL.World.Parts.Skill
             go.RegisterPartEvent((IPart)this, "AdjustSprintDuration");
         }
 
+        public override bool WantEvent(int ID, int cascade)
+        {
+            if (!base.WantEvent(ID, cascade))
+            {
+                return ID == GetSprintDurationEvent.ID;
+            }
+            return true;
+        }
+
+        public override bool HandleEvent(GetSprintDurationEvent E)
+        {
+            E.LinearIncrease += 40;
+            return base.HandleEvent(E);
+        }
+
         public override bool FireEvent(Event E)
         {
             if (E.ID == "Regenerating")
@@ -33,11 +48,11 @@ namespace XRL.World.Parts.Skill
                     HealthRegained *= 3 + ParentObject.StatMod("Toughness", 1);
                 }
             }
-            else if (E.ID == "AdjustSprintDuration")
-            {
-                int SprintSpeedDurationBonus = E.GetIntParameter("Duration");
-                SprintSpeedDurationBonus += 40;
-            }
+            // else if (E.ID == "AdjustSprintDuration")
+            // {
+            //     var SprintSpeedDurationBonus = E.GetIntParameter("Duration");
+            //     SprintSpeedDurationBonus += 40;
+            // }
 
             return base.FireEvent(E);
         }

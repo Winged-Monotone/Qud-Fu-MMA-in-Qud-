@@ -13,12 +13,19 @@
         <tag Name="MMAHooks"></tag>
         <part Name="MartialConditioningFistMod"></part>
     </object>
-
-    <object Name="CarbideFist" Load="Merge">
+    <!-- <object Name="CarbideHandBones" Load="Merge">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
-    <object Name="FulleriteFist" Load="Merge">
+    <object Name="CarbideFist" Inherits="BaseCudgel">
+        <part Name="MartialConditioningFistMod"></part>
+        <tag Name="MMAHooks"></tag>
+    </object>
+    <object Name="FulleriteHandBones" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
+        <tag Name="MMAHooks"></tag>
+    </object>
+    <object Name="FulleriteFist" Inherits="BaseCudgel">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
@@ -26,7 +33,14 @@
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
-
+    <object Name="BionicHands" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
+        <tag Name="MMAHooks"></tag>
+    </object>
+    <object Name="Burrowing Claws" Inherits="MeleeWeapon">
+        <part Name="MartialConditioningFistMod"></part>
+        <tag Name="MMAHooks"></tag>
+    </object> -->
 
 
 
@@ -154,7 +168,7 @@
 
     <object Name="ScytheStrikeTierBracers1" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gaun_bladed.png" DetailColor="G" />
+        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1+1d4" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
         <part Name="Commerce" Value="350" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner." />
@@ -166,7 +180,7 @@
 
     <object Name="ScytheStrikeTierBracers2" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="Items/sw_gaun_bladed.png" DetailColor="G" />
+        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="2+1d8" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
         <part Name="Commerce" Value="750" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner, the edges have been hardened and resharpened with laquer, however the bloodstains of this weapon's victims are forever present for its witnesses." />
@@ -551,15 +565,15 @@
     <object Name="BraverMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400" />
         <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;Y" DetailColor="C" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.possessive= fist show scars from beating witchwood trees and hardened eyes show an eagerness to test =pronouns.possessive= resolve. The bandanna =pronouns.subjective= =verb:bear:afterpronoun= on =pronouns.possessive= forehead is tainted pitch, a sign a master of various arts stands before you." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -582,15 +596,15 @@
     <object Name="BraverDawnMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversDawn-400" />
         <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/ryu_dawn_master.png" ColorString="&amp;m" RenderString="m" DetailColor="K" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.possessive= fist show scars from beating witchwood trees and hardened eyes show an eagerness to test =pronouns.possessive= resolve. Dawnglider feather's ride the edges of each band, burned tips rub streaks of grey into the braver's shawls, the ashen crest of a true master of the Dawning-Fist." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -616,15 +630,15 @@
     <object Name="BraverAstralMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversAstralCabby-400" />
         <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/ryu_astral_Disc.png" ColorString="&amp;b" RenderString="B" DetailColor="K" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="Wrapped around this warrior's waist is the shrunken tail of a black puma, it is linked in the back by silver medallions. Puma fangs line the tail's elastic banding, a sign =pronouns.subjective= =verb:have:afterpronoun= mastered the Void-Claw Way." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -649,15 +663,15 @@
     <object Name="BraverSaltHopMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltHopper-400" />
         <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/ryu_salthop_master.png" ColorString="&amp;K" RenderString="K" DetailColor="g" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= the iconic bracers of their caste: leather bound wrappings with salthopper-scythes potruding forward like jagged claws. The edges of each blade are tinted red with bloodstains that mark the countless victories needed to be considered a master." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -683,15 +697,15 @@
     <object Name="BraverSaltBackMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltBack-400" />
         <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/ryu_saltback_master.png" ColorString="&amp;K" RenderString="K" DetailColor="w" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, their fist show scars from beating witchwood trees and hardened eyes show an eagerness to test their resolve. =pronouns.Subjective= =verb:wear:afterpronoun= a great tortoise shell on =pronouns.possessive= back, painted with amethyst swaths of mudric symbolisms. The shell is old and sturdy, dashed with battle scars and cudgle-inflicted warping, one can assume =pronouns.subjective= =verb:are:afterpronoun= a master of the Amethyst-Shell Way." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -717,15 +731,15 @@
     <object Name="BraverSlumberMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSlumber-400" />
         <part Name="Render" DisplayName="braver-master of Slumbering-Fury Ryu" Tile="creatures/ryu_slumber_master.png" ColorString="&amp;K" RenderString="K" DetailColor="r" />
-        <stat Name="Strength" sValue="19,1d3" />
-        <stat Name="Agility" sValue="19,1d3" />
-        <stat Name="Toughness" sValue="19,1d3" />
-        <stat Name="Intelligence" sValue="11,1d3" />
-        <stat Name="Willpower" sValue="16,1d3" />
-        <stat Name="Ego" sValue="11,1d3" />
-        <stat Name="Hitpoints" Value="23" />
-        <stat Name="Level" Value="30" />
-        <stat Name="AV" Value="3" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="250" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
         <part Name="Description" Short="This densely muscled wanderer stands with a disciplined and readied posture, =pronouns.subjective= =verb:wear:afterpronoun= wrappings about =pronouns.possessive= whole form, painted scarlet. It is painted in swaths of maroon, a coating a gorish remnants, a sign this is a master of the Slumbering-Fury Way." />
         <skill Name="WM_MMASkillTree" />
         <skill Name="WM_MMA_MartialConI" />
@@ -769,68 +783,116 @@
 
     <object Name="Braver Hero" Inherits="BraverMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
     <object Name="Braver Hero Dawn" Inherits="BraverDawnMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
     <object Name="Braver Hero Astral" Inherits="BraverAstralMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
     <object Name="Braver Hero SaltHop" Inherits="BraverSaltHopMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
     <object Name="Braver Hero SaltBack" Inherits="BraverSaltBackMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
     <object Name="Braver Hero Slumber" Inherits="BraverSlumberMaster">
         <part Name="Render" ColorString="&amp;M" />
-        <stat Name="Hitpoints" Value="25" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
         <property Name="Role" Value="Hero" />
         <part Name="GivesRep" />
         <xtagGrammar Proper="true"></xtagGrammar>
         <tag Name="Noclone" />
+        <stat Name="Strength" sValue="19+1d10" />
+        <stat Name="Agility" sValue="19+1d10" />
+        <stat Name="Toughness" sValue="19+1d10" />
+        <stat Name="Intelligence" sValue="11+1d10" />
+        <stat Name="Willpower" sValue="16+1d10" />
+        <stat Name="Ego" sValue="11+1d10" />
+        <stat Name="Hitpoints" Value="350" />
+        <stat Name="Level" Value="35" />
+        <stat Name="AV" Value="7" />
     </object>
 
 </objects>

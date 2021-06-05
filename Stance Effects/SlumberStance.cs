@@ -38,7 +38,7 @@ namespace XRL.World.Effects
             go.RegisterEffectEvent((Effect)this, "MovementModeChanged");
             go.RegisterEffectEvent((Effect)this, "CanChangeMovementMode");
             go.RegisterEffectEvent((Effect)this, "EndTurn");
-            go.RegisterEffectEvent((Effect)this, "IsMobile");
+            go.RegisterEffectEvent((Effect)this, "SlumberSleepCommand");
             go.RegisterEffectEvent((Effect)this, "LeaveCell");
             go.RegisterEffectEvent((Effect)this, "BeginTakeAction");
             base.Register(Object);
@@ -61,7 +61,7 @@ namespace XRL.World.Effects
             {
                 if (!Object.HasEffect("Asleep"))
                 {
-                    Object.ApplyEffect(new Asleep(1200 - (Object.Statistics["Toughness"].Modifier * 10), forced: false, quicksleep: false, voluntary: true));
+                    Object.ApplyEffect(new Asleep(1200 - (Object.Statistics["Toughness"].Modifier * 10), forced: true, quicksleep: false, voluntary: true));
                     AddPlayerMessage("You fall into a deep slumber ...");
                 }
             }
@@ -87,8 +87,8 @@ namespace XRL.World.Effects
             AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
             RageSplat();
 
-            var ParentAV = Object.Statistics["AV"].BaseValue;
-            var ParentDV = Object.Statistics["DV"].BaseValue;
+            var ParentAV = Object.Statistics["AV"].Value;
+            var ParentDV = Object.Statistics["DV"].Value;
 
             PlayWorldSound("swapstance", PitchVariance: 0.5f);
 

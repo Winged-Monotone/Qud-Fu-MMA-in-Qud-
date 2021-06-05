@@ -78,6 +78,8 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
+            StatShifter.SetStatShift("MoveSpeed", -10);
+
             PlayWorldSound("swapstance", PitchVariance: 0f);
 
             AstralTabbyPulse(Object.CurrentCell);

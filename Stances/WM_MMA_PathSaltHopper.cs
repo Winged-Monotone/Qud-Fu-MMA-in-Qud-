@@ -10,7 +10,7 @@ using XRL.World.Effects;
 namespace XRL.World.Parts.Skill
 {
     [Serializable]
-    public class WM_MMA_PathSalthopper : BaseSkill
+    public class WM_MMA_PathSaltHopper : BaseSkill
     {
         public Guid SaltHopperStanceID;
 
@@ -30,7 +30,7 @@ namespace XRL.World.Parts.Skill
             "Stun",
         };
 
-        public WM_MMA_PathSalthopper()
+        public WM_MMA_PathSaltHopper()
         {
             Name = "WM_MMA_PathSaltHopper";
             DisplayName = "Path of the Salt-Hopper";

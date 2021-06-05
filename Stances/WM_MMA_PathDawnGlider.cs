@@ -38,18 +38,18 @@ namespace XRL.World.Parts.Skill
             {
                 if (ParentObject.HasPart("WM_MMA_SureStrikes"))
                 {
-                    var MMAComboAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+                    var MMAComboSSAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
 
                     //Handles damage scaling.
 
                     if (BonusSureStrike <= 10)
                     { ++BonusSureStrike; }
-                    MMAComboAccess.UpdateCounter();
+                    MMAComboSSAccess.UpdateCounter();
                 }
                 else
                     try
                     {
-                        var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                        var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
                         Damage Damage = E.GetParameter<Damage>("Damage");
                         var Attacker = ParentObject;
 

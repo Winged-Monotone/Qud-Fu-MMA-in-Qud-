@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 
 using XRL.Rules;
@@ -14,6 +15,7 @@ using XRL.Core;
 
 using XRL.World;
 using XRL.World.AI.GoalHandlers;
+using XRL.World.Effects;
 using XRL.World.Parts.Mutation;
 
 using UnityEngine;
@@ -66,7 +68,7 @@ namespace XRL.World.Parts.Skill
             {
                 try
                 {
-                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSalthopper>();
+                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
                     Damage Damage = E.GetParameter<Damage>("Damage");
                     var Attacker = ParentObject;
 
@@ -85,7 +87,7 @@ namespace XRL.World.Parts.Skill
                     }
                     else
                     {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+
                     }
                 }
                 catch
@@ -106,7 +108,7 @@ namespace XRL.World.Parts.Skill
                 Event E2 = Event.New("SlumberCleaveEvent");
                 E2.SetParameter("Attacker", ParentObject);
                 E2.SetParameter("Defender", Defender);
-                E2.SetParameter("Damage", Damage);
+                E2.SetParameter("Damage", Damage.Amount);
 
                 ParentObject.FireEvent(E2);
             }
@@ -114,7 +116,9 @@ namespace XRL.World.Parts.Skill
             {
                 GameObject Attacker = E.GetGameObjectParameter("Attacker");
                 GameObject Defender = E.GetGameObjectParameter("Defender");
-                Damage Damage = E.GetParameter<Damage>("Damage");
+                int DamageAmount = E.GetParameter<int>("Damage");
+
+                int ParentsStr = ParentObject.Statistics["Strength"].Modifier;
 
                 // AddPlayerMessage("var check 1");
 
@@ -125,74 +129,51 @@ namespace XRL.World.Parts.Skill
                 var AttackerCell = Attacker.GetCurrentCell();
                 var AttackersAdacentCells = AttackerCell.GetLocalAdjacentCells();
 
-                var CellQuery = AttackersAdacentCells.Where(Cell => Cell.HasObjectWithPart("Brain") || Cell.HasObjectWithPart("Combat") && Cell.HasCombatObject() && !Cell.HasObject(ParentObject));
-
-
                 // AddPlayerMessage("slumberstyle initiated vars");
-                foreach (var c in CellQuery)
+                string[] directionList = Directions.DirectionList;
+                foreach (string direction3 in directionList)
                 {
-                    // AddPlayerMessage("slumberstarting for each");
-                    // AddPlayerMessage("{{dark red|slumbering style fires second for each!}}");
-                    var Flankers = c.GetObjectsInCell();
-                    RageStrikePulse(c);
-                    PlayWorldSound("Hit_Default", 1f, 1f, true);
-                    foreach (var obj1 in Flankers)
+                    GameObject Flankers = ParentObject.GetCurrentCell().GetCellFromDirection(direction3)?.GetCombatTarget(ParentObject, AllowInanimate: false);
+                    if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
                     {
-                        var ForceQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
-                        // AddPlayerMessage("slumberstarting for each 0");
-                        obj1.TakeDamage(Damage.Amount / 2, null, "Slumberling way's fury.");
-                        foreach (var objForced in ForceQuery)
-                        {
-                            if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
-                            {
-                                // AddPlayerMessage("slumber pushing");
-                                string KnockBack = Directions.GetRandomDirection();
-                                objForced.Push(KnockBack, 2500 * (AttackerLevels / 5));
-                            }
-                        }
-                        var FlankersBody = obj1.Body.GetParts();
+                        // AddPlayerMessage("Dismember is Firing?");
+
+                        var FlankersBody = Flankers.Body.GetParts();
                         foreach (var ob in FlankersBody)
                         {
-                            var SeveringQuery = Flankers.Where(Obj => !obj1.HasPart("Brain") || obj1.HasPart("Combat"));
-
-                            // AddPlayerMessage("slumberstarting for each 1");
-                            foreach (var objpart in SeveringQuery)
+                            if (Stat.Random(1, 100) <= 2 + (AttackerLevels / 10) && ob.IsSeverable() && ob.ParentBody != ParentObject.Body)
                             {
-                                if (Stat.Random(1, 100) <= 2 + AttackerLevels / 10)
+
+                                if (ob.AnyMortalParts() || ob.Mortal)
                                 {
-                                    var SeveredPartsQuery = Flankers.Where(Obj => ob.IsRegenerable() || ob.IsSeverable() && ob.IsRecoverable() && ob.ParentBody != ParentObject.Body);
-                                    foreach (var target in SeveredPartsQuery)
+                                    if (ob.Type == "Head")
                                     {
-                                        var SeveringPartsQuery = SeveredPartsQuery.Where(Obj => ob.AnyMortalParts() || ob.Mortal);
-
-                                        foreach (var targetbodypart in SeveredPartsQuery)
-                                        {
-                                            if (ob.Name == "Head")
-                                            {
-                                                ob.Dismember();
-                                                target.Die(ParentObject, ParentObject.its + " lobs " + target.its + ob.Name + ", killing it!", false);
-                                            }
-                                            else
-                                            {
-                                                ob.Dismember();
-                                                target.Die(ParentObject, ParentObject.Its + " strike obliterates " + target.the + "!");
-                                            }
-                                        }
+                                        ob.Dismember();
+                                        Flankers.Die(ParentObject, ParentObject.it + " lob " + Flankers.its + ob.Name + ", killing it!", null);
                                     }
-
-                                    Event E3 = Event.New("SlumberCleaveEvent");
-                                    E3.SetParameter("Attacker", ParentObject);
-                                    E3.SetParameter("Defender", Defender);
-
-                                    ParentObject.FireEvent("SlumberCleaveEvent");
+                                    else if (ob.Type == "Body")
+                                    {
+                                        ob.Dismember();
+                                        Flankers.Die(ParentObject, ParentObject.it + "obliterates" + Flankers.its + ob.Name + ", killing it!", null);
+                                    }
                                 }
-                                else
-                                {
-
-                                }
+                            }
+                            else if (ob.IsSeverable() && ob.Appendage && !ob.Mortal && ob.ParentBody != ParentObject.Body)
+                            {
+                                ob.Dismember();
                             }
                         }
                     }
+                    if (Stat.Random(1, 100) <= 25 + AttackerLevels / 3)
+                    {
+                        // AddPlayerMessage("Push is firing?");
+
+                        Flankers.TakeDamage(ref (DamageAmount));
+                        RageStrikePulse(Flankers.CurrentCell);
+                        Flankers.Push(direction3, 1000, 1);
+                    }
+
+
                 }
             }
             else if (E.ID == "SlumberWitnessEvent" && ParentObject.HasEffect("SlumberStance"))

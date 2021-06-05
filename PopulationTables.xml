@@ -24,25 +24,28 @@
     </population>
 
     <population Name="GenericFactionPopulation" Load="Merge">
-        <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="1" />
-            <object Blueprint="BraversDawnGlider" Weight="2" />
-            <object Blueprint="BraversSaltHopper" Weight="2" />
-            <object Blueprint="BraversAstralCabby" Weight="2" />
-            <object Blueprint="BraversSaltBack" Weight="2" />
-            <object Blueprint="BraversSlumber" Weight="2" />
+        <group Name="Factions" Style="pickone" Load="Merge">
+            <group Name="Bravers" Style="pickone" Weight="1">
+                <object Blueprint="Bravers" Weight="1" />
+                <object Blueprint="BraversDawnGlider" Weight="1" />
+                <object Blueprint="BraversSaltHopper" Weight="1" />
+                <object Blueprint="BraversAstralCabby" Weight="1" />
+                <object Blueprint="BraversSaltBack" Weight="1" />
+                <object Blueprint="BraversSlumber" Weight="1" />
+            </group>
         </group>
     </population>
 
     <population Name="SafeFactionPopulation" Load="Merge">
-        <group Name="Factions" Style="pickone">
-            <object Blueprint="Bravers" Weight="1" />
-            <object Blueprint="BraversDawnGlider" Weight="2" />
-            <object Blueprint="BraversSaltHopper" Weight="2" />
-            <object Blueprint="BraversAstralCabby" Weight="2" />
-            <object Blueprint="BraversSaltBack" Weight="2" />
-            <object Blueprint="BraversSlumber" Weight="2" />
-
+        <group Name="Factions" Style="pickone" Load="Merge">
+            <group Name="Bravers" Style="pickone" Weight="1">
+                <object Blueprint="Bravers" Weight="1" />
+                <object Blueprint="BraversDawnGlider" Weight="1" />
+                <object Blueprint="BraversSaltHopper" Weight="1" />
+                <object Blueprint="BraversAstralCabby" Weight="1" />
+                <object Blueprint="BraversSaltBack" Weight="1" />
+                <object Blueprint="BraversSlumber" Weight="1" />
+            </group>
         </group>
     </population>
 
@@ -55,7 +58,7 @@
             <object Blueprint="WineGourd" Number="1-3" />
         </group>
     </population>
-    <population Name="FactionEncounterZoneObjects_Braves">
+    <population Name="FactionEncounterZoneObjects_BravesWithMaster">
         <group Name="Items" Style="pickeach">
             <table Name="Scrap_ZoneTier" Number="1-2" />
             <object Blueprint="Garbage" Number="15-25" />
@@ -72,25 +75,79 @@
         </group>
     </population>
 
+    <population Name="CommonOddEncounters" Load="Merge">
+        <group Name="Types" Style="pickone" Load="Merge">
+            <group Name="SolitaryDawnMaster" weight="1" Style="pickeach">
+                <object Number="1" Blueprint="Braver Hero Dawn"></object>
+                <object Number="1" Blueprint="Bedroll"></object>
+                <object Number="1" Blueprint="Brazier"></object>
+                <object Number="1" Chance="75" Blueprint="Wine Pitcher"></object>
+            </group>
+
+            <group Name="SolitaryAstralMaster" weight="1" Style="pickeach">
+                <object Number="1" Blueprint="Braver Hero Astral"></object>
+                <object Number="1" Blueprint="Bedroll"></object>
+                <object Number="1" Blueprint="Brazier"></object>
+                <object Number="1" Chance="75" Blueprint="Wine Pitcher"></object>
+            </group>
+
+            <group Name="SolitarySaltBackMaster" weight="1" Style="pickeach">
+                <object Number="1" Blueprint="Braver Hero SaltBack"></object>
+                <object Number="1" Blueprint="Bedroll"></object>
+                <object Number="1" Blueprint="Brazier"></object>
+                <object Number="1" Chance="75" Blueprint="Wine Pitcher"></object>
+            </group>
+
+            <group Name="SolitarySalthopMaster" weight="1" Style="pickeach">
+                <object Number="1" Blueprint="Braver Hero SaltHop"></object>
+                <object Number="1" Blueprint="Bedroll"></object>
+                <object Number="1" Blueprint="Brazier"></object>
+                <object Number="1" Chance="75" Blueprint="Wine Pitcher"></object>
+            </group>
+
+            <group Name="SolitarySlumberMaster" weight="1" Style="pickeach">
+                <object Number="1" Blueprint="Braver Hero Slumber"></object>
+                <object Number="1" Blueprint="Bedroll"></object>
+                <object Number="1" Blueprint="Brazier"></object>
+                <object Number="1" Chance="75" Blueprint="Wine Pitcher"></object>
+            </group>
+        </group>
+    </population>
+
     <!-- Contenders encounter -->
     <population Name="FactionEncounterPartyObjects_Contenders">
         <group Name="Items" Style="pickeach">
             <object Blueprint="WineWaterskin" Number="1-3" />
             <object Blueprint="WineGourd" Number="1-3" />
-
         </group>
+
     </population>
+
     <population Name="FactionEncounterZoneObjects_Contenders">
         <group Name="Items" Style="pickeach">
             <object Blueprint="Garbage" Number="15-25" />
         </group>
     </population>
+
     <population Name="FactionEncounterLeaderInventory_Contenders">
         <group Name="Items" Style="pickeach">
             <object Blueprint="RandomWaterskin" Number="1-2" />
             <object Blueprint="Cloth Robe" Number="1" />
         </group>
     </population>
+
+    <!-- Teachers System -->
+    <population Name="Martial_Instructors">
+        <group Name="Options" Style="pickone">
+            <object Number="1" Blueprint="Braver Hero Slumber"></object>
+            <object Number="1" Blueprint="Braver Hero SaltHop"></object>
+            <object Number="1" Blueprint="Braver Hero SaltBack"></object>
+            <object Number="1" Blueprint="Braver Hero Astral"></object>
+            <object Number="1" Blueprint="Braver Hero Dawn"></object>
+        </group>
+    </population>
+
+    <!-- Taught SkillPowers_MartialTechniques -->
 
     <population Name="SkillPowers_MartialTechniques">
         <group Name="Options" Style="pickone">
@@ -103,7 +160,6 @@
             <object Blueprint="WM_MMA_SureStrikes" />
             <object Blueprint="WM_MMA_CombinationStrikesIII" />
             <object Blueprint="WM_MMA_MartialConIII" />
-
         </group>
     </population>
 

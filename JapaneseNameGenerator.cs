@@ -125,24 +125,26 @@ namespace XRL.World.Parts
             int SurRan = Stat.Random(1, 6);
             if (E.Object == ParentObject)
             {
+                if (!E.Object.HasProperName)
+                {
+                    ParentObject.pRender.DisplayName = ("&M")
+                    + (GenerateJapaneseSurName(Ran))
+                    + " "
+                    + (GenerateJapaneseName(SurRan))
+                    + (", ");
 
-                ParentObject.pRender.DisplayName = ("&M")
-                + (GenerateJapaneseSurName(Ran))
-                + " "
-                + (GenerateJapaneseName(SurRan))
-                + (", ");
-
-                ParentObject.pRender.DisplayName += (MasteryPro.GetRandomElement() + "-" + MasteryTitle.GetRandomElement());
-                if (ParentObject.Factions.Contains("BraversDawn"))
-                    ParentObject.pRender.DisplayName += (" of the Dawning-Fist Ryu");
-                if (ParentObject.Factions.Contains("BraversSaltBack"))
-                    ParentObject.pRender.DisplayName += (" of the Amethyst Shell Goyo-Ryu");
-                if (ParentObject.Factions.Contains("BraversSaltHopper"))
-                    ParentObject.pRender.DisplayName += (" of the Scythe-Strike Ryu");
-                if (ParentObject.Factions.Contains("BraversAstralCabby"))
-                    ParentObject.pRender.DisplayName += (" of the Void-Claw Ryu");
-                if (ParentObject.Factions.Contains("BraversSlumber"))
-                    ParentObject.pRender.DisplayName += (" of the Slumbering-Fury Ryu");
+                    ParentObject.pRender.DisplayName += (MasteryPro.GetRandomElement() + "-" + MasteryTitle.GetRandomElement());
+                    if (ParentObject.Factions.Contains("BraversDawn"))
+                        ParentObject.pRender.DisplayName += (" of the Dawning-Fist Ryu");
+                    if (ParentObject.Factions.Contains("BraversSaltBack"))
+                        ParentObject.pRender.DisplayName += (" of the Amethyst Shell Goyo-Ryu");
+                    if (ParentObject.Factions.Contains("BraversSaltHopper"))
+                        ParentObject.pRender.DisplayName += (" of the Scythe-Strike Ryu");
+                    if (ParentObject.Factions.Contains("BraversAstralCabby"))
+                        ParentObject.pRender.DisplayName += (" of the Void-Claw Ryu");
+                    if (ParentObject.Factions.Contains("BraversSlumber"))
+                        ParentObject.pRender.DisplayName += (" of the Slumbering-Fury Ryu");
+                }
             }
 
             return base.HandleEvent(E);

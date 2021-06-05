@@ -63,7 +63,7 @@ namespace MMAWishes
             AddSkill(new WM_MMA_CombinationStrikesII());
             AddSkill(new WM_MMA_CombinationStrikesIII());
             AddSkill(new WM_MMA_PathSlumberling());
-            AddSkill(new WM_MMA_PathSalthopper());
+            AddSkill(new WM_MMA_PathSaltHopper());
             AddSkill(new WM_MMA_PathSaltBack());
             AddSkill(new WM_MMA_PathDawnGlider());
             AddSkill(new WM_MMA_PathAstralTabby());

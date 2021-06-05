@@ -29,7 +29,7 @@ namespace XRL.World.Parts.Skill
             {
                 Body body = ParentObject.GetPart("Body") as Body;
 
-                var ParentsAgility = ParentObject.StatMod("Ego");
+                var ParentsAgility = ParentObject.StatMod("Agility");
                 var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
 
                 List<BodyPart> hands = body.GetPart("Hand");

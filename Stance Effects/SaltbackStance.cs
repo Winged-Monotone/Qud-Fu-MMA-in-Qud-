@@ -72,7 +72,7 @@ namespace XRL.World.Effects
 
             PlayWorldSound("swapstance", PitchVariance: 0f);
             SaltBackPulse(Object.CurrentCell);
-            StatShifter.SetStatShift("MoveSpeed", -10);
+            StatShifter.SetStatShift("MoveSpeed", 10);
 
             return true;
         }

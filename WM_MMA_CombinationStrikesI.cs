@@ -76,7 +76,9 @@ namespace XRL.World.Parts.Skill
         {
             return base.WantEvent(ID, cascade)
             || ID == AttackerDealingDamageEvent.ID
-            || ID == GetAttackerHitDiceEvent.ID;
+            || ID == GetAttackerHitDiceEvent.ID
+            || ID == ModifyAttackingSaveEvent.ID
+            || ID == ModifyDefendingSaveEvent.ID;
         }
 
         public override void Register(GameObject Object)
@@ -92,6 +94,20 @@ namespace XRL.World.Parts.Skill
             base.Register(Object);
         }
 
+        public override bool HandleEvent(ModifyAttackingSaveEvent E)
+        {
+            var Parent = E.Attacker == ParentObject;
+            var Defender = E.Defender;
+
+            if (Parent && ParentObject.HasPart("MartialBody") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII"))
+            {
+                E.NaturalRoll += (CurrentComboICounter / 2);
+                E.Roll += (CurrentComboICounter / 2);
+            }
+
+            return base.HandleEvent(E);
+        }
+
         public override bool HandleEvent(GetAttackerHitDiceEvent E)
         {
             var Weapon = E.Weapon;
@@ -99,10 +115,9 @@ namespace XRL.World.Parts.Skill
             var Defender = E.Defender;
             var PenBonus = E.PenetrationBonus;
 
-
-            if (Parent && Weapon.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesIII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
+            if (Parent && (E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.Blueprint == "DefaultMartialFist" || E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.HasPart("NaturalGear") || E.Weapon.HasPropertyOrTag("WeaponUnarmed")) && ParentObject.HasSkill("WM_MMA_CombinationStrikesIII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
             {
-                PenBonus = PenBonus + (CurrentComboICounter);
+                E.PenetrationBonus += (CurrentComboICounter / 3);
             }
 
             return base.HandleEvent(E);
@@ -111,44 +126,48 @@ namespace XRL.World.Parts.Skill
 
         public override bool HandleEvent(AttackerDealingDamageEvent E)
         {
-            var Parent = E.Actor == ParentObject;
-            var Target = E.Object;
+            try
+            {
+                var Parent = E.Actor == ParentObject;
+                var Target = E.Object;
 
-            Body body = ParentObject.GetPart("Body") as Body;
+                Body body = ParentObject.GetPart("Body") as Body;
 
-            var ParentsAgility = ParentObject.StatMod("Ego");
-            var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
+                var ParentsAgility = ParentObject.StatMod("Ego");
+                var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
 
-            List<BodyPart> hands = body.GetPart("Hand");
+                List<BodyPart> hands = body.GetPart("Hand");
 
-            if (E.Weapon.HasPart("MartialConditioningFistMod") && E.Actor == ParentObject)
-                foreach (BodyPart hand in hands)
-                {
-                    try
+                if (E.Actor == ParentObject && (E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.Blueprint == "DefaultMartialFist" || E.Weapon.HasPart("NaturalGear") || E.Weapon.HasPropertyOrTag("WeaponUnarmed")))
+
+                    // AddPlayerMessage("Accessing Damage System.s");
+
+                    foreach (BodyPart hand in hands)
                     {
-                        if (!hand.Name.Contains("Robo-") && hand.DefaultBehavior != null && hand.DefaultBehavior.HasPart("MartialConditioningFistMod"))
+                        try
                         {
-                            if (hand == null || hand.Category != 6)
-                            {
-                                if (Parent && Target.HasPart("Brain") && Target.HasPart("Combat"))
-                                {
-                                    var FistDamage = E.Damage.Amount;
+                            // AddPlayerMessage("Accessing Damage System. A");
 
-                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
-                                }
-                                else if (Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
-                                {
-                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
-                                }
+                            if (Parent && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                            {
+                                var FistDamage = E.Damage.Amount;
+
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
                             }
+                            else if (Stat.Random(1, 100) < CurrentComboICounter && Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
+                            {
+                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.050) * E.Damage.Amount));
+                            }
+
+                        }
+                        catch
+                        {
+                            return base.HandleEvent(E);
                         }
                     }
-                    catch
-                    {
-                        return base.HandleEvent(E);
-                    }
-                }
-
+            }
+            catch
+            { }
             return base.HandleEvent(E);
         }
 
@@ -168,7 +187,7 @@ namespace XRL.World.Parts.Skill
                 if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.HasPart("MartialConditioningFistMod"))
                 {
                     // AddPlayerMessage("Decrease ComboCounter");
-                    if (CurrentComboICounter < 0)
+                    if (CurrentComboICounter > 0)
                         --CurrentComboICounter;
                     UpdateCounter();
                 }
@@ -185,12 +204,12 @@ namespace XRL.World.Parts.Skill
                 var DeezHands = E.GetGameObjectParameter("Weapon");
                 if (Penetrations == 0)
                 {
-                    if (CurrentComboICounter >= 0)
+                    if (CurrentComboICounter > 0)
                     {
                         --CurrentComboICounter;
                     }
                 }
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && DeezHands.Blueprint == "DefaultMartialFist")
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && (DeezHands.Blueprint == "DefaultMartialFist" || DeezHands.HasPart("MartialConditioningFistMod") || DeezHands.HasPart("NaturalGear") || DeezHands.HasPropertyOrTag("WeaponUnarmed")))
                 {
                     // AddPlayerMessage("Increase ComboCounter");
 

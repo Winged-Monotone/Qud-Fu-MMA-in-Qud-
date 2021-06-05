@@ -12,7 +12,7 @@ namespace XRL.World.Parts
     {
         public MartialConditioningFistMod()
         {
-            Name = "MartialConditioningFistMod";
+
         }
 
         public override void Register(GameObject Object)
@@ -26,7 +26,9 @@ namespace XRL.World.Parts
             {
                 // AddPlayerMessage("Updating fist?");
                 MeleeWeapon FistProperties = this.ParentObject.GetPart("MeleeWeapon") as MeleeWeapon;
+
                 FistProperties.BaseDamage = (string)E.GetParameter("Dice");
+
                 if (!ParentObject.HasPart("KO_On_Finish"))
                 {
                     ParentObject.AddPart<KO_On_Finish>();
