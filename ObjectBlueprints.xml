@@ -353,6 +353,7 @@
         <tag Name="HeroIntBoost" Value="2" />
         <tag Name="HeroNameTitlePariah" Value="Forgotten Master" />
         <tag Name="NoHateFactions" Value="Wardens,Dromad" />
+        <part Name="JapaneseNameConstructor" />
         <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
         <tag Name="RandomGender" Value="genericsingular" />
     </object>
@@ -383,6 +384,7 @@
         <skill Name="WM_MMA_FlurryOfBlows" />
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
+        <part Name="JapaneseNameConstructor" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="ContenderTierArmor1" />
@@ -413,6 +415,7 @@
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathDawnGlider" />
+        <part Name="JapaneseNameConstructor" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="DawningFistTierArmor1" Number="1" />
         <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
@@ -472,6 +475,7 @@
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSaltHopper" />
+        <part Name="JapaneseNameConstructor" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="ContenderTierArmor1" />
@@ -502,6 +506,7 @@
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSaltBack" />
+        <part Name="JapaneseNameConstructor" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="AmethystShellTierArmor1" />
@@ -532,6 +537,7 @@
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSlumberling" />
+        <part Name="JapaneseNameConstructor" />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="SlumberFistTierArmor1" />

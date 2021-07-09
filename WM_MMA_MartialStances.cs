@@ -26,7 +26,7 @@ namespace XRL.World.Parts.Skill
             "SaltbackStance",
             "SaltHopperStance",
             "SlumberStance",
-            "JiltedStance",
+            "DaccaStance",
         };
         public Guid DismissStanceID;
         public Guid DawnStanceID;

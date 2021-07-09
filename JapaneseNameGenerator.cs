@@ -85,6 +85,16 @@ namespace XRL.World.Parts
             ;
         }
 
+        private List<string> DiscipleUnits = new List<string>()
+        {
+                "BraverSlumberDisciple",
+                "BraverSaltBackDisciple",
+                "BraverSaltHopDisciple",
+                "BraverAstralDisciple",
+                "BraverDawnDisciple",
+                "BraverDisciple",
+        };
+
         public override bool HandleEvent(AfterObjectCreatedEvent E)
         {
             string[] MasteryTitle = new string[7]
@@ -96,6 +106,16 @@ namespace XRL.World.Parts
                 "Grandmaster",
                 "Shihan",
                 "Souke",
+      };
+            string[] DiscipleTitle = new string[7]
+      {
+                "Disciple",
+                "Protégé",
+                "Pupil",
+                "Studier",
+                "Savant",
+                "Apprentice",
+                "Gakusei",
       };
             string[] MasteryPro = new string[20]
         {
@@ -123,7 +143,7 @@ namespace XRL.World.Parts
 
             int Ran = Stat.Random(1, 4);
             int SurRan = Stat.Random(1, 6);
-            if (E.Object == ParentObject)
+            if (E.Object == ParentObject && !(DiscipleUnits.Any<string>()))
             {
                 if (!E.Object.HasProperName)
                 {
@@ -134,6 +154,29 @@ namespace XRL.World.Parts
                     + (", ");
 
                     ParentObject.pRender.DisplayName += (MasteryPro.GetRandomElement() + "-" + MasteryTitle.GetRandomElement());
+                    if (ParentObject.Factions.Contains("BraversDawn"))
+                        ParentObject.pRender.DisplayName += (" of the Dawning-Fist Ryu");
+                    if (ParentObject.Factions.Contains("BraversSaltBack"))
+                        ParentObject.pRender.DisplayName += (" of the Amethyst Shell Goyo-Ryu");
+                    if (ParentObject.Factions.Contains("BraversSaltHopper"))
+                        ParentObject.pRender.DisplayName += (" of the Scythe-Strike Ryu");
+                    if (ParentObject.Factions.Contains("BraversAstralCabby"))
+                        ParentObject.pRender.DisplayName += (" of the Void-Claw Ryu");
+                    if (ParentObject.Factions.Contains("BraversSlumber"))
+                        ParentObject.pRender.DisplayName += (" of the Slumbering-Fury Ryu");
+                }
+            }
+            else
+            {
+                if (!E.Object.HasProperName && E.Object.HasPropertyOrTag("Role"))
+                {
+                    ParentObject.pRender.DisplayName = ("&M")
+                    + (GenerateJapaneseSurName(Ran))
+                    + " "
+                    + (GenerateJapaneseName(SurRan))
+                    + (", ");
+
+                    ParentObject.pRender.DisplayName += (MasteryPro.GetRandomElement() + "-" + DiscipleTitle.GetRandomElement());
                     if (ParentObject.Factions.Contains("BraversDawn"))
                         ParentObject.pRender.DisplayName += (" of the Dawning-Fist Ryu");
                     if (ParentObject.Factions.Contains("BraversSaltBack"))

@@ -23,17 +23,24 @@ namespace XRL.World.Parts.Skill
             go.RegisterPartEvent((IPart)this, "AdjustSprintDuration");
         }
 
+        public override void Initialize()
+        {
+            // AddPlayerMessage("Initialize From MCIII Activate!");
+            base.Initialize();
+            Run.SyncAbility(ParentObject);
+        }
+
         public override bool WantEvent(int ID, int cascade)
         {
-            if (!base.WantEvent(ID, cascade))
-            {
-                return ID == GetSprintDurationEvent.ID;
-            }
-            return true;
+
+            return ID == GetSprintDurationEvent.ID
+            || base.WantEvent(ID, cascade);
+
         }
 
         public override bool HandleEvent(GetSprintDurationEvent E)
         {
+            // AddPlayerMessage("Sprint Bonus From MCIII Activate!");
             E.LinearIncrease += 40;
             return base.HandleEvent(E);
         }
@@ -45,7 +52,7 @@ namespace XRL.World.Parts.Skill
                 if (ParentObject.HasEffect("Meditating"))
                 {
                     int HealthRegained = E.GetIntParameter("Amount");
-                    HealthRegained *= 3 + ParentObject.StatMod("Toughness", 1);
+                    HealthRegained += 3 + ParentObject.StatMod("Toughness", 1);
                 }
             }
             // else if (E.ID == "AdjustSprintDuration")
