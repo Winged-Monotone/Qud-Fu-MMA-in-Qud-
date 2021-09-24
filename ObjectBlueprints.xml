@@ -107,7 +107,7 @@
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
         <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="M" />
         <part Name="Commerce" Value="250" />
-        <part Name="Description" Short="Arm wrappings lined with jilted-lovers thorns, plates of leather in the interior braces the arm for impacts while the thorns tear away a would-be-foes' flesh." />
+        <part Name="Description" Short="Arm wrappings lined with jilted-lovers' thorns, plates of leather in the interior braces the arm for impacts while the thorns tear away at the would-be-foes' flesh." />
         <part Name="Physics" Weight="3" />
         <tag Name="Tier" Value="6" />
         <tag Name="Mods" Value="None" />
@@ -120,7 +120,7 @@
         <part Name="Armor" AV="0" DV="2" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
         <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="600" />
-        <part Name="Description" Short="A martial suit made from the commingling of black-puma's tail wrapped into a sash and sable layered cloth acts as a shawl to protect the body." />
+        <part Name="Description" Short="A martial suit made from the commingling of a black-puma's tail wrapped into a sash and sable-layered cloth acts as a shawl to protect the body." />
         <part Name="Physics" Weight="2" />
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
@@ -131,7 +131,7 @@
         <part Name="Armor" AV="0" DV="3" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
         <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keikogi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="550" />
-        <part Name="Description" Short="A martial suit made from the commingling of black-puma's tail wrapped into a sash and sable layered cloth acts as a shawl to protect the body. The tail has puma teeth lining the elastic banding around its center." />
+        <part Name="Description" Short="A martial suit made from the commingling of a black-puma's tail wrapped into a sash and sable layered cloth acts as a shawl to protect the body. The tail has puma teeth lining the elastic banding around its center." />
         <part Name="Physics" Weight="3" />
         <tag Name="Tier" Value="7" />
         <tag Name="Mods" Value="None" />
@@ -252,7 +252,7 @@
     <object Name="GiantWineGourd" Inherits="WaterContainer">
         <part Name="LiquidVolume" MaxVolume="200" Volume="200" StartVolume="1d200+5" InitialLiquid="wine-1000" ManualSeal="true" />
         <part Name="Render" DisplayName="giant {{M|wine}}-gourd" Tile="Items/sw_giantgourd.png" DetailColor="w" TileColor="y"/>
-        <part Name="Description" Short="A massive clay-gourd with a large witch-wood rope, both lacquer for long travels." />
+        <part Name="Description" Short="A massive clay-gourd with a large witch-wood rope, both lacquered for long travels." />
         <stat Name="Hitpoints" sValue="100" />
         <part Name="Physics" Weight="40" />
         <intproperty Name="Inorganic" Value="0" />

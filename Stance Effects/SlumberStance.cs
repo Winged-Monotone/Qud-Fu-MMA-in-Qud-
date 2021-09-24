@@ -4,8 +4,7 @@ using XRL.Core;
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
-
-
+using XRL.Rules;
 
 namespace XRL.World.Effects
 {
@@ -30,7 +29,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "Vicious sweeping attacks that harm any in  the practitioners way while throwing away one's defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage.\n";
+            return "Vicious sweeping attacks that harm any in the practitioners way while throwing away one's defensive abilities. At the cost of half your AV and DV, attacks while unnarmed now deal damage to nearby foes, for every successful hit on an opponent, enemies flanking you must make a penetration save or be dealt 50% of the damage.\n";
         }
 
         public override void Register(GameObject go)
@@ -84,7 +83,9 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
-            AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
+            if (Stat.Random(1, 100) < 50)
+                AddPlayerMessage("{{dark red|With a bloodchilling roar, you unleash your slumbering fury!}}");
+
             RageSplat();
 
             var ParentAV = Object.Statistics["AV"].Value;

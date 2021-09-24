@@ -261,7 +261,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.SureStrikesActivatedAbilityID = base.AddMyActivatedAbility("Sure Strikes", "CommandSureStrikes", "Skill", "Deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike.", ">", null, false, false, false, false, false, false, false, 80, null);
+            this.SureStrikesActivatedAbilityID = base.AddMyActivatedAbility(Name: "Sure Strikes", Command: "CommandSureStrikes", Class: "Skill", Description: "Deliver an attack at double penetration so long as you aren't wielding a weapon in your primary hand. If the attack lands, there's scaling chance you will throw another sure strike.", Icon: ">", Cooldown: 80);
 
             return true;
         }

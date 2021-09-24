@@ -67,7 +67,7 @@ namespace MMAWishes
             AddSkill(new WM_MMA_PathSaltBack());
             AddSkill(new WM_MMA_PathDawnGlider());
             AddSkill(new WM_MMA_PathAstralTabby());
-            AddSkill(new WM_MMA_Grappler());
+            AddSkill(new WM_MMA_PathDeathDacca());
 
         }
     }

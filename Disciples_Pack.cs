@@ -204,10 +204,16 @@ namespace XRL.World.Parts
 
                         Cell randomElement = ParentsAdjacentCells.GetRandomElement();
 
-                        if (Stat.Random(1, 100) <= 70)
+                        if (Stat.Random(1, 100) <= 70 && randomElement.IsEmpty())
                             randomElement.AddObject(gameObject);
-                        else
+                        else if (Stat.Random(1, 100) <= 70 && randomElement.IsEmpty())
                             randomElement.AddObject(gameObjectRace);
+                        else if (!randomElement.IsEmpty())
+                        {
+                            gameObject.MakeActive();
+                            gameObjectRace.MakeActive();
+                            break;
+                        }
 
                         gameObject.MakeActive();
                         gameObjectRace.MakeActive();

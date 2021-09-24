@@ -71,17 +71,21 @@ namespace XRL.World.Parts.Skill
             GO.RemoveActivatedAbility(ref SlumberStanceID);
             GO.RemoveActivatedAbility(ref SaltHopperStanceID);
             GO.RemoveActivatedAbility(ref AstralTabbyStanceID);
+            GO.RemoveActivatedAbility(ref DeathDaccaStanceID);
             return true;
         }
 
         public override void Register(GameObject Object)
         {
             Object.RegisterPartEvent(this, "DismissStanceCommand");
+
             Object.RegisterPartEvent(this, "DawngliderStanceCommand");
             Object.RegisterPartEvent(this, "AstralTabbyStanceCommand");
             Object.RegisterPartEvent(this, "SaltBackStanceCommand");
             Object.RegisterPartEvent(this, "SlumberlingStanceCommand");
             Object.RegisterPartEvent(this, "SaltHopperStanceCommand");
+            Object.RegisterPartEvent(this, "DeathDaccaStanceCommand");
+
             Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
 
             base.Register(Object);
@@ -150,6 +154,12 @@ namespace XRL.World.Parts.Skill
                 ParentObject.ApplyEffect(new SaltHopperStance(Effect.DURATION_INDEFINITE));
                 NoviceStancer();
             }
+            else if (E.ID == "DeathDaccaStanceCommand")
+            {
+                StanceReplacement();
+                ParentObject.ApplyEffect(new DaccaStance(Effect.DURATION_INDEFINITE));
+                NoviceStancer();
+            }
             else if (E.ID == "AIGetOffensiveMutationList")
             {
                 WM_MMA_MartialStances GetStances = ParentObject.GetPart<WM_MMA_MartialStances>();
@@ -177,6 +187,11 @@ namespace XRL.World.Parts.Skill
                 else if (IsMyActivatedAbilityToggledOn(SaltBackStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltbackStance") && InStance == false)
                 {
                     E.AddAICommand("SaltBackStanceCommand");
+                    InStance = true;
+                }
+                else if (IsMyActivatedAbilityToggledOn(DeathDaccaStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltbackStance") && InStance == false)
+                {
+                    E.AddAICommand("DeathDaccaStanceCommand");
                     InStance = true;
                 }
             }

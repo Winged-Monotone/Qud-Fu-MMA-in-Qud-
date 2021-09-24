@@ -26,6 +26,8 @@
 
         <power Name="Path of the Astral Tabby" Cost="25" Attribute="Agility" Minimum="19" Class="WM_MMA_PathAstralTabby" Prereq="WM_MMA_MartialStances" Description="Evasive, untouchable, no matter how many flank you--you move as the void does. When flanked by multiple enemies, you gain a bonus to your DV per unit surrounding you, successful dodges build your Combination Strike counter and you gain a +10 to movement speed and gain a bonus to evading missiles, you however deliver reduced damage."></power>
 
+
+
         <power Name="Master of Stances" Cost="250" Attribute="Agility" Minimum="18" Class="WM_MMA_MasterStanceSwap" Prereq="WM_MMA_MartialStances" Description="Switching stances happens instantly."></power>
 
         <power Name="Combination Strikes III" Cost="200" Attribute="Agility" Minimum="18" Class="WM_MMA_CombinationStrikesIII" Prereq="WM_MMA_CombinationStrikesII" Description="Dealing consecutive strikes while unarmed or wielding a natural weapon increases your Penetration by 1 per successful consecutive hit, this refreshes after leaving combat, or missing/failing to penetrate with your attack."></power>
@@ -35,3 +37,4 @@
     </skill>
 </skills>
 
+<!-- <power Name="Path of the Death Dacca" Cost="25" Attribute="Strength" Minimum="18" Class="WM_MMA_PathDeathDacca" Prereq="WM_MMA_MartialStances" Description="With a crushing grip, you take control of the fight with submissions and take downs. Strangle your enemies, toss them afar, and crush limbs. Repositioning, and manipulating your enemies' aggression is the key to this stances power. Grappling scales off of strength."></power> -->

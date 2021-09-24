@@ -54,6 +54,7 @@ namespace XRL.World.Parts.Skill
         public override void Register(GameObject Object)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
+            Object.RegisterPartEvent(this, "DefenderAfterAttack");
             Object.RegisterPartEvent(this, "AttackerAfterAttack");
             Object.RegisterPartEvent(this, "SlumberWitnessEvent");
             Object.RegisterPartEvent(this, "SlumberCleaveEvent");

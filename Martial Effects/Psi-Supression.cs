@@ -20,7 +20,7 @@ namespace XRL.World.Effects
         public PsiSupression(int Duration)
             : this()
         {
-            base.Duration = Duration;
+            base.Duration = DURATION_INDEFINITE;
         }
 
         public override int GetEffectType()

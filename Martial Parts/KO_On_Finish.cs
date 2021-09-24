@@ -101,7 +101,7 @@ namespace XRL.World.Parts
             if (E.Actor.IsPlayer() && ActorAbilities == null)
             {
                 // AddPlayerMessage("adding for mercy");
-                this.ActivatedAbilityID = base.AddMyActivatedAbility("Mercy", "CommandToggleMercy", "Skill", "Activate to show mercy to your opponents, knocking them unconscious instead of killing them. You will not gain xp from {{red|KO'd!}} enemies.", ">", null, true, false, false, false, false, false, false, -1, null);
+                this.ActivatedAbilityID = base.AddMyActivatedAbility(Name: "Mercy", Command: "CommandToggleMercy", Class: "Skill", Description: "Activate to show mercy to your opponents, knocking them unconscious instead of killing them. You will not gain xp from {{red|KO'd!}} enemies.", Icon: ">", Cooldown: -1);
             }
             return base.HandleEvent(E);
         }
