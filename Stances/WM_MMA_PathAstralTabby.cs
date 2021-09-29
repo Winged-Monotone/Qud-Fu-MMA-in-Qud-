@@ -15,6 +15,8 @@ namespace XRL.World.Parts.Skill
         public Guid AstralTabbyStanceID;
         private int FlankersAboundDuration;
 
+        private int FlankerAccumBonus;
+
         public WM_MMA_PathAstralTabby()
         {
             Name = "WM_MMA_PathAstralTabby";
@@ -42,6 +44,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "AstralTabbyStanceCommand");
             Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
+            Object.RegisterPartEvent(this, "EndTurn");
 
             base.Register(Object);
         }
@@ -73,30 +76,60 @@ namespace XRL.World.Parts.Skill
                     var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
                     MMAComboAccess.CurrentComboICounter++;
-                    // AddPlayerMessage("ComboCounterAmount: " + MMAComboAccess.CurrentComboICounter);
                     MMAComboAccess.UpdateCounter();
                 }
             }
-            if (E.ID == "AttackerHit" && ParentObject.HasEffect("AstralTabbyStance"))
+            else if (E.ID == "AttackerHit" && ParentObject.HasEffect("AstralTabbyStance"))
             {
                 Damage Damage = E.GetParameter<Damage>("Damage");
                 Damage.Amount = (int)Math.Floor(Damage.Amount * 0.75);
             }
-            if (E.ID == "BeginTakeAction" && ParentObject.HasEffect("AstralTabbyStance"))
+            else if (E.ID == "BeginTakeAction" && ParentObject.HasEffect<AstralTabbyStance>())
             {
+                // AddPlayerMessage("Log: Beginning Take Action");
                 var ParentCell = ParentObject.CurrentCell.GetLocalAdjacentCells();
-
+                // AddPlayerMessage("Log: Acquired Cells");
                 foreach (var C in ParentCell)
                 {
-                    if (C.HasCombatObject())
+                    // AddPlayerMessage("Log: Starting Foreach");
+                    if (C.HasObjectWithPart("Combat") && !C.HasObjectWithPart("FlankerReader_PAT"))
                     {
-                        FlankersAboundDuration = 3;
+                        // AddPlayerMessage("Found Combat Targets");
+                        var ObjectCheck = C.GetFirstObjectWithPart("Combat");
+                        // AddPlayerMessage("Log: Getting Combat Targets");
 
-                        StatShifter.SetStatShift("DV", +1);
+                        if (!ObjectCheck.HasPart("FlankerReader_PAT"))
+                        {
+                            // AddPlayerMessage("Log: Adding FlankerCheckParts");
+                            ObjectCheck.AddPart<FlankerReader_PAT>();
+
+
+                            // AddPlayerMessage("Log: Added Flanker Part");
+                            var ConfirmedObject = ObjectCheck.GetPart<FlankerReader_PAT>();
+                            ConfirmedObject.Check = true;
+
+
+                            // AddPlayerMessage("Log: Confriming Object Flanker Pass");
+                            if (ConfirmedObject.Check != false)
+                            {
+                                FlankersAboundDuration = 3;
+                                ParentObject.Statistics["DV"]._Value += 1;
+                                Targeted = true;
+                                FlankerAccumBonus += 1;
+                                ConfirmedObject.Check = false;
+                            }
+                        }
+                        // AddPlayerMessage("Log: Completed begin take action.");
+                        break;
+                    }
+                    else
+                    if (Targeted == true)
+                    {
+                        Targeted = false;
                     }
                 }
             }
-            if (E.ID == "TargetedForMissileWeapon" && ParentObject.HasEffect("AstralTabbyStance"))
+            else if (E.ID == "TargetedForMissileWeapon" && ParentObject.HasEffect<AstralTabbyStance>())
             {
                 GameObject Attacker = E.GetGameObjectParameter("Attacker");
                 GameObject Defender = E.GetGameObjectParameter("Defender");
@@ -107,21 +140,30 @@ namespace XRL.World.Parts.Skill
                     StatShifter.SetStatShift("DV", +ParentObject.Statistics["Agility"].Modifier + (ParentObject.Statistics["Level"].BaseValue / 8));
                 }
             }
-            if (E.ID == "EndTurn" && ParentObject.HasEffect("AstralTabbyStance"))
+            else if (E.ID == "EndTurn" && ParentObject.HasEffect<AstralTabbyStance>())
             {
-                if (FlankersAboundDuration > 0)
+                // AddPlayerMessage("Log: Firing Endturn.");
+                if (FlankersAboundDuration > 0 && Targeted == false)
                 {
+                    // AddPlayerMessage("Log: Duration Countdown.");
                     --FlankersAboundDuration;
                 }
-                else
+                else if (Targeted == false && FlankersAboundDuration <= 0)
                 {
-                    StatShifter.RemoveStatShifts();
-                }
-                if (Targeted)
-                {
+                    // AddPlayerMessage("Log: Resetting Stats");
+
+                    ParentObject.Statistics["DV"]._Value -= FlankerAccumBonus;
+                    FlankerAccumBonus = 0;
                     Targeted = false;
+                }
+                else if (Targeted == true && StatShifter != null)
+                {
                     StatShifter.RemoveStatShifts();
                 }
+
+                AddPlayerMessage("Log: Targeted: " + Targeted);
+                AddPlayerMessage("FlankersAboundDuration: " + FlankersAboundDuration);
+
             }
             return base.FireEvent(E);
         }

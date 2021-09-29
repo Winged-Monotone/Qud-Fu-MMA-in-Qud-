@@ -48,7 +48,7 @@ namespace XRL.World.Effects
 
         public Grappled(GameObject Grappler) : this()
         {
-            Grappler = eGrappler;
+            eGrappler = Grappler;
         }
 
         public override string GetDetails()
@@ -78,16 +78,16 @@ namespace XRL.World.Effects
             if (!Object.CanChangeBodyPosition(To: "Immobilized", Involuntary: true)) return false;
 
 
-            AddPlayerMessage("E1: Applying Effect");
+            // AddPlayerMessage("E1: Applying Effect");
 
             Object.BodyPositionChanged(Involuntary: true);
 
-            AddPlayerMessage("E2: Assigning Body Position Change");
+            // AddPlayerMessage("E2: Assigning Body Position Change");
 
             DidX("are", DisplayNameStripped, "!", ColorAsBadFor: Object);
             Object.ParticleText(ConsequentialColor(ColorAsBadFor: Object) + "*" + DisplayNameStripped + "*");
 
-            AddPlayerMessage("E3: Applied Effect");
+            // AddPlayerMessage("E3: Applied Effect");
 
             return true;
         }
@@ -165,18 +165,26 @@ namespace XRL.World.Effects
         }
         public override bool FireEvent(Event E)
         {
-            if (!eGrappler.IsValid()) return eGrappler.RemoveEffect(this);
+            // AddPlayerMessage("E4: Event Found no Grappler or Grappled was Invalid if no messages are present after this.");
+            // AddPlayerMessage("P1: Grappler: " + eGrappler);
+            // AddPlayerMessage("P2: Grappler Validity: " + eGrappler.IsValid());
 
+            if (!eGrappler.IsValid()) return eGrappler.RemoveEffect(this);
             if (E.ID == "IsMobile")
             {
+                // AddPlayerMessage("E5: Has Mobility returned null.");
                 return false;
             }
             else if (E.ID == "CommandTakeAction")
             {
                 if (MakeSave(eGrappler, Object))
                 {
+                    // AddPlayerMessage("E6: Stops Here due to save being made.");
+
                     Object.RemoveEffect(this);
                 }
+
+                // AddPlayerMessage("P1: Grappler Validity: " + eGrappler.IsValid());
             }
             else if (E.ID == "LeftCell")
             {
@@ -185,6 +193,9 @@ namespace XRL.World.Effects
                 var dir = E.GetStringParameter("Direction");
                 var enter = left.GetCellFromDirection(dir);
                 if (mine == null || left == null || enter == null) return true;
+
+                // AddPlayerMessage("E7: Left Cell Pass 1.");
+
 
                 var dist = mine.PathDistanceTo(enter); // BUG? Misreports distance between zones as +1
                 if (dist <= 1) return true; // TODO: re-examine this, is disconnecting right move? move until adjacent?
