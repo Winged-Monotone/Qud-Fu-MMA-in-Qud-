@@ -15,13 +15,12 @@ namespace XRL.World.Parts.Skill
 
         public WM_MMA_PathDeathDacca()
         {
-            Name = "WM_MMA_PathDeathDacca";
-            DisplayName = "Path of the Death Dacca's";
+
         }
 
         public override bool AddSkill(GameObject GO)
         {
-            this.DeathDaccaStanceID = base.AddMyActivatedAbility("Way of the Death-Dacca", "DeathDaccaStanceCommand", "Skill", "Activate to assume the Dancing-Dacca stance.", "*", null, false, false, true);
+            this.DeathDaccaStanceID = base.AddMyActivatedAbility("Way of the Death-Dacca", "DeathDaccaStanceCommand", "Skill", "Activate to assume the Dancing-Dacca stance.", "*", null, true, false, false);
 
             return true;
         }

@@ -10,14 +10,16 @@
     </object>
 
     <object Name="DefaultFist" Load="Merge">
-        <tag Name="MMAHooks"></tag>
-        <part Name="MartialConditioningFistMod"></part>
-    </object>
-    <!-- <object Name="CarbideHandBones" Load="Merge">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
-    <object Name="CarbideFist" Inherits="BaseCudgel">
+
+    
+    <object Name="CarbideHandBones" Load="Merge">
+        <part Name="MartialConditioningFistMod"></part>
+        <tag Name="MMAHooks"></tag>
+    </object>
+    <object Name="CarbideFist" Load="Merge">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
@@ -25,7 +27,7 @@
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
-    <object Name="FulleriteFist" Inherits="BaseCudgel">
+    <object Name="FulleriteFist" Load="Merge">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
@@ -37,10 +39,10 @@
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
     </object>
-    <object Name="Burrowing Claws" Inherits="MeleeWeapon">
+    <object Name="Burrowing Claws" Load="Merge">
         <part Name="MartialConditioningFistMod"></part>
         <tag Name="MMAHooks"></tag>
-    </object> -->
+    </object>
 
 
 
@@ -68,6 +70,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="DawningFistTierHelmet2" Inherits="BaseHelmet">
@@ -79,6 +82,7 @@
         <tag Name="Tier" Value="6" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="DawningFistTierArmor1" Inherits="Armor">
@@ -90,6 +94,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="DawningFistTierArmor2" Inherits="Armor">
@@ -101,6 +106,7 @@
         <tag Name="Tier" Value="7" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="DawningFistTierBracers1" Inherits="BaseGauntlet">
@@ -112,6 +118,7 @@
         <tag Name="Tier" Value="6" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <!-- Astral Way Stuff -->
@@ -125,6 +132,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="VoidClawTierArmor2" Inherits="Armor">
@@ -136,6 +144,7 @@
         <tag Name="Tier" Value="7" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="VoidClawTierBoot1" Inherits="Armor">
@@ -148,6 +157,7 @@
         <tag Name="Tier" Value="4" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
         <tag Name="Gender" Value="plural" />
     </object>
 
@@ -161,6 +171,7 @@
         <tag Name="Tier" Value="4" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
         <tag Name="Gender" Value="plural" />
     </object>
 
@@ -169,25 +180,27 @@
     <object Name="ScytheStrikeTierBracers1" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
         <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
-        <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1+1d4" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
+        <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1+1d4" Skill="WM_MMASkillTree" Slot="Arm" />
         <part Name="Commerce" Value="350" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner." />
         <part Name="Physics" Weight="3" />
         <tag Name="Tier" Value="6" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="ScytheStrikeTierBracers2" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
         <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
-        <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="2+1d8" Skill="WM_MMASkillTree" SecondaryStat="Agility" Slot="Arm" />
+        <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="2+1d8" Skill="WM_MMASkillTree" Slot="Arm" />
         <part Name="Commerce" Value="750" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner, the edges have been hardened and resharpened with laquer, however the bloodstains of this weapon's victims are forever present for its witnesses." />
         <part Name="Physics" Weight="3" />
         <tag Name="Tier" Value="6" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <!-- Amythestshell/Amethyst-Shell Way Stuff -->
@@ -201,6 +214,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="AmethystShellTierArmor2" Inherits="Armor">
@@ -212,6 +226,7 @@
         <tag Name="Tier" Value="7" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <!-- slumber/Slumbering-Fist Way Stuff -->
@@ -225,6 +240,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="SlumberFistTierArmor2" Inherits="Armor">
@@ -236,6 +252,7 @@
         <tag Name="Tier" Value="7" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <!-- Way Stuff -->
@@ -247,6 +264,7 @@
         <stat Name="Hitpoints" sValue="100" />
         <part Name="Physics" Weight="3" />
         <intproperty Name="Inorganic" Value="0" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="GiantWineGourd" Inherits="WaterContainer">
@@ -256,17 +274,19 @@
         <stat Name="Hitpoints" sValue="100" />
         <part Name="Physics" Weight="40" />
         <intproperty Name="Inorganic" Value="0" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="ContenderTierHelmet1" Inherits="BaseHelmet">
         <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
         <part Name="Render" DisplayName="dashing bandanna" ColorString="&amp;w" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="Y" />
         <part Name="Commerce" Value="100" />
-        <part Name="Description" Short="A strip of cloth, usually worn agaisnt the forehead, it makes one feel brave." />
+        <part Name="Description" Short="A strip of cloth, usually worn against the forehead, it makes one feel brave." />
         <part Name="Physics" Weight="1" />
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
     <object Name="ContenderTierArmor1" Inherits="Armor">
@@ -278,6 +298,7 @@
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
         <tag Name="BaseObject" Value="*noinherit" />
+        <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
 
@@ -327,7 +348,7 @@
         <part Name="JapaneseNameConstructor" />
 
     </object> -->
-
+<!-- 
 
 
 
@@ -395,7 +416,7 @@
     </object>
 
     <object Name="BraverDawnDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversDawn-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversDawn-100" />
         <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="creatures/ryu_dawn_disc.png" ColorString="&amp;m" DetailColor="K" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -426,7 +447,7 @@
     </object>
 
     <object Name="BraverAstralDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversAstralCabby-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversAstralCabby-100" />
         <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="creatures/ryu_astral_master.png" ColorString="&amp;K" RenderString="K" DetailColor="b" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -455,7 +476,7 @@
     </object>
 
     <object Name="BraverSaltHopDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltHopper-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSaltHopper-100" />
         <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="creatures/ryu_salthop_disc.png" ColorString="&amp;w" RenderString="w" DetailColor="g" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -486,7 +507,7 @@
     </object>
 
     <object Name="BraverSaltBackDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltBack-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSaltBack-100" />
         <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="creatures/ryu_saltback_disc.png" ColorString="&amp;y" RenderString="y" DetailColor="w" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -517,7 +538,7 @@
     </object>
 
     <object Name="BraverSlumberDisciple" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSlumber-100" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSlumber-100" />
         <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fury Way" Tile="creatures/ryu_slumber_disc.png" ColorString="&amp;Y" RenderString="R" DetailColor="r" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
@@ -548,6 +569,7 @@
     </object>
 
 
+ -->
 
 
 
@@ -567,9 +589,8 @@
 
 
 
-
-    <object Name="BraverMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400" />
+    <!-- <object Name="BraverMaster" Inherits="BaseBraver">
+        <part Name="Brain" Hostile="false" Factions="Bravers-95" />
         <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;Y" DetailColor="C" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -589,7 +610,7 @@
         <skill Name="WM_MMA_CombinationStrikesI" />
         <skill Name="WM_MMA_CombinationStrikesII" />
         <skill Name="WM_MMA_CombinationStrikesIII" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="ContenderTierArmor1" />
@@ -600,7 +621,7 @@
     </object>
 
     <object Name="BraverDawnMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversDawn-400" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversDawn-400" />
         <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/ryu_dawn_master.png" ColorString="&amp;m" RenderString="m" DetailColor="K" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -623,7 +644,7 @@
         <skill Name="WM_MMA_MasterStanceSwap"/>
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathDawnGlider" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="DawningFistTierArmor2" Number="1" />
         <inventoryobject Blueprint="DawningFistTierBracers1" Number="1"/>
@@ -634,7 +655,7 @@
     </object>
 
     <object Name="BraverAstralMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversAstralCabby-400" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversAstralCabby-400" />
         <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/ryu_astral_Disc.png" ColorString="&amp;b" RenderString="B" DetailColor="K" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -657,7 +678,7 @@
         <skill Name="WM_MMA_MasterStanceSwap"/>
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathAstralTabby" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="VoidClawTierArmor2" Number="1" />
         <inventoryobject Blueprint="VoidClawTierBoot2" Number="1"/>
@@ -667,7 +688,7 @@
     </object>
 
     <object Name="BraverSaltHopMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltHopper-400" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltHopper-400" />
         <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/ryu_salthop_master.png" ColorString="&amp;K" RenderString="K" DetailColor="g" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -690,7 +711,7 @@
         <skill Name="WM_MMA_MasterStanceSwap"/>
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSaltHopper" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="ContenderTierArmor1" />
@@ -701,7 +722,7 @@
     </object>
 
     <object Name="BraverSaltBackMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSaltBack-400" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltBack-400" />
         <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/ryu_saltback_master.png" ColorString="&amp;K" RenderString="K" DetailColor="w" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -724,7 +745,7 @@
         <skill Name="WM_MMA_MasterStanceSwap"/>
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSaltBack" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="AmethystShellTierArmor2" />
@@ -735,7 +756,7 @@
     </object>
 
     <object Name="BraverSlumberMaster" Inherits="BaseBraver">
-        <part Name="Brain" Hostile="false" Factions="Bravers-400,BraversSlumber-400" />
+        <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSlumber-400" />
         <part Name="Render" DisplayName="braver-master of Slumbering-Fury Ryu" Tile="creatures/ryu_slumber_master.png" ColorString="&amp;K" RenderString="K" DetailColor="r" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
@@ -758,7 +779,7 @@
         <skill Name="WM_MMA_MasterStanceSwap"/>
         <skill Name="WM_MMA_MartialStances" />
         <skill Name="WM_MMA_PathSlumberling" />
-        <!-- <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." /> -->
+        <tag Name="SimpleConversation" Value="Moon and Sun. Wisdom and will.~May the earth yield for us this season.~Peace, =player.formalAddressTerm=." />
         <inventoryobject Blueprint="Croccasins" Number="1" />
         <inventoryobject Blueprint="ContenderTierHelmet1" Number="1" />
         <inventoryobject Blueprint="SlumberFistTierArmor2" />
@@ -766,7 +787,7 @@
         <inventoryobject Blueprint="WineGourd" Number="1" />
         <inventoryobject Blueprint="GiantWineGourd" Number="1d2-1" />
         <inventoryobject Blueprint="*Junk 1" Number="1d4" />
-    </object>
+    </object> -->
 
 
 
@@ -787,7 +808,7 @@
 
 
 
-    <object Name="Braver Hero" Inherits="BraverMaster">
+    <!-- <object Name="Braver Hero" Inherits="BraverMaster">
         <part Name="Render" ColorString="&amp;M" />
         <part Name="JapaneseNameConstructor" />
         <part Name="DisciplesPack" />
@@ -899,6 +920,6 @@
         <stat Name="Hitpoints" Value="350" />
         <stat Name="Level" Value="35" />
         <stat Name="AV" Value="7" />
-    </object>
+    </object> -->
 
 </objects>

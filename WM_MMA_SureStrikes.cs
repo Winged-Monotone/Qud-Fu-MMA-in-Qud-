@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using XRL.World.Anatomy;
 using System.Text;
 using XRL.Rules;
 using XRL.UI;
@@ -9,6 +10,12 @@ using XRL.Messages;
 using ConsoleLib.Console;
 using UnityEngine;
 using XRL.World.Effects;
+
+using XRL;
+using XRL.World;
+using XRL.World.Capabilities;
+using XRL.World.Parts;
+using XRL.World.Parts.Skill;
 
 namespace XRL.World.Parts.Skill
 {
@@ -22,8 +29,7 @@ namespace XRL.World.Parts.Skill
         public GameObject eDefender;
         public WM_MMA_SureStrikes()
         {
-            Name = "WM_MMA_SureStrikes";
-            DisplayName = "Sure Strikes";
+
         }
         public void UpdateCounter()
         {
@@ -46,7 +52,7 @@ namespace XRL.World.Parts.Skill
             catch { }
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "CommandSureStrikes");
             Object.RegisterPartEvent(this, "ChainingSureStrikes");
@@ -54,27 +60,6 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "FailedChainingSureStrikes");
             Object.RegisterPartEvent(this, "AIGetOffensiveMutationList");
             Object.RegisterPartEvent(this, "EndTurn");
-        }
-
-        public void ChainFuntion()
-        {
-            var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
-            var ParentAgi = ParentObject.StatMod("Agility");
-
-            AwardSureStrikes = ParentAgi;
-            var Attacker = _ParentObject;
-
-            if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
-            {
-                --AwardSureStrikes;
-                // AddPlayerMessage("inititate chaining strike event");
-                Attacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
-            }
-            else
-            {
-                --AwardSureStrikes;
-                Attacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
-            }
         }
 
         public override bool FireEvent(Event E)
@@ -116,7 +101,7 @@ namespace XRL.World.Parts.Skill
                 }
                 else
                 {
-                    ChainFuntion();
+                    // ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
@@ -126,14 +111,14 @@ namespace XRL.World.Parts.Skill
             else if (E.ID == "FailedChainingSureStrikes")
             {
                 var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
-                var eAttacker = _ParentObject;
+                var eAttacker = ParentObject;
 
                 if (IsPlayer())
                     UpdateCounter();
 
                 if (Stat.Random(1, 100) <= 20 + MMAAccess.CurrentComboICounter)
                 {
-                    ChainFuntion();
+                    // ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
@@ -153,7 +138,7 @@ namespace XRL.World.Parts.Skill
 
                 if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
                 {
-                    ChainFuntion();
+                    // ChainFuntion();
                     ParentObject.CooldownActivatedAbility(SureStrikesActivatedAbilityID, 80 - (AwardSureStrikes * 10));
                 }
 
@@ -168,96 +153,102 @@ namespace XRL.World.Parts.Skill
             return base.FireEvent(E);
         }
 
-        public void ChainingSureStrike(GameObject Target)
-        {
-            // AddPlayerMessage("Chaining Strikes Method Fires");
-            PlayWorldSound("swiftstrikes", 0.5f, 0, true);
-
-            // AddPlayerMessage("chaining eventhook?");
-            Event EventHook = null;
-
-            var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
-
-            var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
-
-            FistPenBonus = PrimaryWeaponTraits.PenBonus;
-            PrimaryWeaponTraits.AdjustBonusCap(FistPenBonus * 2);
-
-            // AddPlayerMessage("event changes");
-            EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
-            EventHook.SetParameter("PenBonus", FistPenBonus * 2);
-            EventHook.SetParameter("PenCapBonus", ParentObject);
-            EventHook.SetParameter("Attacker", ParentObject);
-            EventHook.SetParameter("Defender", Target);
-
-            // AddPlayerMessage("fire eventhook?");
-            ParentObject.FireEvent(EventHook);
-
-            var eAttacker = Target;
-            var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
-
-            ChainFuntion();
-            if (IsPlayer())
-                UpdateCounter();
-        }
-
         public void PlayersSurestrike()
         {
-            TextConsole _TextConsole = UI.Look._TextConsole;
-            ScreenBuffer Buffer = TextConsole.ScrapBuffer;
-            Core.XRLCore.Core.RenderMapToBuffer(Buffer);
             var cell = PickDirection();
-
             ThrowSureStrike(cell);
         }
 
         public void ThrowSureStrike(Cell cell)
         {
-            // var TargetCell = ParentObject.PickDirection();
+            var WMMAHooks = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
 
+            var ComboCounter = WMMAHooks.CurrentComboICounter;
             var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
+            var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
+            var FistPenBonus = PrimaryWeaponTraits.PenBonus;
 
-            Event EventHook = null;
-            GameObject Target = cell.FindObject(o => o.HasPart("Brain"));
+            GameObject Target = cell.GetCombatTarget(Attacker: ParentObject);
+
+            eDefender = Target;
 
             if (cell == null)
             {
                 AddPlayerMessage("Must target an enemy!");
                 return;
             }
-            if (IsPlayer() && Target == null)
+            if (IsPlayer() && Target == null || Target.IsPlayer())
             {
                 AddPlayerMessage("Invalid Target.");
                 return;
             }
-            // if (IsPlayer() && Target != null && !PrimaryWeapon.HasPart("MartialConditioningFistMod") || !PrimaryWeapon.HasPart("MartialConditioningFistMod"))
-            // {
-            //     AddPlayerMessage("Invalid Weapon type.");
-            //     return;
-            // }
-            // AddPlayerMessage("passed clears, throwing attack");
 
             PlayWorldSound("swiftstrikes", 0.5f, 0, true);
 
+            Combat.PerformMeleeAttack(Attacker: ParentObject,
+                                         Defender: eDefender,
+                                         EnergyCost: 0, HitModifier: + 5,
+                                         PenModifier: FistPenBonus + 10 + ComboCounter,
+                                         PenCapModifier: 99);
 
+            XDidYToZ(ParentObject, "throw focused percussive-strikes at", eDefender);
+
+            UpdateCounter();
+        }
+
+        public void ChainingSureStrike(GameObject Target)
+        {
+            PlayWorldSound("swiftstrikes", 0.5f, 0, true);
+
+            var WMMAHooks = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+            
+            var ComboCounter = WMMAHooks.CurrentComboICounter;
+
+            var PrimaryWeapon = ParentObject.GetPrimaryWeapon();
             var PrimaryWeaponTraits = PrimaryWeapon.GetPart<MeleeWeapon>();
-
             var FistPenBonus = PrimaryWeaponTraits.PenBonus;
-
-            EventHook = Event.New("PerformMeleeAttack", 0, 0, 0);
-            EventHook.SetParameter("PenBonus", FistPenBonus + 20);
-            EventHook.SetParameter("Attacker", ParentObject);
-            EventHook.SetParameter("TargetCell", cell);
-            EventHook.SetParameter("Defender", Target);
+            var HitModifier = 5;
 
             eDefender = Target;
 
-            AddPlayerMessage(ParentObject.it + " throws focused, percussive strikes at " + eDefender.it);
-
-            ParentObject.FireEvent(EventHook);
-            UpdateCounter();
-            // ParentObject.PerformMeleeAttack(Target);
+            if (ParentObject.TryGetPart(out WM_MMA_PathDawnGlider WMMADGS))
+            {
+                HitModifier += WMMADGS.BonusSureStrike;
+            }
+            
+            Combat.PerformMeleeAttack(Attacker: ParentObject,
+                                         Defender: eDefender,
+                                         EnergyCost: 0, HitModifier: + HitModifier,
+                                         PenModifier: FistPenBonus + 10 + ComboCounter,
+                                         PenCapModifier: 99);
+            
+            
+            // ChainFuntion();
+            
+            if (IsPlayer())
+                UpdateCounter();
+            
         }
+
+        // public void ChainFuntion()
+        // {
+        //     var MMAAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+        //     var ParentAgi = ParentObject.StatMod("Agility");
+
+        //     AwardSureStrikes = ParentAgi;
+        //     var Attacker = _ParentObject;
+
+        //     if (Stat.Random(1, 100) <= 20 + (MMAAccess.CurrentComboICounter * 2))
+        //     {
+        //         --AwardSureStrikes;
+        //         Attacker.FireEvent(Event.New("ChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
+        //     }
+        //     else
+        //     {
+        //         --AwardSureStrikes;
+        //         Attacker.FireEvent(Event.New("FailedChainingSureStrikes", "Defender", eDefender, "Attacker", Attacker));
+        //     }
+        // }
 
         public override bool AddSkill(GameObject GO)
         {

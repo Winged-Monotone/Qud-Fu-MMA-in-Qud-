@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<AssemblyName>FocusPsi</AssemblyName>
-		<PackageId>FocusPsi</PackageId>
+		<AssemblyName>Qud-Fu</AssemblyName>
+		<PackageId>QudFuMMA</PackageId>
 		<Authors>Winged Monotone</Authors>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-		<LangVersion>6</LangVersion>
+		<LangVersion>9</LangVersion>
 		<IntermediateOutputPath>../dump</IntermediateOutputPath>
 		<OutputPath>../dump</OutputPath>
-		<QudLibPath>E:\SteamLibrary\steamapps\common\Caves of Qud\CoQ_Data\Managed</QudLibPath>
+		<QudLibPath>H:\SteamLibrary\steamapps\common\Caves of Qud\CoQ_Data\Managed</QudLibPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System" />

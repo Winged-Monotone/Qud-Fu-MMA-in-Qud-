@@ -6,6 +6,8 @@ using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
 
+using XRL.World.Anatomy;
+
 namespace XRL.World.Parts.Skill
 {
     [Serializable]
@@ -13,48 +15,29 @@ namespace XRL.World.Parts.Skill
     {
         public WM_MMA_FlurryOfBlows()
         {
-            Name = "WM_MMA_FlurryOfBlows";
-            DisplayName = "Chaining Strikes";
+           
         }
 
-        public override void Register(GameObject Object)
+        public override bool WantEvent(int ID, int cascade)
         {
-            Object.RegisterPartEvent(this, "AttackerQueryWeaponSecondaryAttackChanceMultiplier");
-            base.Register(Object);
+            return base.WantEvent(ID, cascade)
+            || ID == BeforeMeleeAttackEvent.ID;
         }
 
-        public override bool FireEvent(Event E)
+        public override bool HandleEvent(BeforeMeleeAttackEvent E)
         {
-            if (E.ID == "AttackerQueryWeaponSecondaryAttackChanceMultiplier")
+            var eWeapon = E.Weapon;
+            var eWeaponSChance = E.Weapon.GetPart<SecondaryAttackChance>();
+
+            var ParentsAgility = ParentObject.StatMod("Agility");
+            var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
+
+            if (E.Actor == ParentObject & (eWeapon.HasPart("MartialConditioningFistMod") || eWeapon.Blueprint == "DefaultMartialFist" || eWeapon.IsNatural() || eWeapon.HasPart("Psionic Hand")) && eWeapon.HasPart<SecondaryAttackChance>())
             {
-                Body body = ParentObject.GetPart("Body") as Body;
-
-                var ParentsAgility = ParentObject.StatMod("Agility");
-                var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
-
-                List<BodyPart> hands = body.GetPart("Hand");
-
-                foreach (BodyPart hand in hands)
-                {
-                    try
-                    {
-                        if (!hand.Name.Contains("Robo-") && hand.DefaultBehavior != null && hand.DefaultBehavior.HasPart("MartialConditioningFistMod"))
-                        {
-                            BodyPart bodyPart = E.GetParameter("BodyPart") as BodyPart;
-                            if (bodyPart == null || bodyPart.Category != 6)
-                            {
-                                E.SetParameter("Chance", E.GetIntParameter("Chance") + (1 + ParentsAgility) + (1 * (ParentsLevel / 4)));
-                            }
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-                }
+                eWeaponSChance.Chance += (2 * ParentsAgility) + 1 + (ParentsLevel / 4);
             }
 
-            return base.FireEvent(E);
+            return base.HandleEvent(E);
         }
 
         public override bool AddSkill(GameObject GO)

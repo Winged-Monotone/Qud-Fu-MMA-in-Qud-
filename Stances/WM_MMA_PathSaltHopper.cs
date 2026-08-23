@@ -32,18 +32,17 @@ namespace XRL.World.Parts.Skill
 
         public WM_MMA_PathSaltHopper()
         {
-            Name = "WM_MMA_PathSaltHopper";
-            DisplayName = "Path of the Salt-Hopper";
+
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerAfterAttack");
             Object.RegisterPartEvent(this, "SlumberWitnessEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
 
         public override bool FireEvent(Event E)
@@ -140,7 +139,7 @@ namespace XRL.World.Parts.Skill
         public override bool AddSkill(GameObject GO)
         {
 
-            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
 
             return true;
         }

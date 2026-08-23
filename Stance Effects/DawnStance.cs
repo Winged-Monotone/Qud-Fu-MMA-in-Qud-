@@ -5,6 +5,7 @@ using XRL.Core;
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
+using XRL.World.Parts.Skill;
 
 namespace XRL.World.Effects
 {
@@ -27,26 +28,15 @@ namespace XRL.World.Effects
             return "A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +1 to hit and + 2 to DV\n";
         }
 
-        public override void Register(GameObject go)
+        public override void Register(GameObject go, IEventRegistrar registrar)
         {
-            go.RegisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.RegisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.RegisterEffectEvent((Effect)this, "EndTurn");
-            go.RegisterEffectEvent((Effect)this, "IsMobile");
-            go.RegisterEffectEvent((Effect)this, "LeaveCell");
-            go.RegisterEffectEvent((Effect)this, "BeginTakeAction");
-            base.Register(Object);
-        }
-
-        public override void Unregister(GameObject go)
-        {
-            go.UnregisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.UnregisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.UnregisterEffectEvent((Effect)this, "EndTurn");
-            go.UnregisterEffectEvent((Effect)this, "IsMobile");
-            go.UnregisterEffectEvent((Effect)this, "LeaveCell");
-            go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
-            base.Unregister(Object);
+            registrar.Register("MovementModeChanged");
+            registrar.Register("CanChangeMovementMode");
+            registrar.Register("EndTurn");
+            registrar.Register("IsMobile");
+            registrar.Register("LeaveCell");
+            registrar.Register("BeginTakeAction");
+            base.Register(Object, registrar);
         }
 
         public void DawnPulse(Cell cell)
@@ -105,7 +95,107 @@ namespace XRL.World.Effects
             StatShifter.RemoveStatShifts();
         }
 
+        public override bool WantEvent(int ID, int cascade)
+        {
+            return base.WantEvent(ID, cascade)
+            || ID == AttackerDealtDamageEvent.ID;
+        }
 
+        public override bool HandleEvent(AttackerDealtDamageEvent E)
+        {
+            var eAttacker = E.Source;
+            var eDefender = E.Object;
 
+            var eWeapon = E.Weapon;
+
+            if (E.Weapon.IsValid() && eAttacker.HasPart<WM_MMA_MartialStances>() && eWeapon.HasPart<MartialConditioningFistMod>())
+            {
+
+                // AddPlayerMessage("E.Log: Found Part");
+
+                var eAttackerLinkHandlers = eAttacker.GetPart<WM_MMA_MartialStances>();
+                var eStanceActiveToggles = eAttackerLinkHandlers.StanceVisceraDefID;
+
+                // AddPlayerMessage("E.Log: Found Calls");
+
+                if (eAttacker.IsPlayer() && IsMyActivatedAbilityToggledOn(eStanceActiveToggles, Object))
+                {
+                    // AddPlayerMessage("T: Stance is Toggle On.");
+
+                    if (eAttacker == Object)
+                    {
+                        var eRandomizer = Stat.Random(1, 100);
+                        var eVisceralRandom = Stat.Random(1, 150);
+
+                        if (eRandomizer <= 33)
+                        {
+                            // if (eVisceralRandom )
+                            if (eVisceralRandom <= 10)
+                            {
+                                XDidYToZ(eAttacker, "slam a bone-crushing elbow-strike into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 20)
+                            {
+                                XDidYToZ(eAttacker, "throw a whirling roundhouse at", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 30)
+                            {
+                                XDidYToZ(eAttacker, "drive a powerful thigh-kick through", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 40)
+                            {
+                                XDidYToZ(eAttacker, "launch a rising-knee at", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 50)
+                            {
+                                XDidYToZ(eAttacker, "sweep with a mae mawashi at", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 60)
+                            {
+                                XDidYToZ(eAttacker, "drive a strong sun-fist into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 70)
+                            {
+                                XDidYToZ(eAttacker, "drill a push-kick into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 80)
+                            {
+                                XDidYToZ(eAttacker, "cleave with a deadly hammerblow into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 90)
+                            {
+                                XDidYToZ(eAttacker, "drop a strong hammer-kick against", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 100)
+                            {
+                                XDidYToZ(eAttacker, "fire off a flurry-of-jabs at", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 110)
+                            {
+                                XDidYToZ(eAttacker, "let loose a series of mawashi-geri into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 120)
+                            {
+                                XDidYToZ(eAttacker, "let a furious crescent snap-kick crush", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 130)
+                            {
+                                XDidYToZ(eAttacker, "unleash a quick 1-inch punch into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 140)
+                            {
+                                XDidYToZ(eAttacker, "pull an illusion-twist-kick and slam your heel into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 150)
+                            {
+                                XDidYToZ(eAttacker, "leap into the air and perform a tornado-kick, hitting", eDefender, "", "!");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace XRL.World.Effects
             StatShifter.SetStatShift("Ego", -2);
             if (Object.HasEffect("PsiSupression"))
             {
-                PsiSupression PsiSupression = Object.GetEffect("PsiSupression") as PsiSupression;
+                PsiSupression PsiSupression = Object.GetEffect<PsiSupression>() as PsiSupression;
                 if (Duration > PsiSupression.Duration)
                 {
                     PsiSupression.Duration = Duration;
@@ -54,18 +54,11 @@ namespace XRL.World.Effects
             base.Remove(Object);
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
 
-            Object.RegisterEffectEvent(this, "EndTurn");
-            base.Register(Object);
-        }
-
-        public override void Unregister(GameObject Object)
-        {
-
-            Object.UnregisterEffectEvent(this, "EndTurn");
-            base.Unregister(Object);
+            registrar.Register("EndTurn");
+            base.Register(Object, registrar);
         }
 
         public override bool FireEvent(Event E)

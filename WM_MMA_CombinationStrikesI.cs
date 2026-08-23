@@ -5,6 +5,7 @@ using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
 using XRL.World.Effects;
+using XRL.World.Anatomy;
 
 namespace XRL.World.Parts.Skill
 {
@@ -12,7 +13,7 @@ namespace XRL.World.Parts.Skill
     public class WM_MMA_CombinationStrikesI : BaseSkill
     {
         public int CurrentComboICounter = 0;
-        public int MaximumComboICounter = 30;
+        public int MaximumComboICounter = 99;
         public int ComboResetDuration;
         public int BufferDuration;
         public bool ComboBuffering;
@@ -22,13 +23,12 @@ namespace XRL.World.Parts.Skill
         public Guid ResetComboCounterID = Guid.Empty;
         public WM_MMA_CombinationStrikesI()
         {
-            Name = "WM_MMA_CombinationStrikesI";
-            DisplayName = "Combination Strikes I";
+            
         }
 
         public override bool AddSkill(GameObject GO)
         {
-            this.ComboCounterID = base.AddMyActivatedAbility("Combo-Counter", "CommandPlaceHolder", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.ComboCounterID = base.AddMyActivatedAbility("Combo-Counter", "CommandPlaceHolder", "Skill", "Place this Counter in your hotbar to determine your current combo-level.", "*", null, false, false, true);
             UpdateCounter();
             this.ResetComboCounterID = base.AddMyActivatedAbility("Reset Counter", "CommandResetCmbo", "Skill", "Reset the ComboCounter", "*", null, false, false, true);
             UpdateCounter();
@@ -78,10 +78,11 @@ namespace XRL.World.Parts.Skill
             || ID == AttackerDealingDamageEvent.ID
             || ID == GetAttackerHitDiceEvent.ID
             || ID == ModifyAttackingSaveEvent.ID
-            || ID == ModifyDefendingSaveEvent.ID;
+            || ID == ModifyDefendingSaveEvent.ID
+            || ID == AttackerDealtDamageEvent.ID;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerCriticalHit");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
@@ -91,7 +92,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "CommandResetCmbo");
             Object.RegisterPartEvent(this, "EndTurn");
             Object.RegisterPartEvent(this, "DrinkingFrom");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
 
         public override bool HandleEvent(ModifyAttackingSaveEvent E)
@@ -101,8 +102,8 @@ namespace XRL.World.Parts.Skill
 
             if (Parent && ParentObject.HasPart("MartialBody") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII"))
             {
-                E.NaturalRoll += (CurrentComboICounter / 2);
-                E.Roll += (CurrentComboICounter / 2);
+                E.NaturalRoll += (CurrentComboICounter / 4);
+                E.Roll += (CurrentComboICounter / 4);
             }
 
             return base.HandleEvent(E);
@@ -117,7 +118,7 @@ namespace XRL.World.Parts.Skill
 
             if (Parent && (E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.Blueprint == "DefaultMartialFist" || E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.HasPart("NaturalGear") || E.Weapon.HasPropertyOrTag("WeaponUnarmed")) && ParentObject.HasSkill("WM_MMA_CombinationStrikesIII") && Defender.HasPart("Brain") && Defender.HasPart("Combat"))
             {
-                E.PenetrationBonus += (CurrentComboICounter / 3);
+                E.PenetrationBonus += (CurrentComboICounter / 10);
             }
 
             return base.HandleEvent(E);
@@ -134,6 +135,7 @@ namespace XRL.World.Parts.Skill
                 Body body = ParentObject.GetPart("Body") as Body;
 
                 var ParentsAgility = ParentObject.StatMod("Ego");
+                var ParentsStrength = ParentObject.StatMod("Strength");
                 var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
 
                 List<BodyPart> hands = body.GetPart("Hand");
@@ -146,17 +148,32 @@ namespace XRL.World.Parts.Skill
                     {
                         try
                         {
-                            // AddPlayerMessage("Accessing Damage System. A");
+                            // AddPlayerMessage("Accessing Damage System. A"); Master of Strikes
 
                             if (Parent && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
-                                var FistDamage = E.Damage.Amount;
+                                if (!ParentObject.HasSkill("Master of Strikes"))
+                                {
+                                    var FistDamage = E.Damage.Amount;
 
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * E.Damage.Amount));
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.025) * ParentsStrength));
+                                }
+                                else
+                                {
+                                    var FistDamage = E.Damage.Amount;
+
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 1.0) * ParentsStrength));
+                                }
                             }
                             else if (Stat.Random(1, 100) < CurrentComboICounter && Parent && hand.DefaultBehavior.HasPart("MartialConditioningFistMod") && ParentObject.HasSkill("WM_MMA_CombinationStrikesII") && Target.HasPart("Brain") && Target.HasPart("Combat"))
                             {
-                                E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.050) * E.Damage.Amount));
+                                if (!ParentObject.HasSkill("Master of Strikes"))
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 0.5) + (ParentsStrength * (CurrentComboICounter * 0.25))));
+                                else
+                                {
+                                    E.Damage.Amount = (int)Math.Round(E.Damage.Amount + ((CurrentComboICounter * 1.0) + (ParentsStrength * (CurrentComboICounter * 0.75))));
+
+                                }
                             }
 
                         }
@@ -209,7 +226,7 @@ namespace XRL.World.Parts.Skill
                         --CurrentComboICounter;
                     }
                 }
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && (DeezHands.Blueprint == "DefaultMartialFist" || DeezHands.HasPart("MartialConditioningFistMod") || DeezHands.HasPart("NaturalGear") || DeezHands.HasPropertyOrTag("WeaponUnarmed")))
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && (DeezHands.Blueprint == "DefaultMartialFist" || DeezHands.HasPart("MartialConditioningFistMod") || DeezHands.HasPart("NaturalEquipment") || DeezHands.HasPart("NaturalWeapon") || DeezHands.HasPropertyOrTag("WeaponUnarmed")))
                 {
                     // AddPlayerMessage("Increase ComboCounter");
 
@@ -243,6 +260,7 @@ namespace XRL.World.Parts.Skill
                         ComboBuffering = false;
                         CurrentComboICounter = 0;
                         UpdateCounter();
+
                     }
                 }
 

@@ -16,12 +16,11 @@
         <group Name="SpecialItems" Style="pickone">
 
             <object Blueprint="GiantWineGourd" Number="1" />
-            <table Name="#Junk 1" Number="1" />
 
         </group>
     </population>
 
-    <!-- <population Name="GenericFactionPopulation" Load="Merge">
+    <population Name="GenericFactionPopulation" Load="Merge">
         <group Name="Factions" Style="pickone" Load="Merge">
             <group Name="Bravers" Style="pickone" Weight="1">
                 <object Blueprint="Bravers" Weight="1" />
@@ -45,6 +44,5 @@
                 <object Blueprint="BraversSlumber" Weight="1" />
             </group>
         </group>
-    </population> -->
+    </population>
 </populations>
-

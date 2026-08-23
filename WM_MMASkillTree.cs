@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security;
 using XRL.Core;
 using XRL.World;
+using XRL.World.Anatomy;
 
 
 using ObjectPart = XRL.World.GameObjectFactory;
@@ -29,8 +30,7 @@ namespace XRL.World.Parts.Skill
 
         public WM_MMASkillTree()
         {
-            Name = "WM_MMASkillTree";
-            DisplayName = "Martial Disciplines";
+
         }
 
         public override bool AddSkill(GameObject GO)
@@ -51,6 +51,10 @@ namespace XRL.World.Parts.Skill
             {
                 ParentObject.AddSkill("WM_MMA_MartialConI");
             }
+            if (!ParentObject.HasSkill("WM_MMA_FlurryOfBlows"))
+            {
+                ParentObject.AddSkill("WM_MMA_FlurryOfBlows");
+            }
             return true;
         }
 
@@ -59,20 +63,20 @@ namespace XRL.World.Parts.Skill
             return true;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "DrinkingFrom");
         }
 
-        public string GetLevelValueBaseDamage(int Level)
+        public int GetLevelValueBaseDamage(int Level)
         {
-            if (ParentObject != null)
-            {
-                BaseDamageMod = "1d" + (2 + (Level / 4));
-            }
+            int exDamageMIN = (1 + Level / 2);
+            int exDamageMAX = (1 + Level / 2) + (2 + (Level / 2));
 
-            return BaseDamageMod;
+            var MinMax = Stat.Random(exDamageMIN, exDamageMAX);
+
+            return MinMax;
         }
 
         public int GetLevelValuePenetration(int Level)
@@ -120,55 +124,38 @@ namespace XRL.World.Parts.Skill
             return BasePenMod;
         }
 
-        public void UpdateFistDamage(GameObject parent)
+        public override bool WantEvent(int ID, int cascade)
         {
-            Body body = parent.GetPart<Body>();
-            List<BodyPart> hands = body.GetPart("Hand");
 
-            foreach (BodyPart hand in hands)
-            {
-                try
-                {
-                    if ((!hand.Name.Contains("Robo-") && hand.DefaultBehavior != null && hand.DefaultBehavior.HasPart("MartialConditioningFistMod")))
-                    {
-                        var ObjectDamageLevel = GetLevelValueBaseDamage(this.ParentObject.Statistics["Level"].BaseValue);
+            return ID == AttackerDealingDamageEvent.ID
+            || base.WantEvent(ID, cascade);
 
-                        hand.DefaultBehavior.FireEvent(Event.New("UpdateFistProperties", "Dice", ObjectDamageLevel));
-                    }
-                    if (hand.DefaultBehavior.HasPropertyOrTag("UndesireableWeapon"))
-                    {
-                        GameObject ConditionFist = GameObject.create("DefaultMartialFist");
-
-                        // hand.DefaultBehaviorBlueprint.Remove(1, 1);
-                        hand.DefaultBehavior.UnequipAndRemove();
-                        // hand.DefaultBehaviorBlueprint = "DefaultMartialFist";
-                        hand.DefaultBehavior = ConditionFist;
-                    }
-                }
-                catch
-                {
-
-                }
-            }
-            return;
         }
 
-        public override bool FireEvent(Event E)
+        public override bool HandleEvent(AttackerDealingDamageEvent E)
         {
-            if (E.ID == "BeginTakeAction")
+            var eActor = E.Actor;
+            var Defender = E.Object;
+
+            var eWeapon = E.Weapon;
+            if (eWeapon != null)
             {
-                UpdateFistDamage(this.ParentObject);
-                return true;
+                var eDamage = E.Damage.Amount;
+
+
+                var ObjectDamageLevel = GetLevelValueBaseDamage(this.ParentObject.Statistics["Level"].BaseValue);
+
+                if (eWeapon.HasPart<MartialConditioningFistMod>() || eWeapon.HasPropertyOrTag("MMAHooks"))
+                {
+                    E.Damage.Amount = ObjectDamageLevel;
+                }
+            }
+            else
+            {
 
             }
-            // else if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine"))
-            // {
-            //     AddPlayerMessage("Drunken");
-            //     ParentObject.ApplyEffect(new Drunken(10));
-            // }
-            return base.FireEvent(E);
+
+            return base.HandleEvent(E);
         }
-
-
     }
 }

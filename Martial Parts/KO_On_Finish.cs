@@ -26,7 +26,7 @@ namespace XRL.World.Parts
             || ID == AfterAddSkillEvent.ID;
         }
 
-        public override void Register(GameObject go)
+        public override void Register(GameObject go, IEventRegistrar registrar)
         {
             go.RegisterPartEvent((IPart)this, "DealDamage");
             go.RegisterPartEvent((IPart)this, "AttackerAfterAttack");
@@ -70,7 +70,7 @@ namespace XRL.World.Parts
                 var weapon = E.GetGameObjectParameter("Weapon");
                 var defender = E.GetGameObjectParameter("Defender");
                 var damage = E.GetParameter<Damage>("Damage");
-                if (attacker.IsPlayer() && (weapon.HasPart("KO_On_Finish") || attacker.HasPart("KO_On_Finish")) && ShowMercy == true)
+                if (attacker.IsPlayer() && attacker.HasPart("KO_On_Finish") && ShowMercy == true)
                 {
                     // AddPlayerMessage("mercy start mercy");
 
@@ -79,14 +79,12 @@ namespace XRL.World.Parts
                         // AddPlayerMessage("mercy recalculates damage");
 
                         damage.Amount = (int)Math.Min(1, defender.hitpoints - 1); //Set damage equal to what we need to drop them to 1 HP
+                                                                                  // AddPlayerMessage("KO in deal damage event");
+                        var KOdToughness = defender.StatMod("Toughness");
+                        var SaveDC = 40 - (KOdToughness * 10);
+                        if (!defender.HasEffect("Incapacitated"))
+                        { defender.ApplyEffect(new Incapacitated(2400, SaveDC)); }
                     }
-                    // AddPlayerMessage("KO in deal damage event");
-                    var KOdToughness = defender.StatMod("Toughness");
-                    var SaveDC = 40 - (KOdToughness * 10);
-                    if (!defender.HasEffect("Incapacitated"))
-                    { defender.ApplyEffect(new Incapacitated(2400, SaveDC)); }
-
-                    return true;
                 }
             }
 

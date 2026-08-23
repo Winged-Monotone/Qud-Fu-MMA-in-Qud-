@@ -5,6 +5,7 @@ using System.Linq;
 using XRL.Rules;
 using XRL.Messages;
 using XRL.UI;
+using XRL.World.Anatomy;
 
 
 namespace XRL.World.Parts.Skill
@@ -18,19 +19,20 @@ namespace XRL.World.Parts.Skill
 
         public WM_MMA_PathDawnGlider()
         {
-            Name = "WM_MMA_PathDawnGlider";
-            DisplayName = "Path of the Dawnglider";
+
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "CommandSureStrikes");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "BeginTakeAction");
             Object.RegisterPartEvent(this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
+
+
 
         public override bool FireEvent(Event E)
         {
@@ -206,7 +208,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.DawnStanceID = base.AddMyActivatedAbility("Way of The Dawnglider", "DawngliderStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.DawnStanceID = base.AddMyActivatedAbility("Way of The Dawnglider", "DawngliderStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
             return true;
         }
 

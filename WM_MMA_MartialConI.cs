@@ -13,8 +13,7 @@ namespace XRL.World.Parts.Skill
     {
         public WM_MMA_MartialConI()
         {
-            Name = "WM_MMA_MartialConI";
-            DisplayName = "Martial Conditioning I";
+
         }
 
         public override bool AddSkill(GameObject GO)

@@ -26,10 +26,12 @@ namespace XRL.World.Effects
         public const int SAVE_TARGET = 20;
         public const string SAVE_STAT = "Agility";
         public const string SAVE_VERSUS = "Immobilization[Grappled]";
-        public const int SAVE_DIVISOR = 5;
+        public const int SAVE_DIVISOR = 2;
 
         public int DVPenalty;
         public int SaveTarget;
+
+        public GameObject Target;
 
 
         public GameObject eGrappler;
@@ -72,7 +74,7 @@ namespace XRL.World.Effects
 
         public override bool Apply(GameObject Object)
         {
-            var effect = Object.GetEffect("Grappled") as Grappled;
+            var effect = Object.GetEffect<Grappled>();
             if (effect != null) return false;
             if (!Object.Statistics.ContainsKey("Energy")) return false;
             if (!Object.CanChangeBodyPosition(To: "Immobilized", Involuntary: true)) return false;
@@ -94,7 +96,12 @@ namespace XRL.World.Effects
 
         public override void Remove(GameObject Object)
         {
-            AddPlayerMessage(Object.The + " " + "has escaped" + " " + eGrappler.its + "grapple.");
+            Target = Object;
+            if (Target.IsPlayer())
+                AddPlayerMessage("You escape the grapple!");
+            else
+                Object.ParticleText(ConsequentialColor(ColorAsBadFor: Object) + "Escaped!");
+
             base.Remove(Object);
         }
 
@@ -112,48 +119,25 @@ namespace XRL.World.Effects
             return false;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
-            Object.RegisterEffectEvent(this, "BeginTakeAction");
-            Object.RegisterEffectEvent(this, "BodyPositionChanged");
-            Object.RegisterEffectEvent(this, "CanStandUp");
-            Object.RegisterEffectEvent(this, "EndTurn");
-            Object.RegisterEffectEvent(this, "MovementModeChanged");
-            Object.RegisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.RegisterEffectEvent(this, "CanChangeMovementMod");
-            Object.RegisterEffectEvent(this, "CanMoveExtremities");
-            Object.RegisterEffectEvent(this, "IsMobile");
-            Object.RegisterEffectEvent(this, "CommandTakeAction");
-            Object.RegisterEffectEvent(this, "IsMobile");
+            registrar.Register("BeginTakeAction");
+            registrar.Register("BodyPositionChanged");
+            registrar.Register("CanStandUp");
+            registrar.Register("EndTurn");
+            registrar.Register("MovementModeChanged");
+            registrar.Register("CanChangeBodyPosition");
+            registrar.Register("CanChangeMovementMod");
+            registrar.Register("CanMoveExtremities");
+            registrar.Register("IsMobile");
+            registrar.Register("CommandTakeAction");
+            registrar.Register("IsMobile");
             eGrappler.RegisterEffectEvent(this, "LeftCell");
             eGrappler.RegisterEffectEvent(this, "wm-GrappleCommand");
 
 
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
-
-        public override void Unregister(GameObject Object)
-        {
-            Object.UnregisterEffectEvent(this, "BeginTakeAction");
-            Object.UnregisterEffectEvent(this, "BodyPositionChanged");
-            Object.UnregisterEffectEvent(this, "CanStandUp");
-            Object.UnregisterEffectEvent(this, "EndTurn");
-            Object.UnregisterEffectEvent(this, "MovementModeChanged");
-            Object.UnregisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.UnregisterEffectEvent(this, "CanChangeMovementMod");
-            Object.UnregisterEffectEvent(this, "CanMoveExtremities");
-            Object.UnregisterEffectEvent(this, "IsConversationallyResponsive");
-            Object.UnregisterEffectEvent(this, "IsMobile");
-            Object.UnregisterEffectEvent(this, "CommandTakeAction");
-            Object.UnregisterEffectEvent(this, "IsMobile");
-            eGrappler.UnregisterEffectEvent(this, "LeftCell");
-            eGrappler.UnregisterEffectEvent(this, "wm-GrappleCommand");
-
-
-
-            base.Unregister(Object);
-        }
-
         public static bool MakeSave(GameObject attacker, GameObject defender)
         {
             var target = SAVE_TARGET / SAVE_DIVISOR;
@@ -208,6 +192,5 @@ namespace XRL.World.Effects
 
             return true;
         }
-
     }
 }

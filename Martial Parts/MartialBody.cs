@@ -24,10 +24,10 @@ namespace XRL.World.Parts
             || ID == InventoryActionEvent.ID;
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "DrinkingFrom");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
 
         public override bool HandleEvent(InventoryActionEvent E)
@@ -42,7 +42,7 @@ namespace XRL.World.Parts
             if (E.ID == "DrinkingFrom" && (E.GetParameter("Container") as GameObject).LiquidVolume.ContainsLiquid("wine") && !ParentObject.HasEffect("Drunken"))
             {
                 // AddPlayerMessage("Drunken");
-                ParentObject.ApplyEffect(new Drunken(25 + (10 * ParentObject.Statistics["Level"].BaseValue / 5)));
+                ParentObject.ApplyEffect(new mDrunken(25 + (10 * ParentObject.Statistics["Level"].BaseValue / 5)));
 
             }
 

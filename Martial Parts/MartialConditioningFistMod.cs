@@ -15,9 +15,10 @@ namespace XRL.World.Parts
 
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
-            Object.RegisterPartEvent(this, "UpdateFistProperties");
+            registrar.Register("UpdateFistProperties");
+            base.Register(Object, registrar);
         }
 
         public override bool FireEvent(Event E)

@@ -19,6 +19,7 @@ using XRL.World.Effects;
 using XRL.World.Parts.Mutation;
 
 using UnityEngine;
+using XRL.World.Anatomy;
 
 
 namespace XRL.World.Parts.Skill
@@ -30,8 +31,7 @@ namespace XRL.World.Parts.Skill
         private static List<BodyPart> DismemberableBodyParts = new List<BodyPart>(8);
         public WM_MMA_PathSlumberling()
         {
-            Name = "WM_MMA_PathSlumberling";
-            DisplayName = "Path of the Slumberling";
+
         }
         public void RageStrikePulse(Cell TargetCell)
         {
@@ -51,7 +51,7 @@ namespace XRL.World.Parts.Skill
                 }
             }
         }
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "DefenderAfterAttack");
@@ -60,7 +60,7 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "SlumberCleaveEvent");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
 
         public override bool FireEvent(Event E)
@@ -135,7 +135,7 @@ namespace XRL.World.Parts.Skill
                 foreach (string direction3 in directionList)
                 {
                     GameObject Flankers = ParentObject.GetCurrentCell().GetCellFromDirection(direction3)?.GetCombatTarget(ParentObject, AllowInanimate: false);
-                    if (Stat.Random(1, 100) <= 3 + AttackerLevels / 3)
+                    if (Stat.Random(1, 100) <= 3 + (AttackerLevels / 2) * ParentsStr)
                     {
                         // AddPlayerMessage("Dismember is Firing?");
 
@@ -162,6 +162,7 @@ namespace XRL.World.Parts.Skill
                             else if (ob.IsSeverable() && ob.Appendage && !ob.Mortal && ob.ParentBody != ParentObject.Body)
                             {
                                 ob.Dismember();
+                                break;
                             }
                         }
                     }
@@ -202,8 +203,8 @@ namespace XRL.World.Parts.Skill
                         string text = (int)Math.Floor((double)(AttackerLevels / 2) + 3.0) + "d6";
                         int num = ParentObject.StatMod("Ego");
 
-                        o2.pBrain.Goals.Clear();
-                        o2.pBrain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
+                        o2.Brain.Goals.Clear();
+                        o2.Brain.PushGoal(new Flee(Attacker, 5 + (AttackerLevels / 2), false));
                         // AddPlayerMessage(o2.The + " flees in horror of " + Attacker.Its + " torrent of rage.");
                     }
 
@@ -227,7 +228,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
 
             return true;
         }

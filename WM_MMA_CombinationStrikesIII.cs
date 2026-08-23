@@ -11,12 +11,6 @@ namespace XRL.World.Parts.Skill
     [Serializable]
     public class WM_MMA_CombinationStrikesIII : BaseSkill
     {
-        public WM_MMA_CombinationStrikesIII()
-        {
-            Name = "WM_MMA_CombinationStrikesIII";
-            DisplayName = "Martial Conditioning III";
-        }
-
         public override bool AddSkill(GameObject GO)
         {
             return true;

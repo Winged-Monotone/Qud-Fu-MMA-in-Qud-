@@ -12,8 +12,7 @@ namespace XRL.World.Parts.Skill
     {
         public WM_MMA_MartialConII()
         {
-            Name = "WM_MMA_MartialConII";
-            DisplayName = "Martial Conditioning II";
+
         }
 
         public override bool FireEvent(Event E)
@@ -37,7 +36,7 @@ namespace XRL.World.Parts.Skill
             }
             return base.FireEvent(E);
         }
-        public override void Register(GameObject go)
+        public override void Register(GameObject go, IEventRegistrar registrar)
         {
             go.RegisterPartEvent((IPart)this, "ModifyDefendingSave");
         }

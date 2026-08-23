@@ -7,6 +7,7 @@ using ShieldPart = XRL.World.Parts.Shield;
 
 using XRL.Rules;
 using System.Linq;
+using XRL.World.Anatomy;
 
 
 
@@ -34,17 +35,16 @@ namespace XRL.World.Parts.Skill
         };
         public WM_MMA_PathSaltBack()
         {
-            Name = "WM_MMA_PathSaltBack";
-            DisplayName = "Path of the Salt-Back";
+
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "GetDefenderHitDice");
             Object.RegisterPartEvent(this, "PerformMeleeAttack");
             Object.RegisterPartEvent(this, "EndTurn");
-            base.Register(Object);
+            base.Register(Object, registrar);
         }
         public override bool WantEvent(int ID, int cascade)
         {
@@ -163,7 +163,7 @@ namespace XRL.World.Parts.Skill
         {
 
 
-            this.SaltBackStanceID = base.AddMyActivatedAbility("Way of the Salt-Back", "SaltBackStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.SaltBackStanceID = base.AddMyActivatedAbility("Way of the Salt-Back", "SaltBackStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
             return true;
         }
 

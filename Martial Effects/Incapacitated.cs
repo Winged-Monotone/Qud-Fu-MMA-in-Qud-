@@ -59,7 +59,7 @@ namespace XRL.World.Effects
         {
             if (Object.HasEffect("Incapacitated"))
             {
-                Incapacitated incapacitated = Object.GetEffect("Incapacitated") as Incapacitated;
+                Incapacitated incapacitated = Object.GetEffect<Incapacitated>() as Incapacitated;
                 if (Duration > incapacitated.Duration)
                 {
                     incapacitated.Duration = Duration;
@@ -69,7 +69,7 @@ namespace XRL.World.Effects
             if (Object.FireEvent("ApplyIncapacitate"))
             {
                 ApplyStats();
-                DidX("is", "incapacitated", "!", null, null, Object);
+                DidX("incapacitated", "", "!", null, null, Object);
                 Object.ParticleText("&R*KO'd!!!*");
                 return true;
             }
@@ -102,30 +102,18 @@ namespace XRL.World.Effects
             base.StatShifter.RemoveStatShifts(base.Object);
         }
 
-        public override void Register(GameObject Object)
+        public override void Register(GameObject Object, IEventRegistrar registrar)
         {
-            Object.RegisterEffectEvent(this, "AfterDeepCopyWithoutEffects");
-            Object.RegisterEffectEvent(this, "BeforeDeepCopyWithoutEffects");
-            Object.RegisterEffectEvent(this, "BeginTakeAction");
-            Object.RegisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.RegisterEffectEvent(this, "CanChangeMovementMod");
-            Object.RegisterEffectEvent(this, "CanMoveExtremities");
-            Object.RegisterEffectEvent(this, "IsMobile");
-            base.Register(Object);
+            registrar.Register("AfterDeepCopyWithoutEffects");
+            registrar.Register("BeforeDeepCopyWithoutEffects");
+            registrar.Register("BeginTakeAction");
+            registrar.Register("CanChangeBodyPosition");
+            registrar.Register("CanChangeMovementMod");
+            registrar.Register("CanMoveExtremities");
+            registrar.Register("IsMobile");
+            base.Register(Object, registrar);
         }
 
-        public override void Unregister(GameObject Object)
-        {
-            Object.UnregisterEffectEvent(this, "AfterDeepCopyWithoutEffects");
-            Object.UnregisterEffectEvent(this, "BeforeDeepCopyWithoutEffects");
-            Object.UnregisterEffectEvent(this, "BeginTakeAction");
-            Object.UnregisterEffectEvent(this, "CanChangeBodyPosition");
-            Object.UnregisterEffectEvent(this, "CanChangeMovementMod");
-            Object.UnregisterEffectEvent(this, "CanMoveExtremities");
-            Object.UnregisterEffectEvent(this, "IsConversationallyResponsive");
-            Object.UnregisterEffectEvent(this, "IsMobile");
-            base.Unregister(Object);
-        }
 
         public override bool Render(RenderEvent E)
         {

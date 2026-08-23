@@ -6,6 +6,7 @@ using XRL.Rules;
 using System.Collections.Generic;
 using System.Text;
 using XRL.World.Parts;
+using XRL.World.Parts.Skill;
 
 namespace XRL.World.Effects
 {
@@ -34,28 +35,16 @@ namespace XRL.World.Effects
             return "Sudden, high precision strikes that target sensitive areas on the foe; melee damage switches to agility, cannot build combinations strikes and only perform one attack per turn, however each blow has a 10% chance of adding either Immobilize, Confuse, Stun, Daze or Crippled/Hobbled to your enemy.\n";
         }
 
-        public override void Register(GameObject go)
+        public override void Register(GameObject go, IEventRegistrar registrar)
         {
-            go.RegisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.RegisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.RegisterEffectEvent((Effect)this, "EndTurn");
-            go.RegisterEffectEvent((Effect)this, "IsMobile");
-            go.RegisterEffectEvent((Effect)this, "LeaveCell");
-            go.RegisterEffectEvent((Effect)this, "BeginTakeAction");
-            base.Register(Object);
+            registrar.Register("MovementModeChanged");
+            registrar.Register("CanChangeMovementMode");
+            registrar.Register("EndTurn");
+            registrar.Register("IsMobile");
+            registrar.Register("LeaveCell");
+            registrar.Register("BeginTakeAction");
+            base.Register(Object, registrar);
         }
-
-        public override void Unregister(GameObject go)
-        {
-            go.UnregisterEffectEvent((Effect)this, "MovementModeChanged");
-            go.UnregisterEffectEvent((Effect)this, "CanChangeMovementMode");
-            go.UnregisterEffectEvent((Effect)this, "EndTurn");
-            go.UnregisterEffectEvent((Effect)this, "IsMobile");
-            go.UnregisterEffectEvent((Effect)this, "LeaveCell");
-            go.UnregisterEffectEvent((Effect)this, "BeginTakeAction");
-            base.Unregister(Object);
-        }
-
 
         public void SaltHopperPulse(Cell cell)
         {
@@ -118,5 +107,94 @@ namespace XRL.World.Effects
 
         }
 
+        public override bool HandleEvent(AttackerDealtDamageEvent E)
+        {
+            var eAttacker = E.Source;
+            var eDefender = E.Object;
+
+            var eWeapon = E.Weapon;
+
+            if (eAttacker.HasPart<WM_MMA_MartialStances>() && eWeapon.HasPart<MartialConditioningFistMod>())
+            {
+                var eAttackerLinkHandlers = eAttacker.GetPart<WM_MMA_MartialStances>();
+                var eStanceActiveToggles = eAttackerLinkHandlers.StanceVisceraDefID;
+
+                if (eAttacker.IsPlayer() && IsMyActivatedAbilityToggledOn(eStanceActiveToggles, Object))
+                {
+                    if (eAttacker == Object)
+                    {
+                        var eRandomizer = Stat.Random(1, 100);
+                        var eVisceralRandom = Stat.Random(1, 150);
+
+                        if (eRandomizer <= 33)
+                        {
+                            // if (eVisceralRandom )
+                            if (eVisceralRandom <= 10)
+                            {
+                                XDidYToZ(eAttacker, "use a pin-point mantis blow on", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 20)
+                            {
+                                XDidYToZ(eAttacker, "knife-blow", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 30)
+                            {
+                                XDidYToZ(eAttacker, "finger strike the pressure points of", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 40)
+                            {
+                                XDidYToZ(eAttacker, "needle-blow", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 50)
+                            {
+                                XDidYToZ(eAttacker, "two-finger knuckle-strike", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 60)
+                            {
+                                XDidYToZ(eAttacker, "drive a strong ridgehand blow into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 70)
+                            {
+                                XDidYToZ(eAttacker, "drill a push-kick into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 80)
+                            {
+                                XDidYToZ(eAttacker, "cleave with a chestting-strike at", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 90)
+                            {
+                                XDidYToZ(eAttacker, "drop a strong hammer-kick against", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 100)
+                            {
+                                XDidYToZ(eAttacker, "fire off a flurry of knuckled-strikes into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 110)
+                            {
+                                XDidYToZ(eAttacker, "let loose a series of rapid kicks into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 120)
+                            {
+                                XDidYToZ(eAttacker, "let loose a furious crescent snap-kick, crushing", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 130)
+                            {
+                                XDidYToZ(eAttacker, "unleash a quick mantis-strike", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 140)
+                            {
+                                XDidYToZ(eAttacker, "hop and deliver successive front kicks into", eDefender, "", "!");
+                            }
+                            else if (eVisceralRandom <= 150)
+                            {
+                                XDidYToZ(eAttacker, "leap into the air and palm-strike", eDefender, "", "!");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

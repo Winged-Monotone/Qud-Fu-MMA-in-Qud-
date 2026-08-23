@@ -13,8 +13,7 @@ namespace XRL.World.Parts.Skill
     {
         public WM_MMA_MasterStanceSwap()
         {
-            Name = "WM_MMA_MasterStanceSwap";
-            DisplayName = "Master of Stances";
+
         }
 
         public override bool AddSkill(GameObject GO)

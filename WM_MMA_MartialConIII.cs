@@ -13,11 +13,10 @@ namespace XRL.World.Parts.Skill
     {
         public WM_MMA_MartialConIII()
         {
-            Name = "WM_MMA_MartialConIII";
-            DisplayName = "Martial Conditioning III";
+
         }
 
-        public override void Register(GameObject go)
+        public override void Register(GameObject go, IEventRegistrar registrar)
         {
             go.RegisterPartEvent((IPart)this, "Regenerating");
             go.RegisterPartEvent((IPart)this, "AdjustSprintDuration");
@@ -55,11 +54,11 @@ namespace XRL.World.Parts.Skill
                     HealthRegained += 3 + ParentObject.StatMod("Toughness", 1);
                 }
             }
-            // else if (E.ID == "AdjustSprintDuration")
-            // {
-            //     var SprintSpeedDurationBonus = E.GetIntParameter("Duration");
-            //     SprintSpeedDurationBonus += 40;
-            // }
+            else if (E.ID == "AdjustSprintDuration")
+            {
+                var SprintSpeedDurationBonus = E.GetIntParameter("Duration");
+                SprintSpeedDurationBonus += 40;
+            }
 
             return base.FireEvent(E);
         }
