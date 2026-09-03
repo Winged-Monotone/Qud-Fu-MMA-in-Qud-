@@ -1,47 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objects>
-
-    <object Name="DefaultMartialFist" Inherits="NaturalWeapon">
-        <part Name="Render" DisplayName="conditioned fist" />
-        <part Name="MartialConditioningFistMod"></part>
-        <part Name="MeleeWeapon" MaxStrengthBonus="1000" BaseDamage="1d2-1" Skill="Cudgel" Stat="Strength" />
-        <tag Name="TinkerCategory" Value="melee weapons" />
-        <tag Name="BaseObject" Value="*noinherit" />
-    </object>
-
+    
     <object Name="DefaultFist" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <part Name="MartialConditioningFistMod"/>
     </object>
-
     
     <object Name="CarbideHandBones" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="CarbideFist" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="FulleriteHandBones" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="FulleriteFist" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="FungalInfection" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="BionicHands" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
     <object Name="Burrowing Claws" Load="Merge">
-        <part Name="MartialConditioningFistMod"></part>
-        <tag Name="MMAHooks"></tag>
+        <tag Name="MMAHooks"/>
     </object>
 
 
@@ -51,21 +34,89 @@
 
 
     <!-- OBJECTS - ITEMS -->
+    
+<!--    Thrown-Items-->
+
+    <object Name="BaseThrowingKnives" Inherits="Item">
+        <part Name="Render" DisplayName="throwing knife" RenderString="\" ColorString="&amp;k" Tile="WingyFuTextures/items/ThrowingDagger.png" TileColor="&amp;Y" DetailColor="K" Occluding="false" />
+        <part Name="Physics" Weight="1" Takeable="true" Solid="false" Category="Thrown Weapons" />
+        <part Name="Description" Short="Handleless short-blades with a heavier end, when tossed, the long-edge hurls its momentum forward like a jet-black slip-star." />
+        <part Name="ThrownWeapon" Damage="2d6" Penetration="9" Attributes="ShortBlades" />
+        <tag Name="EquipSound" Value="sfx_equip_weapon_thrown_bladed" />
+        <tag Name="UnequipSound" Value="sfx_unequip_weapon_thrown" />
+        <tag Name="Mods" Value="CommonMods,ThrownWeaponMods" />
+        <part Name="Commerce" Value="5" />
+        <stag Name="Thrown" />
+        <stag Name="Contemporary" />
+        <tag Name="MMAThrowable"/>
+        <part Name="TinkerItem" Bits="C" CanBuild="true" CanDisassemble="true" NumberMade="5" />
+        <xtagThrowVFX
+                Speed="400"
+                Orientation="0"
+                Rotation="1440"
+                TrailOrigin="6,0"
+                TrailColor="Detail"
+                TrailStartWidth="0"
+                TrailLife="0.075"
+                Flip="H"
+                Slant="True"
+                Curve="1"
+                Arc="1"
+                Easing="SineInOut"
+        />
+    </object>
+
+    <object Name="Throwing Knife" Inherits="BaseThrowingKnives">
+        <part Name="Render" DisplayName="throwing knife" RenderString="\" Tile="WingyFuTextures/items/ThrowingDagger.png" TileColor="&amp;Y" DetailColor="K" Occluding="false" />
+        <part Name="Physics" Weight="0" Takeable="true" Solid="false" Category="Thrown Weapons" />
+        <part Name="Description" Short="A handleless short-blade with a heavier forward-end, when tossed, the long-edge hurls its momentum forward like a jet-black slip-star." />
+        <part Name="ThrownWeapon" Damage="2d6" Penetration="9" Attributes="ShortBlades" />
+    </object>
+
+    <object Name="BaseShuriken" Inherits="Item">
+        <part Name="Render" DisplayName="shuriken" RenderString="*" Tile="WingyFuTextures/items/shuriken.png" TileColor="&amp;K" DetailColor="y" Occluding="false" />
+        <part Name="Physics" Weight="0" Takeable="true" Solid="false" Category="Thrown Weapons" />
+        <part Name="ThrownWeapon" Damage="5d4" Penetration="6" Attributes="ShortBlades" />
+        <part Name="Multithrow"/>
+        <tag Name="EquipSound" Value="sfx_equip_weapon_thrown_bladed" />
+        <tag Name="UnequipSound" Value="sfx_unequip_weapon_thrown" />
+        <tag Name="Mods" Value="CommonMods,ThrownWeaponMods" />
+        <part Name="Commerce" Value="5" />
+        <stag Name="Thrown" />
+        <stag Name="Contemporary" />
+        <tag Name="MMAThrowable"/>
+        <part Name="TinkerItem" Bits="C" CanBuild="true" CanDisassemble="true" NumberMade="5" />
+        <xtagThrowVFX
+                Speed="800"
+                Orientation="5"
+                Rotation="2000"
+                TrailOrigin="6,0"
+                TrailColor="Detail"
+                TrailStartWidth="1"
+                TrailLife="0.075"
+                Flip="H"
+                Slant="True"
+                Curve="0"
+                Arc="0"
+                Easing="SineInOut"
+        />
+    </object>
+
+    <object Name="Shuriken" Inherits="BaseShuriken">
+        <part Name="Render" DisplayName="shuriken" RenderString="*" ColorString="&amp;k" TileColor="&amp;K" DetailColor="y" Occluding="false" />
+        <part Name="Physics" Weight="0" Takeable="true" Solid="false" Category="Thrown Weapons" />
+        <part Name="Description" Short="A hand-full jet-black stars, hollowed at its horizon, careens like sable opal disk when thrown." />
+        <part Name="ThrownWeapon" Damage="5d4" Penetration="9" Attributes="ShortBlades" />
+    </object>
 
     <!-- Dawnglider Way Stuff -->
-
-
-
-
-
-
-
+    
 
     <object Name="DawningFistTierHelmet1" Inherits="BaseHelmet">
         <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
-        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="M" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_bandanna.bmp" DetailColor="M" />
         <part Name="Commerce" Value="100" />
-        <part Name="Description" Short="A violet strip of cloth, dawn glider feathers have been stitched into the lining as ornamental trophies." />
+        <part Name="Description" Short="A violet strip of cloth, dawnglider feathers have been stitched into the lining as ornamental trophies." />
         <part Name="Physics" Weight="1" />
         <tag Name="Tier" Value="5" />
         <tag Name="Mods" Value="None" />
@@ -75,7 +126,7 @@
 
     <object Name="DawningFistTierHelmet2" Inherits="BaseHelmet">
         <part Name="Armor" AV="1" DV="1" Heat="10" WornOn="Head" />
-        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;K" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="M" />
+        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} bandanna" ColorString="&amp;K" RenderString="]" Tile="WingyFuTextures/Items/sw_bandanna.bmp" DetailColor="M" />
         <part Name="Commerce" Value="500" />
         <part Name="Description" Short="A magenta strip of cloth, dawn glider feathers have been stitched into the lining as ornamental trophies, the edges of the feathers have ashen fraying, rubbing soot into the cloth in a marble-like pattern." />
         <part Name="Physics" Weight="1" />
@@ -87,7 +138,7 @@
 
     <object Name="DawningFistTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" Heat="5" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_keikigo.png" DetailColor="M" />
         <part Name="Commerce" Value="200" />
         <part Name="Description" Short="A gi, padded with thick swafts of cotton and dawnglider feathers." />
         <part Name="Physics" Weight="3" />
@@ -99,7 +150,7 @@
 
     <object Name="DawningFistTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="1" DV="2" Heat="10" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="M" />
+        <part Name="Render" DisplayName="{{m|masters'}} {{M|dawning}}-{{O|fist}} keiko" ColorString="&amp;K" RenderString="]" Tile="WingyFuTextures/Items/sw_keikigo.png" DetailColor="M" />
         <part Name="Commerce" Value="550" />
         <part Name="Description" Short="A gi, padded with thick swafts of cotton and dawnglider feathers. The tips of the feathers have collected ash and dashed the martial suit with streaks of grey marble." />
         <part Name="Physics" Weight="3" />
@@ -109,7 +160,7 @@
         <tag Name="DynamicObjectsTable:TradeGoods" />
     </object>
 
-    <object Name="DawningFistTierBracers1" Inherits="BaseGauntlet">
+    <object Name="DawningFistTierBracers1" Inherits="Spiked Gauntlets">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
         <part Name="Render" DisplayName="{{M|dawning}}-{{O|fist}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier1.bmp" DetailColor="M" />
         <part Name="Commerce" Value="250" />
@@ -125,7 +176,7 @@
 
     <object Name="VoidClawTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} keikogi" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="600" />
         <part Name="Description" Short="A martial suit made from the commingling of a black-puma's tail wrapped into a sash and sable-layered cloth acts as a shawl to protect the body." />
         <part Name="Physics" Weight="2" />
@@ -137,7 +188,7 @@
 
     <object Name="VoidClawTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="0" DV="3" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keikogi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_keiko.png" DetailColor="B" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} keikogi" ColorString="&amp;K" RenderString="]" Tile="WingyFuTextures/Items/sw_keiko.png" DetailColor="B" />
         <part Name="Commerce" Value="550" />
         <part Name="Description" Short="A martial suit made from the commingling of a black-puma's tail wrapped into a sash and sable layered cloth acts as a shawl to protect the body. The tail has puma teeth lining the elastic banding around its center." />
         <part Name="Physics" Weight="3" />
@@ -149,7 +200,7 @@
 
     <object Name="VoidClawTierBoot1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="1" WornOn="Feet" />
-        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} tabi" Tile="Items/sw_tabi.png" RenderString="]" ColorString="&amp;Y" DetailColor="W"/>
+        <part Name="Render" DisplayName="{{B|void}}-{{W|claw}} tabi" Tile="WingyFuTextures/Items/sw_tabi.png" RenderString="]" ColorString="&amp;Y" DetailColor="W"/>
         <part Name="Commerce" Value="250" />
         <part Name="Description" Short="Sandle-like footwear sporting a shin-guard lined with leather and fur, it is held against the calf with lacquered witchwood wrappings, the sole is cushioned with comfortable cottons allowing for quieted movement." />
         <part Name="Physics" Weight="1" />
@@ -163,7 +214,7 @@
 
     <object Name="VoidClawTierBoot2" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" WornOn="Feet" />
-        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} tabi" Tile="Items/sw_tabi.png" RenderString="]" ColorString="&amp;K" DetailColor="W" />
+        <part Name="Render" DisplayName="{{b|masters'}} {{B|void}}-{{W|claw}} tabi" Tile="WingyFuTextures/Items/sw_tabi.png" RenderString="]" ColorString="&amp;K" DetailColor="W" />
         <part Name="Commerce" Value="600" />
         <part Name="Description" Short="Sandle-like footwear sporting a shin-guard lined with leather and fur, it is held against the calf with lacquered witchwood wrappings, puma teeth exude from its edges and the sole is cushioned with comfortable cottons allowing for quieted movement." />
         <part Name="Physics" Weight="1" />
@@ -179,7 +230,7 @@
 
     <object Name="ScytheStrikeTierBracers1" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
+        <part Name="Render" DisplayName="{{Y|scythe}}-{{G|strike}} sangu" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="10" BaseDamage="1+1d4" Skill="WM_MMASkillTree" Slot="Arm" />
         <part Name="Commerce" Value="350" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner." />
@@ -192,7 +243,7 @@
 
     <object Name="ScytheStrikeTierBracers2" Inherits="BaseGauntlet">
         <part Name="Armor" AV="1" DV="0" Heat="2" Cold="0" Acid="0" Elec="0" WornOn="Hands" />
-        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
+        <part Name="Render" DisplayName="{{g|masters'}} {{Y|scythe}}-{{G|strike}} sangu" ColorString="K" RenderString="]" Tile="WingyFuTextures/Items/sw_gauntlets_hightier2.bmp" DetailColor="G" />
         <part Name="MeleeWeapon" MaxStrengthBonus="15" BaseDamage="2+1d8" Skill="WM_MMASkillTree" Slot="Arm" />
         <part Name="Commerce" Value="750" />
         <part Name="Description" Short="Boiled-leather sangu braced with salt-hopper scythe's with just out in a claw-like manner, the edges have been hardened and resharpened with laquer, however the bloodstains of this weapon's victims are forever present for its witnesses." />
@@ -207,7 +258,7 @@
 
     <object Name="AmethystShellTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="4" DV="-2" Heat="5" Cold="5" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{m|amethyst}}-{{g|shell}} hotoke dou" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_turtlegoteka.png" DetailColor="m" />
+        <part Name="Render" DisplayName="{{m|amethyst}}-{{g|shell}} hotoke dou" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_turtlegoteka.png" DetailColor="m" />
         <part Name="Commerce" Value="200" />
         <part Name="Description" Short="A tortoise shell refitted to be worn about the body, it is encumbering, but provides excellent defenses for this cost. This shell looks young and new." />
         <part Name="Physics" Weight="12" />
@@ -219,7 +270,7 @@
 
     <object Name="AmethystShellTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="5" DV="-2" Heat="5" Cold="5" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{M|masters'}} {{m|amethyst}}-{{g|shell}} hotoke dou" ColorString="&amp;K" RenderString="]" Tile="Items/sw_turtlegoteka.png" DetailColor="m" />
+        <part Name="Render" DisplayName="{{M|masters'}} {{m|amethyst}}-{{g|shell}} hotoke dou" ColorString="&amp;K" RenderString="]" Tile="WingyFuTextures/Items/sw_turtlegoteka.png" DetailColor="m" />
         <part Name="Commerce" Value="1050" />
         <part Name="Description" Short="A tortoise shell refitted to be worn about the body, it is encumbering, but provides excellent defenses for this cost. This shell looks worn and weathered." />
         <part Name="Physics" Weight="12" />
@@ -233,7 +284,7 @@
 
     <object Name="SlumberFistTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="1" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{r|slumbering}}-{{R|fist}} sarashi" ColorString="&amp;Y" RenderString="]" Tile="Items/sw_bloodiedwrappings.png" DetailColor="R" />
+        <part Name="Render" DisplayName="{{r|slumbering}}-{{R|fist}} sarashi" ColorString="&amp;Y" RenderString="]" Tile="WingyFuTextures/Items/sw_bloodiedwrappings.png" DetailColor="R" />
         <part Name="Commerce" Value="25" />
         <part Name="Description" Short="A bundle of body wrappings, they are tinted crimson with scarlet dyes." />
         <part Name="Physics" Weight="12" />
@@ -245,7 +296,7 @@
 
     <object Name="SlumberFistTierArmor2" Inherits="Armor">
         <part Name="Armor" AV="1" DV="1" Heat="0" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="{{K|masters'}} {{r|slumbering}}-{{R|fist}} sarashi" ColorString="&amp;K" RenderString="]" Tile="Items/sw_bloodiedwrappings.png" DetailColor="r" />
+        <part Name="Render" DisplayName="{{K|masters'}} {{r|slumbering}}-{{R|fist}} sarashi" ColorString="&amp;K" RenderString="]" Tile="WingyFuTextures/Items/sw_bloodiedwrappings.png" DetailColor="r" />
         <part Name="Commerce" Value="50" />
         <part Name="Description" Short="A bundle of body-wrappings, they are tinted scarlet with dyes and the blood of victims who worn it before." />
         <part Name="Physics" Weight="12" />
@@ -259,7 +310,7 @@
 
     <object Name="WineGourd" Inherits="WaterContainer">
         <part Name="LiquidVolume" MaxVolume="34" Volume="34" StartVolume="1d34-1+5" InitialLiquid="wine-1000" ManualSeal="true" />
-        <part Name="Render" DisplayName="{{M|wine}}-gourd" Tile="Items/sw_gourd" DetailColor="w" TileColor="y"/>
+        <part Name="Render" DisplayName="{{M|wine}}-gourd" Tile="WingyFuTextures/Items/sw_gourd" DetailColor="w" TileColor="y"/>
         <part Name="Description" Short="An overgrown tuber, forced into the way of the gourd." />
         <stat Name="Hitpoints" sValue="100" />
         <part Name="Physics" Weight="3" />
@@ -269,7 +320,7 @@
 
     <object Name="GiantWineGourd" Inherits="WaterContainer">
         <part Name="LiquidVolume" MaxVolume="200" Volume="200" StartVolume="1d200+5" InitialLiquid="wine-1000" ManualSeal="true" />
-        <part Name="Render" DisplayName="giant {{M|wine}}-gourd" Tile="Items/sw_giantgourd.png" DetailColor="w" TileColor="y"/>
+        <part Name="Render" DisplayName="giant {{M|wine}}-gourd" Tile="WingyFuTextures/Items/sw_giantgourd.png" DetailColor="w" TileColor="y"/>
         <part Name="Description" Short="A massive clay-gourd with a large witch-wood rope, both lacquered for long travels." />
         <stat Name="Hitpoints" sValue="100" />
         <part Name="Physics" Weight="40" />
@@ -279,7 +330,7 @@
 
     <object Name="ContenderTierHelmet1" Inherits="BaseHelmet">
         <part Name="Armor" AV="0" DV="1" Heat="5" WornOn="Head" />
-        <part Name="Render" DisplayName="dashing bandanna" ColorString="&amp;w" RenderString="]" Tile="Items/sw_bandanna.bmp" DetailColor="Y" />
+        <part Name="Render" DisplayName="dashing bandanna" ColorString="&amp;w" RenderString="]" Tile="WingyFuTextures/Items/sw_bandanna.bmp" DetailColor="Y" />
         <part Name="Commerce" Value="100" />
         <part Name="Description" Short="A strip of cloth, usually worn against the forehead, it makes one feel brave." />
         <part Name="Physics" Weight="1" />
@@ -291,7 +342,7 @@
 
     <object Name="ContenderTierArmor1" Inherits="Armor">
         <part Name="Armor" AV="0" DV="2" Heat="5" Cold="0" Acid="0" Elec="0" WornOn="Body" />
-        <part Name="Render" DisplayName="martial keiko" ColorString="&amp;y" RenderString="]" Tile="Items/sw_keikigo.png" DetailColor="w" />
+        <part Name="Render" DisplayName="martial keiko" ColorString="&amp;y" RenderString="]" Tile="WingyFuTextures/Items/sw_keikigo.png" DetailColor="w" />
         <part Name="Commerce" Value="200" />
         <part Name="Description" Short="A collection of padded wrappings fit for a martial artist." />
         <part Name="Physics" Weight="3" />
@@ -326,7 +377,7 @@
     </object>
 
     <object Name="MartialForms" Inherits="Book">
-        <part Name="Render" DisplayName="{{P|The Paths of the Contenders}}" ColorString="&amp;p" RenderString="=" RenderLayer="5" Tile="Items/sw_book2.bmp" TileColor="&amp;b" DetailColor="G" />
+        <part Name="Render" DisplayName="{{P|The Paths of the Contenders}}" ColorString="&amp;p" RenderString="=" RenderLayer="5" Tile="WingyFuTextures/Items/sw_book2.bmp" TileColor="&amp;b" DetailColor="G" />
         <part Name="Description" Short="Naught but a few pages, a humble collection of waxed paper-sheets and leather-binding." />
         <part Name="Book" ID="MartialForms" />
         <part Name="Commerce" Value="15" />
@@ -343,7 +394,7 @@
 
     <!-- <object Name="BaseTester" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" />
-        <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
+        <part Name="Render" Tile="WingyFuTextures/creatures/caste_contender_flipped.png" DetailColor="w" />
       
         <part Name="JapaneseNameConstructor" />
 
@@ -360,7 +411,7 @@
 
     <object Name="BaseBraver" Inherits="BaseHumanoid">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="true"/>
-        <part Name="Render" Tile="creatures/caste_contender_flipped.png" DetailColor="w" />
+        <part Name="Render" Tile="WingyFuTextures/creatures/caste_contender_flipped.png" DetailColor="w" />
         <stat Name="Level" Value="8" />
         <stat Name="AV" Value="3" />
         <stat Name="DV" Value="3" />
@@ -388,7 +439,7 @@
 
     <object Name="BraverDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100" Wanders="false" />
-        <part Name="Render" DisplayName="braver journey-warden" Tile="creatures/caste_contender_flipped.png" ColorString="&amp;Y" DetailColor="C" />
+        <part Name="Render" DisplayName="braver journey-warden" Tile="WingyFuTextures/creatures/caste_contender_flipped.png" ColorString="&amp;Y" DetailColor="C" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -417,7 +468,7 @@
 
     <object Name="BraverDawnDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversDawn-100" />
-        <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="creatures/ryu_dawn_disc.png" ColorString="&amp;m" DetailColor="K" />
+        <part Name="Render" DisplayName="braver-disciple of The Dawning Fist Way" Tile="WingyFuTextures/creatures/ryu_dawn_disc.png" ColorString="&amp;m" DetailColor="K" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -448,7 +499,7 @@
 
     <object Name="BraverAstralDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversAstralCabby-100" />
-        <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="creatures/ryu_astral_master.png" ColorString="&amp;K" RenderString="K" DetailColor="b" />
+        <part Name="Render" DisplayName="braver-disciple of The Void-Claw Way" Tile="WingyFuTextures/creatures/ryu_astral_master.png" ColorString="&amp;K" RenderString="K" DetailColor="b" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -477,7 +528,7 @@
 
     <object Name="BraverSaltHopDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSaltHopper-100" />
-        <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="creatures/ryu_salthop_disc.png" ColorString="&amp;w" RenderString="w" DetailColor="g" />
+        <part Name="Render" DisplayName="braver-disciple of The Scythe-Strike Way" Tile="WingyFuTextures/creatures/ryu_salthop_disc.png" ColorString="&amp;w" RenderString="w" DetailColor="g" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -508,7 +559,7 @@
 
     <object Name="BraverSaltBackDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSaltBack-100" />
-        <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="creatures/ryu_saltback_disc.png" ColorString="&amp;y" RenderString="y" DetailColor="w" />
+        <part Name="Render" DisplayName="braver-disciple of The Amethyst Shell" Tile="WingyFuTextures/creatures/ryu_saltback_disc.png" ColorString="&amp;y" RenderString="y" DetailColor="w" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -539,7 +590,7 @@
 
     <object Name="BraverSlumberDisciple" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-50,BraversSlumber-100" />
-        <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fury Way" Tile="creatures/ryu_slumber_disc.png" ColorString="&amp;Y" RenderString="R" DetailColor="r" />
+        <part Name="Render" DisplayName="braver-disciple of The Slumbering-Fury Way" Tile="WingyFuTextures/creatures/ryu_slumber_disc.png" ColorString="&amp;Y" RenderString="R" DetailColor="r" />
         <stat Name="Strength" sValue="19,1d3" />
         <stat Name="Agility" sValue="19,1d3" />
         <stat Name="Toughness" sValue="19,1d3" />
@@ -591,7 +642,7 @@
 
     <!-- <object Name="BraverMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-95" />
-        <part Name="Render" DisplayName="braver journey-master" Tile="creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;Y" DetailColor="C" />
+        <part Name="Render" DisplayName="braver journey-master" Tile="WingyFuTextures/creatures/caste_contender_flipped.png" RenderString="K" ColorString="&amp;Y" DetailColor="C" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />
@@ -622,7 +673,7 @@
 
     <object Name="BraverDawnMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversDawn-400" />
-        <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="creatures/ryu_dawn_master.png" ColorString="&amp;m" RenderString="m" DetailColor="K" />
+        <part Name="Render" DisplayName="braver-master of The Dawning Fist Way" Tile="WingyFuTextures/creatures/ryu_dawn_master.png" ColorString="&amp;m" RenderString="m" DetailColor="K" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />
@@ -656,7 +707,7 @@
 
     <object Name="BraverAstralMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversAstralCabby-400" />
-        <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="creatures/ryu_astral_Disc.png" ColorString="&amp;b" RenderString="B" DetailColor="K" />
+        <part Name="Render" DisplayName="braver-master of The Void-Claw Way" Tile="WingyFuTextures/creatures/ryu_astral_Disc.png" ColorString="&amp;b" RenderString="B" DetailColor="K" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />
@@ -689,7 +740,7 @@
 
     <object Name="BraverSaltHopMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltHopper-400" />
-        <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="creatures/ryu_salthop_master.png" ColorString="&amp;K" RenderString="K" DetailColor="g" />
+        <part Name="Render" DisplayName="braver-master of The Scythe-Strike Way" Tile="WingyFuTextures/creatures/ryu_salthop_master.png" ColorString="&amp;K" RenderString="K" DetailColor="g" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />
@@ -723,7 +774,7 @@
 
     <object Name="BraverSaltBackMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSaltBack-400" />
-        <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="creatures/ryu_saltback_master.png" ColorString="&amp;K" RenderString="K" DetailColor="w" />
+        <part Name="Render" DisplayName="braver-master of The Amethyst Shell" Tile="WingyFuTextures/creatures/ryu_saltback_master.png" ColorString="&amp;K" RenderString="K" DetailColor="w" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />
@@ -757,7 +808,7 @@
 
     <object Name="BraverSlumberMaster" Inherits="BaseBraver">
         <part Name="Brain" Hostile="false" Factions="Bravers-100,BraversSlumber-400" />
-        <part Name="Render" DisplayName="braver-master of Slumbering-Fury Ryu" Tile="creatures/ryu_slumber_master.png" ColorString="&amp;K" RenderString="K" DetailColor="r" />
+        <part Name="Render" DisplayName="braver-master of Slumbering-Fury Ryu" Tile="WingyFuTextures/creatures/ryu_slumber_master.png" ColorString="&amp;K" RenderString="K" DetailColor="r" />
         <stat Name="Strength" sValue="19+1d10" />
         <stat Name="Agility" sValue="19+1d10" />
         <stat Name="Toughness" sValue="19+1d10" />

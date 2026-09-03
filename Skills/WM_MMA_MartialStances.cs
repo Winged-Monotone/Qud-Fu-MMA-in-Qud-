@@ -229,32 +229,32 @@ namespace XRL.World.Parts.Skill
             {
                 WM_MMA_MartialStances GetStances = ParentObject.GetPart<WM_MMA_MartialStances>();
 
-                if (IsMyActivatedAbilityToggledOn(AstralTabbyStanceID, ParentObject) == false && !ParentObject.HasEffect("AstralTabbyStance") && InStance == false)
+                if (!IsMyActivatedAbilityToggledOn(AstralTabbyStanceID, ParentObject) && !ParentObject.HasEffect("AstralTabbyStance") && !InStance)
                 {
                     E.AddAICommand("AstralTabbyStanceCommand");
                     InStance = true;
                 }
-                else if (IsMyActivatedAbilityToggledOn(DawnStanceID, ParentObject) == false && !ParentObject.HasEffect("DawnStance") && InStance == false)
+                else if (!IsMyActivatedAbilityToggledOn(DawnStanceID, ParentObject) && !ParentObject.HasEffect("DawnStance") && !InStance)
                 {
                     E.AddAICommand("DawngliderStanceCommand");
                     InStance = true;
                 }
-                else if (IsMyActivatedAbilityToggledOn(SlumberStanceID, ParentObject) == false && !ParentObject.HasEffect("SlumberStance") && InStance == false)
+                else if (!IsMyActivatedAbilityToggledOn(SlumberStanceID, ParentObject) && !ParentObject.HasEffect("SlumberStance") && !InStance)
                 {
                     E.AddAICommand("SlumberlingStanceCommand");
                     InStance = true;
                 }
-                else if (IsMyActivatedAbilityToggledOn(SaltHopperStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltHopperStance") && InStance == false)
+                else if (!IsMyActivatedAbilityToggledOn(SaltHopperStanceID, ParentObject) && !ParentObject.HasEffect("SaltHopperStance") && !InStance)
                 {
                     E.AddAICommand("SaltHopperStanceCommand");
                     InStance = true;
                 }
-                else if (IsMyActivatedAbilityToggledOn(SaltBackStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltbackStance") && InStance == false)
+                else if (!IsMyActivatedAbilityToggledOn(SaltBackStanceID, ParentObject) && !ParentObject.HasEffect("SaltbackStance") && !InStance)
                 {
                     E.AddAICommand("SaltBackStanceCommand");
                     InStance = true;
                 }
-                else if (IsMyActivatedAbilityToggledOn(DeathDaccaStanceID, ParentObject) == false && !ParentObject.HasEffect("SaltbackStance") && InStance == false)
+                else if (!IsMyActivatedAbilityToggledOn(DeathDaccaStanceID, ParentObject) && !ParentObject.HasEffect("SaltbackStance") && !InStance)
                 {
                     E.AddAICommand("DeathDaccaStanceCommand");
                     InStance = true;

@@ -43,7 +43,7 @@ namespace XRL.World.Parts
                 {
 
                     ShowMercy = true;
-                    AddPlayerMessage("You will pull your punches, and strike with with no intent to kill. For now, your enemies are fortunate fools. For you show mercy, where others wouldn't.");
+                    AddPlayerMessage("You will pull your punches, and strike with no intent to kill. For now, your enemies are fortunate fools. For you show mercy, where others wouldn't.");
                 }
                 else
                 {
@@ -64,14 +64,16 @@ namespace XRL.World.Parts
             //     defender.UnregisterPartEvent(this, "DealDamage");
 
             // }
-            else if (E.ID == "DealDamage")
+            else if (E.ID == "AttackerHit")
             {
                 var attacker = E.GetGameObjectParameter("Attacker");
                 var weapon = E.GetGameObjectParameter("Weapon");
                 var defender = E.GetGameObjectParameter("Defender");
                 var damage = E.GetParameter<Damage>("Damage");
-                if (attacker.IsPlayer() && attacker.HasPart("KO_On_Finish") && ShowMercy == true)
+                if (attacker.IsPlayer() && ShowMercy)
                 {
+                    // defender.ApplyEffect(new StopDeath());
+                    
                     // AddPlayerMessage("mercy start mercy");
 
                     if (damage.Amount >= defender.hitpoints)
@@ -106,23 +108,23 @@ namespace XRL.World.Parts
 
         // public override bool HandleEvent(KilledEvent E)
         // {
-        //     AddPlayerMessage("KOing Opponent");
+        //     // AddPlayerMessage("KOing Opponent");
         //     if (E.Killer.IsPlayer() && E.Weapon.HasPart("KO_On_Finish") && !E.Dying.HasEffect("Immobilized"))
         //     {
-        //         AddPlayerMessage("KO Opponent");
+        //         // AddPlayerMessage("KO Opponent");
         //         var KOdToughness = E.Dying.StatMod("Ego");
         //         var SaveDC = 40 - (KOdToughness * 10);
-
+        //
         //         E.Dying.hitpoints = 1;
         //         E.Dying.ApplyEffect(new Immobilized(SaveDC, "Toughness", "knocked unconscious", "{{red|KO'd!!!}}"));
         //     }
-
+        //
         //     else if (E.Killer.IsPlayer() && E.Killer.HasPart("KO_On_Finish") && !E.Dying.HasEffect("Immobilized"))
         //     {
         //         AddPlayerMessage("KO Opponent tag on parent");
         //         var KOdToughness = E.Dying.StatMod("Ego");
         //         var SaveDC = 40 - (KOdToughness * 10);
-
+        //
         //         E.Dying.hitpoints = 1;
         //         E.Dying.ApplyEffect(new Immobilized(SaveDC, "Toughness", "knocked unconscious", "{{red|KO'd!!!}}"));
         //     }

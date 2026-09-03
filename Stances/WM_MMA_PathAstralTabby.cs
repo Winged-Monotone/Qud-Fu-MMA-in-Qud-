@@ -29,7 +29,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.AstralTabbyStanceID = base.AddMyActivatedAbility("Way of the Astral Tabby", "AstralTabbyStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, true);
+            this.AstralTabbyStanceID = base.AddMyActivatedAbility("Way of the Astral Tabby", "AstralTabbyStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
 
             return true;
         }

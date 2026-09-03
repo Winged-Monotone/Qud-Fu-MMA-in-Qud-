@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<populations>
+    <population Name="StartingGear_Brave">
+        <group Name="Items" Style="pickeach">
+
+            <object Blueprint="HalfFullWaterskin" Number="2" />
+            <object Blueprint="EmptyWaterskin" Number="2" />
+            <object Blueprint="Dagger" Number="1" />
+            <object Blueprint="Spiked Gauntlets" Number="1" />
+            <object Blueprint="Goat Jerky" Number="1-5" />
+            <object Blueprint="ContenderTierHelmet1" Number="1" />
+            <object Blueprint="ContenderTierArmor1" Number="1" />
+            <object Blueprint="WineGourd" Number="1d3" />
+            <object Blueprint="Glowsphere" Number="1" />
+        </group>
+
+        <group Name="SpecialItems" Style="pickone">
+
+            <object Blueprint="GiantWineGourd" Number="0-1" />
+
+        </group>
+    </population>
+
+    <population Name="StartingGear_DivineDawningFistRyu">
+        <group Name="Items" Style="pickeach">
+
+            <object Blueprint="Camel Bladder" Number="1" />
+            <object Blueprint="FullWaterskin" Number="2" />
+            <object Blueprint="Throwing Knife" Number="10" />
+            <object Blueprint="Shuriken" Number="20" />
+            <object Blueprint="DawningFistTierBracers1" Number="1" />
+            <object Blueprint="Goat Jerky" Number="1-5" />
+            <object Blueprint="DawningFistTierHelmet2" Number="1" />
+            <object Blueprint="DawningFistTierArmor2" Number="1" />
+            <object Blueprint="Glowsphere" Number="1" />
+        </group>
+
+        <group Name="SpecialItems" Style="pickone">
+
+            <object Blueprint="GiantWineGourd" Number="1" />
+
+        </group>
+    </population>
+
+    <population Name="Ammo 1" Load="Merge">
+        <group Name="Items" Style="pickone">
+            <object Weight="10" Number="1-10" Blueprint="Throwing Knife" />
+            <object Weight="10" Number="1-20" Blueprint="Shuriken" />
+        </group>
+    </population>
+
+<!--    <population Name="GenericFactionPopulation" Load="Merge">-->
+<!--        <group Name="Factions" Style="pickone" Load="Merge">-->
+<!--            <group Name="Bravers" Style="pickone" Weight="1">-->
+<!--                <object Blueprint="Bravers" Weight="1" />-->
+<!--                <object Blueprint="BraversDawnGlider" Weight="1" />-->
+<!--                <object Blueprint="BraversSaltHopper" Weight="1" />-->
+<!--                <object Blueprint="BraversAstralCabby" Weight="1" />-->
+<!--                <object Blueprint="BraversSaltBack" Weight="1" />-->
+<!--                <object Blueprint="BraversSlumber" Weight="1" />-->
+<!--            </group>-->
+<!--        </group>-->
+<!--    </population>-->
+
+<!--    <population Name="SafeFactionPopulation" Load="Merge">-->
+<!--        <group Name="Factions" Style="pickone" Load="Merge">-->
+<!--            <group Name="Bravers" Style="pickone" Weight="1">-->
+<!--                <object Blueprint="Bravers" Weight="1" />-->
+<!--                <object Blueprint="BraversDawnGlider" Weight="1" />-->
+<!--                <object Blueprint="BraversSaltHopper" Weight="1" />-->
+<!--                <object Blueprint="BraversAstralCabby" Weight="1" />-->
+<!--                <object Blueprint="BraversSaltBack" Weight="1" />-->
+<!--                <object Blueprint="BraversSlumber" Weight="1" />-->
+<!--            </group>-->
+<!--        </group>-->
+<!--    </population>-->
+</populations>

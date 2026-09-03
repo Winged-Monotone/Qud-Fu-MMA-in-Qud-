@@ -119,6 +119,8 @@ namespace XRL.World.Parts.Skill
                 GameObject Defender = E.GetGameObjectParameter("Defender");
                 int DamageAmount = E.GetParameter<int>("Damage");
 
+                Attacker.TryGetPart(out WM_MMASkillTree WMMMA);
+
                 int ParentsStr = ParentObject.Statistics["Strength"].Modifier;
 
                 // AddPlayerMessage("var check 1");
@@ -135,38 +137,49 @@ namespace XRL.World.Parts.Skill
                 foreach (string direction3 in directionList)
                 {
                     GameObject Flankers = ParentObject.GetCurrentCell().GetCellFromDirection(direction3)?.GetCombatTarget(ParentObject, AllowInanimate: false);
-                    if (Stat.Random(1, 100) <= 3 + (AttackerLevels / 2) * ParentsStr)
+                    
+                    
+                    if (Stat.Random(1, 100) <= 3 + (WMMMA.ComboCounter / 2) * ParentsStr)
                     {
                         // AddPlayerMessage("Dismember is Firing?");
-
-                        var FlankersBody = Flankers.Body.GetParts();
-                        foreach (var ob in FlankersBody)
+                        
+                        if (Flankers.IsValid())
                         {
-                            if (Stat.Random(1, 100) <= 2 + (AttackerLevels / 10) && ob.IsSeverable() && ob.ParentBody != ParentObject.Body)
+                            var FlankersBody = Flankers.Body.GetParts();
+                            
+                            foreach (var ob in FlankersBody)
                             {
-
-                                if (ob.AnyMortalParts() || ob.Mortal)
+                                if (Stat.Random(1, 100) <= 2 + (WMMMA.ComboCounter / 2) && ob.IsSeverable() &&
+                                    ob.ParentBody != ParentObject.Body)
                                 {
-                                    if (ob.Type == "Head")
+                                    if (ob.AnyMortalParts() || ob.Mortal)
                                     {
-                                        ob.Dismember();
-                                        Flankers.Die(ParentObject, ParentObject.it + " lob " + Flankers.its + ob.Name + ", killing it!", null);
-                                    }
-                                    else if (ob.Type == "Body")
-                                    {
-                                        ob.Dismember();
-                                        Flankers.Die(ParentObject, ParentObject.it + "obliterates" + Flankers.its + ob.Name + ", killing it!", null);
+                                        if ((Stat.Random(1, 100) <= 1 && ob.Type == "Head"))
+                                        {
+                                            ob.Dismember();
+                                            Flankers.Die(ParentObject,
+                                                ParentObject.it + " lob " + Flankers.its + ob.Name + ", killing it!",
+                                                null);
+                                        }
+                                        else if (ob.Type == "Body")
+                                        {
+                                            ob.Dismember();
+                                            Flankers.Die(ParentObject,
+                                                ParentObject.it + "obliterates" + Flankers.its + ob.Name +
+                                                ", killing it!", null);
+                                        }
                                     }
                                 }
-                            }
-                            else if (ob.IsSeverable() && ob.Appendage && !ob.Mortal && ob.ParentBody != ParentObject.Body)
-                            {
-                                ob.Dismember();
-                                break;
+                                else if (ob.IsSeverable() && ob.Appendage && !ob.Mortal &&
+                                         ob.ParentBody != ParentObject.Body)
+                                {
+                                    ob.Dismember();
+                                    break;
+                                }
                             }
                         }
                     }
-                    if (Stat.Random(1, 100) <= 25 + AttackerLevels / 3)
+                    if (Stat.Random(1, 100) <= 25 + (WMMMA.ComboCounter / 2))
                     {
                         // AddPlayerMessage("Push is firing?");
 
@@ -228,7 +241,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
+            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
 
             return true;
         }

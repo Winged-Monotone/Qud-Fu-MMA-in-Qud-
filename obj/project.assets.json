@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lawre\\AppData\\LocalLow\\Freehold Games\\CavesOfQud\\Mods\\Qud-Fu MMA For CoQ by WM\\FocusPsi.csproj",
+      "projectUniqueName": "C:\\Users\\lawre\\AppData\\LocalLow\\Freehold Games\\CavesOfQud\\Mods\\Qud-Fu MMA For CoQ by WM\\Qud-Fu - MMA in Qud.csproj",
       "projectName": "QudFuMMA",
-      "projectPath": "C:\\Users\\lawre\\AppData\\LocalLow\\Freehold Games\\CavesOfQud\\Mods\\Qud-Fu MMA For CoQ by WM\\FocusPsi.csproj",
+      "projectPath": "C:\\Users\\lawre\\AppData\\LocalLow\\Freehold Games\\CavesOfQud\\Mods\\Qud-Fu MMA For CoQ by WM\\Qud-Fu - MMA in Qud.csproj",
       "packagesPath": "C:\\Users\\lawre\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\lawre\\AppData\\LocalLow\\Freehold Games\\CavesOfQud\\Mods\\Qud-Fu MMA For CoQ by WM\\obj\\",
       "projectStyle": "PackageReference",

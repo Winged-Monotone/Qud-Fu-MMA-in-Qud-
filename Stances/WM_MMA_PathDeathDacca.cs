@@ -20,7 +20,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.DeathDaccaStanceID = base.AddMyActivatedAbility("Way of the Death-Dacca", "DeathDaccaStanceCommand", "Skill", "Activate to assume the Dancing-Dacca stance.", "*", null, true, false, false);
+            this.DeathDaccaStanceID = base.AddMyActivatedAbility("Way of the Death-Dacca", "DeathDaccaStanceCommand", "Skill", "Activate to assume the Dancing-Dacca stance.", "*", null, false, false, false);
 
             return true;
         }

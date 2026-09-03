@@ -30,7 +30,7 @@ namespace XRL.World.Parts.Skill
         {
             this.ComboCounterID = base.AddMyActivatedAbility("Combo-Counter", "CommandPlaceHolder", "Skill", "Place this Counter in your hotbar to determine your current combo-level.", "*", null, false, false, true);
             UpdateCounter();
-            this.ResetComboCounterID = base.AddMyActivatedAbility("Reset Counter", "CommandResetCmbo", "Skill", "Reset the ComboCounter", "*", null, false, false, true);
+            this.ResetComboCounterID = base.AddMyActivatedAbility("Reset Counter", "CommandResetCombo", "Skill", "Reset the combo-counter", "*", null, false, false, true);
             UpdateCounter();
             return true;
         }
@@ -79,7 +79,8 @@ namespace XRL.World.Parts.Skill
             || ID == GetAttackerHitDiceEvent.ID
             || ID == ModifyAttackingSaveEvent.ID
             || ID == ModifyDefendingSaveEvent.ID
-            || ID == AttackerDealtDamageEvent.ID;
+            || ID == AttackerDealtDamageEvent.ID
+            || ID == AfterThrownEvent.ID;
         }
 
         public override void Register(GameObject Object, IEventRegistrar registrar)
@@ -89,10 +90,24 @@ namespace XRL.World.Parts.Skill
             Object.RegisterPartEvent(this, "AttackerHit");
             Object.RegisterPartEvent(this, "AttackerMeleeMiss");
             Object.RegisterPartEvent(this, "EndSegment");
-            Object.RegisterPartEvent(this, "CommandResetCmbo");
+            Object.RegisterPartEvent(this, "CommandResetCombo");
             Object.RegisterPartEvent(this, "EndTurn");
             Object.RegisterPartEvent(this, "DrinkingFrom");
             base.Register(Object, registrar);
+        }
+        
+        public override bool HandleEvent(AfterThrownEvent E)
+        {
+            var Parent = E.Actor == ParentObject;
+            var Defender = E.ApparentTarget;
+            var ThrownWeapon = E.Item;
+
+            if (Parent && ParentObject.HasSkill("WM_MMA_SkillTree") && ThrownWeapon.HasPropertyOrTag("MMAThrowable"))
+            {
+                CurrentComboICounter++;
+            }
+
+            return base.HandleEvent(E);
         }
 
         public override bool HandleEvent(ModifyAttackingSaveEvent E)
@@ -139,6 +154,19 @@ namespace XRL.World.Parts.Skill
                 var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
 
                 List<BodyPart> hands = body.GetPart("Hand");
+                
+                var ThrownWeapon = E.Projectile;
+                var Source = E.Source;
+                var Weapon = E.Weapon;
+
+                if (Parent  && ParentObject.HasPart<WM_MMASkillTree>() && ThrownWeapon.HasPropertyOrTag("MMAThrowable"))
+                {
+                    // AddPlayerMessage("Thrown Weapon: " + ThrownWeapon);
+                    // AddPlayerMessage("Source: " + Source);
+                    // AddPlayerMessage("Weapon: " + Weapon);
+
+                    CurrentComboICounter++;
+                }
 
                 if (E.Actor == ParentObject && (E.Weapon.HasPart("MartialConditioningFistMod") || E.Weapon.Blueprint == "DefaultMartialFist" || E.Weapon.HasPart("NaturalGear") || E.Weapon.HasPropertyOrTag("WeaponUnarmed")))
 
@@ -226,14 +254,20 @@ namespace XRL.World.Parts.Skill
                         --CurrentComboICounter;
                     }
                 }
-                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") && ParentObject.HasBodyPart("Hand") && (DeezHands.Blueprint == "DefaultMartialFist" || DeezHands.HasPart("MartialConditioningFistMod") || DeezHands.HasPart("NaturalEquipment") || DeezHands.HasPart("NaturalWeapon") || DeezHands.HasPropertyOrTag("WeaponUnarmed")))
+                if (Parent && Defender.HasPart("Brain") && Defender.HasPart("Combat") 
+                    && ParentObject.HasBodyPart("Hand") 
+                    && (DeezHands.Blueprint == "DefaultMartialFist" 
+                        || DeezHands.HasPart("MartialConditioningFistMod") 
+                        || DeezHands.HasPart("NaturalEquipment") 
+                        || DeezHands.HasPart("NaturalWeapon") 
+                        || DeezHands.HasPropertyOrTag("WeaponUnarmed")))
                 {
                     // AddPlayerMessage("Increase ComboCounter");
 
                     if (CurrentComboICounter <= MaximumComboICounter)
                         ++CurrentComboICounter;
 
-                    if (ComboBuffering == false)
+                    if (!ComboBuffering)
                     {
                         ComboBuffering = true;
                     }
@@ -242,19 +276,19 @@ namespace XRL.World.Parts.Skill
                 }
 
             }
-            else if (E.ID == "CommandResetCmbo")
+            else if (E.ID == "CommandResetCombo")
             {
                 // AddPlayerMessage("Reset Combo");
                 CurrentComboICounter = 0;
             }
             else if (E.ID == "EndTurn")
             {
-                if (BufferDuration > 0 && ComboBuffering == true)
+                if (BufferDuration > 0 && ComboBuffering)
                 {
                     // AddPlayerMessage("depricate bufferduration");
                     --BufferDuration;
                     UpdateCounter();
-                    if (BufferDuration <= 0 && ComboBuffering == true)
+                    if (BufferDuration <= 0 && ComboBuffering)
                     {
                         // AddPlayerMessage("ResetCombos");
                         ComboBuffering = false;

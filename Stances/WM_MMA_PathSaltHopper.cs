@@ -139,7 +139,7 @@ namespace XRL.World.Parts.Skill
         public override bool AddSkill(GameObject GO)
         {
 
-            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, true, false, false);
+            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
 
             return true;
         }

@@ -32,15 +32,19 @@ namespace XRL.World.Parts.Skill
         public override bool WantEvent(int ID, int cascade)
         {
 
-            return ID == GetSprintDurationEvent.ID
-            || base.WantEvent(ID, cascade);
+            return ID == GetSprintDurationEvent.ID ||
+            base.WantEvent(ID, cascade);
 
         }
 
         public override bool HandleEvent(GetSprintDurationEvent E)
         {
             // AddPlayerMessage("Sprint Bonus From MCIII Activate!");
-            E.LinearIncrease += 40;
+            if (E.Object.IsValid() && E.Object == ParentObject)
+            {
+                E.LinearIncrease += 40;
+            }
+            
             return base.HandleEvent(E);
         }
 
@@ -51,21 +55,16 @@ namespace XRL.World.Parts.Skill
                 if (ParentObject.HasEffect("Meditating"))
                 {
                     int HealthRegained = E.GetIntParameter("Amount");
-                    HealthRegained += 3 + ParentObject.StatMod("Toughness", 1);
+                    HealthRegained += (HealthRegained / 2) + ParentObject.StatMod("Toughness", 1);
                 }
-            }
-            else if (E.ID == "AdjustSprintDuration")
-            {
-                var SprintSpeedDurationBonus = E.GetIntParameter("Duration");
-                SprintSpeedDurationBonus += 40;
             }
 
             return base.FireEvent(E);
         }
         public override bool AddSkill(GameObject GO)
         {
-            StatShifter.SetStatShift("AV", 2);
-            StatShifter.SetStatShift("DV", 1);
+            StatShifter.SetStatShift("AV", 3);
+            StatShifter.SetStatShift("DV", 3);
             return true;
         }
 

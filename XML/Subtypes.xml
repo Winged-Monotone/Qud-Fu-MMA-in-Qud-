@@ -1,0 +1,38 @@
+<subtypes>
+
+    <class ID="Callings" ChargenTitle="Choose Calling" SingularTitle="calling" Load="Merge">
+
+        <subtype Name="Brave" Code="a" Gear="StartingGear_Brave" Tile="WingyFuTextures/creatures/caste_contender.png" DetailColor="g">
+            <stat Name="Agility" Bonus="2" />
+
+            <skills>
+                <skill Name="WM_MMASkillTree" />
+                <skill Name="WM_MMA_CombinationStrikesI" />
+                <skill Name="Tactics" />
+                <skill Name="Discipline" />
+                <skill Name="Survival" />
+
+            </skills>
+        </subtype>
+    </class>
+
+    <class ID="Castes" ChargenTitle="choose caste" SingularTitle="caste" Load="Merge">
+
+        <subtype Name="Dawning-Fist Ryu" Gear="StartingGear_DivineDawningFistRyu" Tile="WingyFuTextures/creatures/Contender-Caste TrueKin Ryu.png" DetailColor="m">
+            <stat Name="Strength" Bonus="1" />
+            <stat Name="Agility" Bonus="1" />
+            <stat Name="Toughness" Bonus="2" />
+            <skills>
+                <skill Name="WM_MMASkillTree" />
+                <skill Name="WM_MMA_CombinationStrikesI" />
+                <skill Name="Tactics" />
+                <skill Name="Discipline" />
+                <skill Name="Survival" />
+                <skill Name="WM_MMA_MartialStances" />
+                <skill Name="WM_MMA_PathDawnGlider" />
+            </skills>
+        </subtype>
+        
+    </class>
+    
+</subtypes>

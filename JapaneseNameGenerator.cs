@@ -20,11 +20,11 @@
 // using XRL.World.Parts;
 // using AiUnity.Common.Extensions;
 // using XRL.World.Parts.Skill;
-
-
+//
+//
 // namespace XRL.World.Parts
 // {
-
+//
 //     [Serializable]
 //     public class JapaneseNameConstructor : IPart
 //     {
@@ -32,21 +32,21 @@
 //         private string Consonants = "BB̄ḆCÇC̄C̱DD̄ḎFGḠG̱HH̱JJ̄J̱KḴLL̄ḸḺMM̄M̱NN̄ṈÑPP̄P̱QQ̄R̄ṞṜRSŠS̄S̱TT̄ṮVV̄W̄WXX̄X̱YÝŸȲȲ́Ȳ̀Ȳ̃Y̱ŽZZ̄ẔŒ̄";
 //         private string Vowels = "AEIOUÀÁÂÃÄÈÉÊËÌÍÎÏÒÓÔÕÖÚÛÜÙĀĀ́Ā̀Ā̂Ā̃ǞĀ̈ǠA̱Å̄ǢĒḖḔĒ̂Ē̃Ê̄E̱Ë̄E̊̄ĪĪ́Ī̀Ī̂Ī̃I̱ŌṒṐŌ̂Ō̃ȪŌ̈ǬȬȰO̱Ø̄ŪŪ́Ū̀Ū̂Ū̃U̇ǕṺṲ̄U̱";
 //         private string Exception = "NN̄ṈÑ'";
-
+//
 //         private Dictionary<string, Dictionary<string, int>> JapanesePhonemAdjacency;
 //         private Dictionary<string, Dictionary<string, int>> JapaneseSurnamePhonemAdjacency;
 //         public JapaneseNameConstructor()
 //         {
 //             JapanesePhonemAdjacency = new Dictionary<string, Dictionary<string, int>>();
 //             JapaneseSurnamePhonemAdjacency = new Dictionary<string, Dictionary<string, int>>();
-
-
-
+//
+//
+//
 //             // AddPlayerMessage("PopulatingJapanesePhonems ...");
 //             // AddPlayerMessage("" + Char.ToUpper('ō'));
-
-
-
+//
+//
+//
 //             foreach (string name in JapaneseNameListWW.JapaneseNamelist.JAPANESE_NAMES_FIRSTNAMES)
 //             {
 //                 PopulateJapanesePhonemAdjacency(name);
@@ -55,28 +55,28 @@
 //             {
 //                 PopulateJapaneseSurnamePhonemAdjacency(name);
 //             }
-
-
+//
+//
 //             // int Ran = Stat.Random(1, 4);
 //             // int SurRan = Stat.Random(1, 6);
 //             // GO.DisplayName = "&M" + "" + GenerateJapaneseSurName(Ran) + " " + GenerateJapaneseName(SurRan);
-
-
+//
+//
 //             // for (int i = 0; i < 30; i++)
 //             // {
 //             //     int Ran = Stat.Random(1, 4);
 //             //     int SurRan = Stat.Random(1, 6);
 //             //     AddPlayerMessage(GenerateJapaneseSurName(Ran) + " " + GenerateJapaneseName(SurRan));
 //             // }
-
+//
 //             // AddPlayerMessage("Name Generation Complete ...");
-
+//
 //             // AddPlayerMessage("Generating XML Names ...");
 //             // XMLConversion();
 //             // AddPlayerMessage("Generated XML Names ...");
-
+//
 //         }
-
+//
 //         public override bool WantEvent(int ID, int cascade)
 //         {
 //             return base.WantEvent(ID, cascade)
@@ -84,7 +84,7 @@
 //             || ID == AfterObjectCreatedEvent.ID
 //             ;
 //         }
-
+//
 //         private List<string> DiscipleUnits = new List<string>()
 //         {
 //                 "BraverSlumberDisciple",
@@ -94,7 +94,7 @@
 //                 "BraverDawnDisciple",
 //                 "BraverDisciple",
 //         };
-
+//
 //         public override bool HandleEvent(AfterObjectCreatedEvent E)
 //         {
 //             string[] MasteryTitle = new string[7]
@@ -140,7 +140,7 @@
 //                 "Ardent",
 //                 "Fervent",
 //         };
-
+//
 //             int Ran = Stat.Random(1, 4);
 //             int SurRan = Stat.Random(1, 6);
 //             if (E.Object == ParentObject && !(DiscipleUnits.Any<string>()))
@@ -152,7 +152,7 @@
 //                     + " "
 //                     + (GenerateJapaneseName(SurRan))
 //                     + (", ");
-
+//
 //                     ParentObject.RequirePart<Epithets>().Primary = (MasteryPro.GetRandomElement() + "-" + MasteryTitle.GetRandomElement());
 //                     if (ParentObject.GetPrimaryFaction().Contains("BraversDawn"))
 //                         ParentObject.RequirePart<Epithets>().Primary = "of the Dawning-Fist Ryu";
@@ -175,7 +175,7 @@
 //                     + " "
 //                     + (GenerateJapaneseName(SurRan))
 //                     + (", ");
-
+//
 //                     ParentObject.RequirePart<Epithets>().Primary = (MasteryPro.GetRandomElement() + "-" + DiscipleTitle.GetRandomElement());
 //                     if (ParentObject.GetPrimaryFaction().Contains("BraversDawn"))
 //                         ParentObject.RequirePart<Epithets>().Primary = (" of the Dawning-Fist Ryu");
@@ -189,11 +189,11 @@
 //                         ParentObject.RequirePart<Epithets>().Primary = (" of the Slumbering-Fury Ryu");
 //                 }
 //             }
-
+//
 //             return base.HandleEvent(E);
-
+//
 //         }
-
+//
 //         public void PopulateJapanesePhonemAdjacency(string name)
 //         {
 //             List<string> Phonems = DecomposeName(name);
@@ -202,29 +202,29 @@
 //                 for (int i = 0; i < Phonems.Count - 1; i++)
 //                 {
 //                     Dictionary<string, int> Adjacency;
-
+//
 //                     // AddPlayerMessage("Before Get Adjacency");
-
+//
 //                     if (!JapanesePhonemAdjacency.TryGetValue(Phonems[i], out Adjacency))
 //                     {
 //                         Adjacency = new Dictionary<string, int>();
 //                         JapanesePhonemAdjacency[Phonems[i]] = Adjacency;
 //                     }
-
+//
 //                     // AddPlayerMessage("After get adjacency name ...");
-
+//
 //                     int Occurrence = 0;
-
+//
 //                     // AddPlayerMessage("Get Adjacency Values ...");
-
+//
 //                     if (Adjacency.TryGetValue(Phonems[i + 1], out Occurrence))
 //                     {
 //                         Adjacency[Phonems[i + 1]] = 0;
 //                         Occurrence = 0;
 //                     }
-
+//
 //                     // AddPlayerMessage("After get adjacency values ...");
-
+//
 //                     Adjacency[Phonems[i + 1]] = Occurrence + 1;
 //                 }
 //             }
@@ -237,29 +237,29 @@
 //                 for (int i = 0; i < Phonems.Count - 1; i++)
 //                 {
 //                     Dictionary<string, int> Adjacency;
-
+//
 //                     // AddPlayerMessage("Before Get Adjacency");
-
+//
 //                     if (!JapaneseSurnamePhonemAdjacency.TryGetValue(Phonems[i], out Adjacency))
 //                     {
 //                         Adjacency = new Dictionary<string, int>();
 //                         JapaneseSurnamePhonemAdjacency[Phonems[i]] = Adjacency;
 //                     }
-
+//
 //                     // AddPlayerMessage("After get adjacency name ...");
-
+//
 //                     int Occurrence = 0;
-
+//
 //                     // AddPlayerMessage("Get Adjacency Values ...");
-
+//
 //                     if (Adjacency.TryGetValue(Phonems[i + 1], out Occurrence))
 //                     {
 //                         Adjacency[Phonems[i + 1]] = 0;
 //                         Occurrence = 0;
 //                     }
-
+//
 //                     // AddPlayerMessage("After get adjacency values ...");
-
+//
 //                     Adjacency[Phonems[i + 1]] = Occurrence + 1;
 //                 }
 //             }
@@ -267,14 +267,14 @@
 //         public string GenerateJapaneseSurName(int SoftLimit)
 //         {
 //             // AddPlayerMessage("Generating Name Begins ...");
-
+//
 //             string CurrentPhonem = "Start";
 //             string name = "";
 //             int counter = 0;
-
+//
 //             CurrentPhonem = PickNextPhonem(JapaneseSurnamePhonemAdjacency[CurrentPhonem]);
 //             // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
-
+//
 //             while (CurrentPhonem != "End")
 //             {
 //                 name += CurrentPhonem;
@@ -287,23 +287,23 @@
 //                 { CurrentPhonem = "End"; }
 //                 // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
 //             }
-
+//
 //             // AddPlayerMessage("name " + name);
-
-
+//
+//
 //             return name;
 //         }
 //         public string GenerateJapaneseName(int SoftLimit)
 //         {
 //             // AddPlayerMessage("Generating Name Begins ...");
-
+//
 //             string CurrentPhonem = "Start";
 //             string name = "";
 //             int counter = 0;
-
+//
 //             CurrentPhonem = PickNextPhonem(JapanesePhonemAdjacency[CurrentPhonem]);
 //             // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
-
+//
 //             while (CurrentPhonem != "End")
 //             {
 //                 name += CurrentPhonem;
@@ -316,53 +316,53 @@
 //                 { CurrentPhonem = "End"; }
 //                 // AddPlayerMessage("CurrentPhonem " + CurrentPhonem);
 //             }
-
+//
 //             // AddPlayerMessage("name " + name);
-
-
+//
+//
 //             return name;
 //         }
-
+//
 //         private string PickNextPhonem(Dictionary<string, int> Adjacency)
 //         {
 //             int Total = 0;
 //             int Border = 0;
 //             string[] Phonems = Adjacency.Keys.ToArray();
-
+//
 //             // AddPlayerMessage("Picking Next Phonem begin Foreach ...");
-
-
+//
+//
 //             foreach (int Occurrence in Adjacency.Values)
 //             {
 //                 Total += Occurrence;
 //             }
-
+//
 //             // AddPlayerMessage("total ..." + Total);
-
+//
 //             // AddPlayerMessage("Finished picking phonem ...");
-
+//
 //             int RandomizedPhonetics = Stat.Random(0, Total);
 //             bool HasFoundIndex = false;
-
+//
 //             int index;
 //             for (index = 0; index < Adjacency.Count - 1 && !HasFoundIndex; index++)
 //             {
 //                 // AddPlayerMessage("Setting Border");
-
+//
 //                 Border += Adjacency[Phonems[index]];
-
+//
 //                 // AddPlayerMessage("border =" + Border);
-
+//
 //                 if (RandomizedPhonetics < Border)
 //                 {
 //                     HasFoundIndex = true;
 //                 }
 //             }
-
+//
 //             // AddPlayerMessage("returning phonem index ..." + index);
 //             // AddPlayerMessage("Phonems index ..." + Phonems[index]);
-
-
+//
+//
 //             return Phonems[index];
 //         }
 //         private bool isException(char c)
@@ -379,23 +379,23 @@
 //             {
 //                 return 'V';
 //             }
-
+//
 //             return 'x';
 //         }
 //         private bool GetMatchingFilter(string name, int offset, out string filter)
 //         {
 //             bool HasMatchedFilter = false;
-
+//
 //             string currentFilter = "";
-
-
+//
+//
 //             for (int i = 0; i < JapanesePhonemFilters.Length && !HasMatchedFilter; i++)
 //             {
 //                 HasMatchedFilter = true;
 //                 currentFilter = JapanesePhonemFilters[i];
-
+//
 //                 // AddPlayerMessage("Filter: " + currentFilter);
-
+//
 //                 if (currentFilter.Length <= name.Length - offset)
 //                 {
 //                     for (int charIndex = 0; charIndex < currentFilter.Length && HasMatchedFilter; charIndex++)
@@ -432,42 +432,42 @@
 //             // V = Vowel
 //             // C = Consonant
 //             // N = N Exception
-
+//
 //             // Phonems can be a Single V, CV, CVV, CCV, VN, NV, VV, N
 //             //  Order:
 //             // CVV, CCV, CV, VV, NV, VN, V, N
 //             // Phonems can't end with a C, except for N
-
+//
 //             // AddPlayerMessage("name length " + name.Length);
-
+//
 //             int charOffset = 0;
-
+//
 //             List<string> Phonems = new List<string>();
 //             Phonems.Add("Start");
-
+//
 //             while (charOffset < name.Length)
 //             {
 //                 // AddPlayerMessage("Testing Offset :" + charOffset);
-
+//
 //                 string matchingFilter = "";
-
+//
 //                 if (GetMatchingFilter(name, charOffset, out matchingFilter))
 //                 {
 //                     // AddPlayerMessage("Matched Filter " + matchingFilter);
-
+//
 //                     Phonems.Add(name.Substring(charOffset, matchingFilter.Length));
 //                     charOffset += matchingFilter.Length;
 //                 }
 //                 else
 //                 {
 //                     // AddPlayerMessage("Couldn't match filter.");
-
+//
 //                     return null;
 //                 }
 //             }
-
+//
 //             Phonems.Add("End");
-
+//
 //             return Phonems;
 //         }
 //     }
