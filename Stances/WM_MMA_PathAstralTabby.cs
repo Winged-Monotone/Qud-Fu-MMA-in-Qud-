@@ -29,7 +29,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.AstralTabbyStanceID = base.AddMyActivatedAbility("Way of the Astral Tabby", "AstralTabbyStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.AstralTabbyStanceID = base.AddMyActivatedAbility("Way of the Astral Tabby", "AstralTabbyStanceCommand", "Skill", "Activate to assume the Shifting Astral Tabby stance.", "*", null, false, false, true);
 
             return true;
         }
@@ -64,7 +64,9 @@ namespace XRL.World.Parts.Skill
         {
             RecountAdjacentHostiles();
 
-            StatShifter.SetStatShift("DV", AdjacentHostiles, false);
+            var CurrentDV = ParentObject.BaseStat("DV");
+
+            StatShifter.SetStatShift("DV", CurrentDV + AdjacentHostiles, false);
 
             return base.HandleEvent(E);
         }

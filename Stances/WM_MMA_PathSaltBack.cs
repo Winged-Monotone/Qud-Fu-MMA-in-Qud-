@@ -69,24 +69,31 @@ namespace XRL.World.Parts.Skill
                 {
                     var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
                     Damage Damage = E.GetParameter<Damage>("Damage");
+
                     var Attacker = ParentObject;
+                    var Defender = E.GetGameObjectParameter("Defender");
+                    var Weapon = E.GetGameObjectParameter("Weapon");
 
+                    if (WM_MMASkillTree.GetWeaponEventBooleanChecks(Attacker, Weapon, Defender))
+                    {
+                        if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                        }
 
-                    if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
-                    }
-                    if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
-                    }
-                    if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
-                    }
-                    else
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                        if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                        }
+
+                        if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                        }
+                        else
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                        }
                     }
                 }
                 catch
@@ -97,63 +104,73 @@ namespace XRL.World.Parts.Skill
             if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("SaltbackStance"))
             {
                 // AddPlayerMessage("SaltBack Defender Block Begins");
-                // GameObject Attacker = E.GetGameObjectParameter("Attacker");
-                var Owner = ParentObject;
+                GameObject eAttacker = E.GetGameObjectParameter("Attacker");
+                var eDefender = ParentObject;
+                var eBodyPartIHand = ParentObject.Body.GetUnequippedPart("Hand");
 
-
-                Body body = Owner.GetPart("Body") as Body;
-                List<BodyPart> hands = body.GetPart("Hand");
-                var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultMartialFist", "Hand");
-
-                int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 2);
-                if (SpecialFistCollective.Any(Owner.HasEquippedObject))
+                foreach (var BHand in eBodyPartIHand)
                 {
-                    PSBArmorBonus = 3;
-                }
+                        // AddPlayerMessage("BHand: " + BHand);
+                        // List<BodyPart> hands = body.GetPart("Hand");
+                        
+                        int FistShieldAV = ParentObject.StatMod("Toughness", 1) +
+                                           (ParentObject.Statistics["Level"].BaseValue / 2);
 
-                if (Owner.GetShield() != null)
-                {
-                    // AddPlayerMessage("SaltBackHalf Shield Returned Null");
-                    return true;
-                }
-                if (E.HasParameter("ShieldBlocked"))
-                {
-                    // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
-                    return true;
-                }
-                if (!Owner.CanMoveExtremities(null, false, false, false))
-                {
-                    // AddPlayerMessage("SaltBackHalf CanMove Check");
-                    return true;
-                }
-                // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
-                if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
-                {
-                    // AddPlayerMessage("SaltBackHalf SaltBack Status");
-
-                    var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
-                    E.SetParameter("ShieldBlocked", true);
-                    ++MMAComboAccess.CurrentComboICounter;
-                    MMAComboAccess.UpdateCounter();
-
-                    // AddPlayerMessage("SaltBackHalf Damage");
-
-                    if (Owner.IsPlayer())
-                    {
-                        IComponent<GameObject>.AddPlayerMessage("You deflect an attack with your " + ParentObject.Equipped + "!" + "(" + FistShieldAV + " AV)", 'g');
-                    }
-                    else
-                    {
-                        Owner.ParticleText(string.Concat(new object[]
+                        if (SpecialFistCollective.Any(eDefender.HasEquippedObject))
                         {
-                            "{{",
-                            IComponent<GameObject>.ConsequentialColor(Owner, null),
-                            "|Block! (+",
-                            FistShieldAV +
-                            " AV)}}"
-                        }), ' ', false, 1.5f, -8f);
-                    }
-                    E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
+                            PSBArmorBonus = 3;
+                        }
+
+                        if (eDefender.GetShield() != null)
+                        {
+                            // AddPlayerMessage("SaltBackHalf Shield Returned Null");
+                            return true;
+                        }
+
+                        if (E.HasParameter("ShieldBlocked"))
+                        {
+                            // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
+                            return true;
+                        }
+
+                        if (!eDefender.CanMoveExtremities(null, false, false, false))
+                        {
+                            // AddPlayerMessage("SaltBackHalf CanMove Check");
+                            return true;
+                        }
+
+                        // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
+                        if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
+                        {
+                            // AddPlayerMessage("SaltBackHalf SaltBack Status");
+
+                            var MMAComboAccess = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+                            E.SetParameter("ShieldBlocked", true);
+                            ++MMAComboAccess.CurrentComboICounter;
+                            MMAComboAccess.UpdateCounter();
+
+                            // AddPlayerMessage("SaltBackHalf Damage");
+
+                            if (eDefender.IsPlayer())
+                            {
+                                IComponent<GameObject>.AddPlayerMessage(
+                                    "You deflect an attack with a snappy wrist block!" + "(" + FistShieldAV +
+                                    " AV)", 'g');
+                            }
+                            else
+                            {
+                                eDefender.ParticleText(string.Concat(new object[]
+                                {
+                                    "{{",
+                                    IComponent<GameObject>.ConsequentialColor(eDefender, null),
+                                    "|Deflect! (+",
+                                    FistShieldAV +
+                                    " AV)}}"
+                                }), ' ', false, 1.5f, -8f);
+                            }
+
+                            E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
+                        }
                 }
             }
             return base.FireEvent(E);
@@ -161,9 +178,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-
-
-            this.SaltBackStanceID = base.AddMyActivatedAbility("Way of the Salt-Back", "SaltBackStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
+            this.SaltBackStanceID = base.AddMyActivatedAbility("Way of the Salt-Back", "SaltBackStanceCommand", "Skill", "Activate to assume the Immovable Saltback stance", "*", null, false, false, false);
             return true;
         }
 

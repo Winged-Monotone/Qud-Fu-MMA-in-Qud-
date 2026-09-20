@@ -20,6 +20,7 @@ using XRL.World.Parts.Mutation;
 
 using UnityEngine;
 using XRL.World.Anatomy;
+using GameObject = XRL.World.GameObject;
 
 
 namespace XRL.World.Parts.Skill
@@ -35,22 +36,24 @@ namespace XRL.World.Parts.Skill
         }
         public void RageStrikePulse(Cell TargetCell)
         {
-            for (int i = 0; i < 1; i++)
-            {
-                for (int j = 0; j < 3; j++)
+            if (TargetCell != null)
+                for (int i = 0; i < 1; i++)
                 {
-                    TargetCell.ParticleText("&R" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        TargetCell.ParticleText("&R" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                    }
+                    for (int k = 0; k < 2; k++)
+                    {
+                        TargetCell.ParticleText("&k" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                    }
+                    for (int l = 0; l < 4; l++)
+                    {
+                        TargetCell.ParticleText("&r" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
+                    }
                 }
-                for (int k = 0; k < 2; k++)
-                {
-                    TargetCell.ParticleText("&k" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
-                }
-                for (int l = 0; l < 4; l++)
-                {
-                    TargetCell.ParticleText("&r" + (char)(219 + Stat.Random(0, 10)), 2.9f, 5);
-                }
-            }
         }
+        
         public override void Register(GameObject Object, IEventRegistrar registrar)
         {
             Object.RegisterPartEvent(this, "AttackerHit");
@@ -69,26 +72,35 @@ namespace XRL.World.Parts.Skill
             {
                 try
                 {
-                    var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
-                    Damage Damage = E.GetParameter<Damage>("Damage");
-                    var Attacker = ParentObject;
+                    var eAttacker = ParentObject;
+                    var eWeapon = E.GetGameObjectParameter("Weapon");
+                    var eDefender = E.GetGameObjectParameter("Defender");
+                    
+                    if (WM_MMASkillTree.GetWeaponEventBooleanChecks(eAttacker, eWeapon, eDefender))
+                    {
+                        var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
+                        Damage Damage = E.GetParameter<Damage>("Damage");
+                        var Attacker = ParentObject;
 
 
-                    if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
-                    }
-                    if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
-                    }
-                    if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
-                    {
-                        Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
-                    }
-                    else
-                    {
+                        if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                        }
 
+                        if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                        }
+
+                        if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                        {
+                            Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                        }
+                        else
+                        {
+
+                        }
                     }
                 }
                 catch
@@ -98,20 +110,24 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SlumberStance"))
             {
-
+                
                 // AddPlayerMessage("Execute Attacker hit on Slumberstyle");
 
                 Damage Damage = E.GetParameter<Damage>("Damage");
-                var Attacker = ParentObject;
-                var Defender = E.GetGameObjectParameter("Defender");
-                var Weapon = E.GetGameObjectParameter("Weapon");
 
-                Event E2 = Event.New("SlumberCleaveEvent");
-                E2.SetParameter("Attacker", ParentObject);
-                E2.SetParameter("Defender", Defender);
-                E2.SetParameter("Damage", Damage.Amount);
+                var eAttacker = ParentObject;
+                var eWeapon = E.GetGameObjectParameter("Weapon");
+                var eDefender = E.GetGameObjectParameter("Defender");
 
-                ParentObject.FireEvent(E2);
+                if (WM_MMASkillTree.GetWeaponEventBooleanChecks(eAttacker, eWeapon, eDefender))
+                {
+                    Event E2 = Event.New("SlumberCleaveEvent");
+                    E2.SetParameter("Attacker", ParentObject);
+                    E2.SetParameter("Defender", eDefender);
+                    E2.SetParameter("Damage", Damage.Amount);
+                    
+                    ParentObject.FireEvent(E2);
+                }
             }
             else if (E.ID == "SlumberCleaveEvent" && ParentObject.HasEffect("SlumberStance"))
             {
@@ -183,9 +199,12 @@ namespace XRL.World.Parts.Skill
                     {
                         // AddPlayerMessage("Push is firing?");
 
-                        Flankers.TakeDamage(ref (DamageAmount));
-                        RageStrikePulse(Flankers.CurrentCell);
-                        Flankers.Push(direction3, 1000, 1);
+                        if (Flankers.IsValid())
+                        {
+                            Flankers.TakeDamage(ref (DamageAmount));
+                            RageStrikePulse(Flankers.CurrentCell);
+                            Flankers.Push(direction3, 1000, 1);
+                        }
                     }
 
 
@@ -241,7 +260,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
+            this.SlumberStanceID = base.AddMyActivatedAbility("Way of the Slumberling", "SlumberlingStanceCommand", "Skill", "Activate to assume the Raging Slumberling stance.", "*", null, false, false, false);
 
             return true;
         }
@@ -252,3 +271,5 @@ namespace XRL.World.Parts.Skill
         }
     }
 }
+
+

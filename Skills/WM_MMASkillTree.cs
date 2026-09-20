@@ -135,43 +135,43 @@ namespace XRL.World.Parts.Skill
             {
                 return 1;
             }
-            if (Level == 2)
-            {
-                return 1;
-            }
             if (Level == 3)
-            {
-                return 1;
-            }
-            if (Level == 4)
             {
                 return 1;
             }
             if (Level == 5)
             {
-                return 2;
-            }
-            if (Level == 6)
-            {
-                return 2;
+                return 1;
             }
             if (Level == 7)
             {
-                return 2;
-            }
-            if (Level == 8)
-            {
-                return 2;
-            }
-            if (Level == 9)
-            {
-                return 2;
+                return 1;
             }
             if (Level == 10)
             {
                 return 2;
             }
-            if (Level >= 10)
+            if (Level == 13)
+            {
+                return 2;
+            }
+            if (Level == 16)
+            {
+                return 2;
+            }
+            if (Level == 20)
+            {
+                return 2;
+            }
+            if (Level == 24)
+            {
+                return 2;
+            }
+            if (Level == 27)
+            {
+                return 2;
+            }
+            if (Level >= 30)
             {
                 return 2 + (Level/10);
             }
@@ -197,6 +197,17 @@ namespace XRL.World.Parts.Skill
             }
             
             return base.HandleEvent(E);
+        }
+        
+        public static bool GetWeaponEventBooleanChecks(GameObject MMAPartIOwner, GameObject Weapon, GameObject Defender)
+        {
+            return (Defender.HasPart("Combat")
+                     && MMAPartIOwner.HasBodyPart("Hand")
+                     && Weapon.Blueprint == "DefaultMartialFist"
+                    || Weapon.HasPart("MartialConditioningFistMod")
+                    || Weapon.HasPart("NaturalEquipment")
+                    || Weapon.HasPart("NaturalWeapon")
+                    || Weapon.HasPropertyOrTag("WeaponUnarmed"));
         }
     }
 }

@@ -67,7 +67,7 @@ namespace XRL.World.Parts.Skill
         }
         public override bool AddSkill(GameObject GO)
         {
-            this.DismissStanceID = base.AddMyActivatedAbility("Dismiss Stance", "DismissStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, true);
+            this.DismissStanceID = base.AddMyActivatedAbility("Dismiss Stance", "DismissStanceCommand", "Skill", "Dismiss your current stance.", "*", null, false, false, true);
 
             if (!ParentObject.HasSkill("WM_MMA_MartialStances"))
             {

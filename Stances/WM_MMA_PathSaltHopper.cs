@@ -50,25 +50,31 @@ namespace XRL.World.Parts.Skill
             if (E.ID == "AtttackerHit" && ParentObject.HasEffect("SaltHopperStance"))
             {
                 Damage Damage = E.GetParameter<Damage>("Damage");
+
                 var Attacker = ParentObject;
+                var Defender = E.GetGameObjectParameter("Defender");
+                var Weapon = E.GetGameObjectParameter("Weapon");
 
-                var ComboSI = ParentObject.GetPart<WM_MMA_CombinationStrikesI>();
+                if (WM_MMASkillTree.GetWeaponEventBooleanChecks(Attacker, Weapon, Defender))
+                {
+                    if (NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                    }
 
-                if (NegEffectsCollectiveTI.Any(Attacker.HasEffect))
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
-                }
-                if (NegEffectsCollectiveTII.Any(Attacker.HasEffect))
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
-                }
-                if (NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
-                }
-                else
-                {
-                    Damage.Amount = (int)Math.Round(Damage.Amount * 0.75f);
+                    if (NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 1.55f);
+                    }
+
+                    if (NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                    }
+                    else
+                    {
+                        Damage.Amount = (int)Math.Round(Damage.Amount * 0.75f);
+                    }
                 }
             }
             if (E.ID == "AttackerAfterAttack" && ParentObject.HasEffect("SaltHopperStance"))
@@ -78,6 +84,7 @@ namespace XRL.World.Parts.Skill
 
                 ComboSI.CurrentComboICounter = 0;
                 ComboSI.UpdateCounter();
+                
                 // AddPlayerMessage("Execute Attacker hit on Salthopperstyle");
 
                 Damage Damage = E.GetParameter<Damage>("Damage");
@@ -88,49 +95,51 @@ namespace XRL.World.Parts.Skill
                 var AttackerLevels = Attacker.Statistics["Level"].BaseValue;
 
                 // AddPlayerMessage("var check 1");
-
-
-
-                if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels)
+                
+                if (WM_MMASkillTree.GetWeaponEventBooleanChecks(Attacker, Weapon, Defender))
                 {
-                    if (Stat.Random(1, 100) >= 50)
+                    if (!NegEffectsCollectiveTI.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels)
                     {
-                        Defender.ApplyEffect(new Dazed(10 + (ParentObject.Statistics["Level"].Value)));
+                        if (Stat.Random(1, 100) >= 50)
+                        {
+                            Defender.ApplyEffect(new Dazed(10 + (ParentObject.Statistics["Level"].Value)));
+                        }
+                        else
+                        {
+                            Defender.ApplyEffect(new PsiSupression(10 + (ParentObject.Statistics["Level"].Value)));
+                        }
                     }
-                    else
+                    else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) &&
+                             Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
                     {
-                        Defender.ApplyEffect(new PsiSupression(10 + (ParentObject.Statistics["Level"].Value)));
+                        if (Stat.Random(1, 100) >= 50)
+                        {
+                            Defender.ApplyEffect(new Cripple(10 + (ParentObject.Statistics["Level"].Value)));
+                        }
+                        else
+                        {
+                            Defender.ApplyEffect(new Prone());
+                        }
+                    }
+                    else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) &&
+                             Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
+                    {
+                        if (Stat.Random(1, 100) >= 50)
+                        {
+                            Defender.ApplyEffect(new Paralyzed(10 + (ParentObject.Statistics["Level"].Value),
+                                10 + (ParentObject.Statistics["Level"].Value)));
+                        }
+                        else
+                        {
+                            Defender.ApplyEffect(new Stun(10 + (ParentObject.Statistics["Level"].Value),
+                                10 + (ParentObject.Statistics["Level"].Value)));
+                        }
+                    }
+                    else if (Stat.Random(1, 100) <= 2 + (AttackerLevels / 5))
+                    {
+                        Defender.UseEnergy(25);
                     }
                 }
-                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 10)
-                {
-                    if (Stat.Random(1, 100) >= 50)
-                    {
-                        Defender.ApplyEffect(new Cripple(10 + (ParentObject.Statistics["Level"].Value)));
-                    }
-                    else
-                    {
-                        Defender.ApplyEffect(new Prone());
-                    }
-                }
-                else if (!NegEffectsCollectiveTII.Any(Attacker.HasEffect) && Stat.Random(1, 100) <= 3 + AttackerLevels && ParentObject.Statistics["Level"].Value >= 20)
-                {
-                    if (Stat.Random(1, 100) >= 50)
-                    {
-                        Defender.ApplyEffect(new Paralyzed(10 + (ParentObject.Statistics["Level"].Value),
-                                                                10 + (ParentObject.Statistics["Level"].Value)));
-                    }
-                    else
-                    {
-                        Defender.ApplyEffect(new Stun(10 + (ParentObject.Statistics["Level"].Value),
-                                                            10 + (ParentObject.Statistics["Level"].Value)));
-                    }
-                }
-                else if (Stat.Random(1, 100) <= 2 + (AttackerLevels / 5))
-                {
-                    Defender.UseEnergy(25);
-                }
-
             }
 
             return base.FireEvent(E);
@@ -139,7 +148,7 @@ namespace XRL.World.Parts.Skill
         public override bool AddSkill(GameObject GO)
         {
 
-            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
+            this.SaltHopperStanceID = base.AddMyActivatedAbility("Way of the Salt-Hopper", "SaltHopperStanceCommand", "Skill", "Activate to assume the Stinging Salthopper stance.", "*", null, false, false, false);
 
             return true;
         }

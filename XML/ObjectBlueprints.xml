@@ -70,14 +70,14 @@
         <part Name="Render" DisplayName="throwing knife" RenderString="\" Tile="WingyFuTextures/items/ThrowingDagger.png" TileColor="&amp;Y" DetailColor="K" Occluding="false" />
         <part Name="Physics" Weight="0" Takeable="true" Solid="false" Category="Thrown Weapons" />
         <part Name="Description" Short="A handleless short-blade with a heavier forward-end, when tossed, the long-edge hurls its momentum forward like a jet-black slip-star." />
-        <part Name="ThrownWeapon" Damage="2d6" Penetration="9" Attributes="ShortBlades" />
+        <part Name="ThrownWeapon" Damage="2d6" Penetration="7" Attributes="ShortBlades" />
     </object>
 
     <object Name="BaseShuriken" Inherits="Item">
         <part Name="Render" DisplayName="shuriken" RenderString="*" Tile="WingyFuTextures/items/shuriken.png" TileColor="&amp;K" DetailColor="y" Occluding="false" />
         <part Name="Physics" Weight="0" Takeable="true" Solid="false" Category="Thrown Weapons" />
-        <part Name="ThrownWeapon" Damage="5d4" Penetration="6" Attributes="ShortBlades" />
-        <part Name="Multithrow"/>
+        <part Name="ThrownWeapon" Damage="5d2" Penetration="6" Attributes="ShortBlades" />
+<!--        <part Name="Multithrow"/>-->
         <tag Name="EquipSound" Value="sfx_equip_weapon_thrown_bladed" />
         <tag Name="UnequipSound" Value="sfx_unequip_weapon_thrown" />
         <tag Name="Mods" Value="CommonMods,ThrownWeaponMods" />

@@ -21,20 +21,23 @@ namespace XRL.World.Parts.Skill
         public override bool WantEvent(int ID, int cascade)
         {
             return base.WantEvent(ID, cascade)
-            || ID == BeforeMeleeAttackEvent.ID;
+            || ID == GetMeleeAttackChanceEvent.ID;
         }
 
-        public override bool HandleEvent(BeforeMeleeAttackEvent E)
+        public override bool HandleEvent(GetMeleeAttackChanceEvent E)
         {
             var eWeapon = E.Weapon;
-            var eWeaponSChance = E.Weapon.GetPart<SecondaryAttackChance>();
 
             var ParentsAgility = ParentObject.StatMod("Agility");
             var ParentsLevel = ParentObject.Statistics["Level"].BaseValue;
 
-            if (E.Actor == ParentObject & (eWeapon.HasPart("MartialConditioningFistMod") || eWeapon.Blueprint == "DefaultMartialFist" || eWeapon.IsNatural() || eWeapon.HasPart("Psionic Hand")) && eWeapon.HasPart<SecondaryAttackChance>())
+            if (E.Actor == ParentObject 
+                && (eWeapon.HasPart("MartialConditioningFistMod") 
+                    || eWeapon.Blueprint == "DefaultFist" 
+                    || eWeapon.IsNatural() 
+                    || eWeapon.HasPart("Psionic Hand")))
             {
-                eWeaponSChance.Chance += (2 * ParentsAgility) + 1 + (ParentsLevel / 4);
+                E.Chance += (2 * ParentsAgility) + 1 + (ParentsLevel / 4);
             }
 
             return base.HandleEvent(E);

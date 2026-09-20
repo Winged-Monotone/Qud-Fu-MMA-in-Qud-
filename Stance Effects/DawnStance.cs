@@ -25,7 +25,7 @@ namespace XRL.World.Effects
 
         public override string GetDetails()
         {
-            return "A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike,' command up to a maximum +10. While in this stance you gain a +1 to hit and + 2 to DV\n";
+            return "A balanced stance, for those waiting to unleash their inner fire. Dealing successful strikes will add +1 to the 'sure-strike' command up to a maximum +10, multiplying its effect for each stack. While in this stance you gain a +3 to hit and +3 to DV\n";
         }
 
         public override void Register(GameObject go, IEventRegistrar registrar)
@@ -41,17 +41,17 @@ namespace XRL.World.Effects
 
         public void DawnPulse(Cell cell)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 2; j++)
                 {
                     cell.ParticleText("&M" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
-                for (int k = 0; k < 5; k++)
+                for (int k = 0; k < 2; k++)
                 {
                     cell.ParticleText("&m" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
-                for (int l = 0; l < 5; l++)
+                for (int l = 0; l < 2; l++)
                 {
                     cell.ParticleText("&o" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
@@ -63,7 +63,7 @@ namespace XRL.World.Effects
             PlayWorldSound("swapstance", PitchVariance: 0f);
             DawnPulse(Object.CurrentCell);
 
-            StatShifter.SetStatShift("DV", 1);
+            StatShifter.SetStatShift("DV", 3);
             return true;
         }
 

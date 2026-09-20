@@ -67,17 +67,17 @@ namespace XRL.World.Effects
 
         public void DawnPulse(Cell cell)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 2; j++)
                 {
                     cell.ParticleText("&G" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
-                for (int k = 0; k < 5; k++)
+                for (int k = 0; k < 2; k++)
                 {
                     cell.ParticleText("&g" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }
-                for (int l = 0; l < 5; l++)
+                for (int l = 0; l < 2; l++)
                 {
                     cell.ParticleText("&y" + (char)(219 + Stat.Random(0, 4)), -4.9f, 2);
                 }

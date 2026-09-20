@@ -38,45 +38,55 @@ namespace XRL.World.Parts.Skill
         {
             if (E.ID == "AttackerHit" && ParentObject.HasEffect("DawnStance"))
             {
-                if (ParentObject.HasPart("WM_MMA_SureStrikes"))
+                
+                var eAttacker = ParentObject;
+                var eWeapon = E.GetGameObjectParameter("Weapon");
+                var eDefender = E.GetGameObjectParameter("Defender");
+
+                if (WM_MMASkillTree.GetWeaponEventBooleanChecks(eAttacker, eWeapon, eDefender))
                 {
-                    var MMAComboSSAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
+                    if (ParentObject.HasPart("WM_MMA_SureStrikes"))
+                    {
+                        var MMAComboSSAccess = ParentObject.GetPart<WM_MMA_SureStrikes>();
 
-                    //Handles damage scaling.
+                        //Handles damage scaling.
 
-                    if (BonusSureStrike <= 10)
-                    { ++BonusSureStrike; }
-                    MMAComboSSAccess.UpdateCounter();
+                        if (BonusSureStrike <= 10)
+                        {
+                            ++BonusSureStrike;
+                        }
+
+                        MMAComboSSAccess.UpdateCounter();
+                    }
+                    else
+                        try
+                        {
+                            var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
+                            Damage Damage = E.GetParameter<Damage>("Damage");
+                            var Attacker = ParentObject;
+                            
+                            if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
+                            {
+                                Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
+                            }
+                            else if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
+                            {
+                                Damage.Amount = (int)Math.Round(Damage.Amount * 1.45f);
+                            }
+                            else if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
+                            {
+                                Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
+                            }
+                            else
+                            {
+                                Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
+                            }
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
                 }
-                else
-                    try
-                    {
-                        var salthopperDamageSystem = ParentObject.GetPart<WM_MMA_PathSaltHopper>();
-                        Damage Damage = E.GetParameter<Damage>("Damage");
-                        var Attacker = ParentObject;
-
-
-                        if (salthopperDamageSystem.NegEffectsCollectiveTI.Any(Attacker.HasEffect))
-                        {
-                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.15f);
-                        }
-                        else if (salthopperDamageSystem.NegEffectsCollectiveTII.Any(Attacker.HasEffect))
-                        {
-                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.45f);
-                        }
-                        else if (salthopperDamageSystem.NegEffectsCollectiveTIII.Any(Attacker.HasEffect))
-                        {
-                            Damage.Amount = (int)Math.Round(Damage.Amount * 2.5f);
-                        }
-                        else
-                        {
-                            Damage.Amount = (int)Math.Round(Damage.Amount * 1.0f);
-                        }
-                    }
-                    catch
-                    {
-
-                    }
             }
             else if (E.ID == "CommandSureStrikes" && ParentObject.HasEffect("DawnStance"))
             {
@@ -110,9 +120,10 @@ namespace XRL.World.Parts.Skill
             }
             else if (E.ID == "PerformMeleeAttack" && ParentObject.HasEffect("DawnStance"))
             {
+                
                 int HitBonus = E.GetIntParameter("HitBonus");
 
-                HitBonus = +1;
+                HitBonus = +3;
             }
             if (E.ID == "GetDefenderHitDice" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathSaltBack"))
             {
@@ -126,52 +137,65 @@ namespace XRL.World.Parts.Skill
                 List<BodyPart> hands = body.GetPart("Hand");
                 var hand = body.GetPrimaryWeaponOfTypeOnBodyPartOfType("DefaultMartialFist", "Hand");
 
-                int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 4);
-                if (SaltBackBlockSystem.SpecialFistCollective.Any(Owner.HasEquippedObject))
-                {
-                    SaltBackBlockSystem.PSBArmorBonus = 1;
-                }
+                int FistShieldAV = ParentObject.StatMod("Toughness", 1) + (ParentObject.Statistics["Level"].BaseValue / 5);
+                
+                var eBodyPartIHand = ParentObject.Body.GetUnequippedPart("Hand");
 
-                if (Owner.GetShield() != null)
+                foreach (var BHand in eBodyPartIHand)
                 {
-                    // AddPlayerMessage("SaltBackHalf Shield Returned Null");
-                    return true;
-                }
-                if (E.HasParameter("ShieldBlocked"))
-                {
-                    // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
-                    return true;
-                }
-                if (!Owner.CanMoveExtremities(null, false, false, false))
-                {
-                    // AddPlayerMessage("SaltBackHalf CanMove Check");
-                    return true;
-                }
-                // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
-                if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
-                {
-                    // AddPlayerMessage("SaltBackHalf SaltBack Status");
 
-                    E.SetParameter("ShieldBlocked", true);
-
-                    // AddPlayerMessage("SaltBackHalf Damage");
-
-                    if (Owner.IsPlayer())
+                    if (SaltBackBlockSystem.SpecialFistCollective.Any(Owner.HasEquippedObject))
                     {
-                        IComponent<GameObject>.AddPlayerMessage("You deflect an attack with your " + ParentObject.Equipped + "!" + "(" + FistShieldAV + " AV)", 'g');
+                        SaltBackBlockSystem.PSBArmorBonus = 1;
                     }
-                    else
+
+                    if (Owner.GetShield() != null)
                     {
-                        Owner.ParticleText(string.Concat(new object[]
+                        // AddPlayerMessage("SaltBackHalf Shield Returned Null");
+                        return true;
+                    }
+
+                    if (E.HasParameter("ShieldBlocked"))
+                    {
+                        // AddPlayerMessage("SaltBackHalf Blocked ParameterSet");
+                        return true;
+                    }
+
+                    if (!Owner.CanMoveExtremities(null, false, false, false))
+                    {
+                        // AddPlayerMessage("SaltBackHalf CanMove Check");
+                        return true;
+                    }
+
+                    // AddPlayerMessage("SaltBackHalf Block Attempt Random Int");
+                    if (Stat.Random(1, 100) <= 15 + (5 * (ParentObject.Statistics["Level"].BaseValue / 5)))
+                    {
+                        // AddPlayerMessage("SaltBackHalf SaltBack Status");
+
+                        E.SetParameter("ShieldBlocked", true);
+
+                        // AddPlayerMessage("SaltBackHalf Damage");
+
+                        if (Owner.IsPlayer())
                         {
-                            "{{",
-                            IComponent<GameObject>.ConsequentialColor(Owner, null),
-                            "|Block! (+",
-                            FistShieldAV +
-                            " AV)}}"
-                        }), ' ', false, 1.5f, -8f);
+                            IComponent<GameObject>.AddPlayerMessage(
+                                "You deflect an attack with your " + ParentObject.Equipped + "!" + "(" + FistShieldAV +
+                                " AV)", 'g');
+                        }
+                        else
+                        {
+                            Owner.ParticleText(string.Concat(new object[]
+                            {
+                                "{{",
+                                IComponent<GameObject>.ConsequentialColor(Owner, null),
+                                "|Block! (+",
+                                FistShieldAV +
+                                " AV)}}"
+                            }), ' ', false, 1.5f, -8f);
+                        }
+
+                        E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
                     }
-                    E.SetParameter("AV", E.GetIntParameter("AV", 0) + FistShieldAV);
                 }
             }
             if (E.ID == "BeginTakeAction" && ParentObject.HasEffect("DawnStance") && ParentObject.HasSkill("WM_MMA_PathAstralTabby"))
@@ -208,7 +232,7 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
-            this.DawnStanceID = base.AddMyActivatedAbility("Way of The Dawnglider", "DawngliderStanceCommand", "Skill", "Whenever you launch an attack with either your bare hands or natural weapon.", "*", null, false, false, false);
+            this.DawnStanceID = base.AddMyActivatedAbility("Way of The Dawnglider", "DawngliderStanceCommand", "Skill", "Activate to assume the Soaring Dawnglider stance.", "*", null, false, false, false);
             return true;
         }
 
