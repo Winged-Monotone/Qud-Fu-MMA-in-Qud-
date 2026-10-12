@@ -29,7 +29,6 @@
                 <skill Name="Discipline" />
                 <skill Name="Survival" />
                 <skill Name="WM_MMA_MartialStances" />
-                <skill Name="WM_MMA_PathDawnGlider" />
             </skills>
         </subtype>
         

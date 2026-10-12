@@ -21,7 +21,7 @@ namespace XRL.World.Parts
 
         public void wmHipThrow()
         {
-            AddPlayerMessage("1");
+            // AddPlayerMessage("1");
             TextConsole _TextConsole = UI.Look._TextConsole;
             ScreenBuffer Buffer = TextConsole.ScrapBuffer;
             Core.XRLCore.Core.RenderMapToBuffer(Buffer);
@@ -53,7 +53,9 @@ namespace XRL.World.Parts
             var BlipColorString = Target.Render.TileColor;
             var BlipDetailColor = Target.Render.DetailColor;
             int BlipDuration = 10;
-            AddPlayerMessage("2");
+            
+            // AddPlayerMessage("2");
+            
             if (Target != null)
             {
                 if (!Target.PhaseAndFlightMatches(Grappler))
@@ -93,7 +95,9 @@ namespace XRL.World.Parts
                             break;
                         }
                     }
-                    AddPlayerMessage("3");
+                    
+                    // AddPlayerMessage("3");
+                    
                     Target.DirectMoveTo(TargetCell, EnergyCost: 10);
                 }
             }

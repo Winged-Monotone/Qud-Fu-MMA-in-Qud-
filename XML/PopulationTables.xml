@@ -23,7 +23,6 @@
 
     <population Name="StartingGear_DivineDawningFistRyu">
         <group Name="Items" Style="pickeach">
-
             <object Blueprint="Camel Bladder" Number="1" />
             <object Blueprint="FullWaterskin" Number="2" />
             <object Blueprint="Throwing Knife" Number="10" />
@@ -44,8 +43,8 @@
 
     <population Name="Ammo 1" Load="Merge">
         <group Name="Items" Style="pickone">
-            <object Weight="10" Number="1-10" Blueprint="Throwing Knife" />
-            <object Weight="10" Number="1-20" Blueprint="Shuriken" />
+            <object Weight="10" Number="2-10" Blueprint="Throwing Knife" />
+            <object Weight="10" Number="5-20" Blueprint="Shuriken" />
         </group>
     </population>
 

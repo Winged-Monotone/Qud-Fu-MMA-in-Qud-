@@ -136,7 +136,7 @@ namespace XRL.World.Parts
                 }
                 else
                 {
-                    AddPlayerMessage(Target.the + "resist your attempts to wrestle them into a different space.");
+                    AddPlayerMessage(Target.the + " resist your attempts to wrestle them into a different space.");
                 }
             }
             // AddPlayerMessage("4");
