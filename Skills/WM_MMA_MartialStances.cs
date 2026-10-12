@@ -14,6 +14,7 @@ using UnityEngine;
 using XRL.Messages;
 using XRL.UI;
 using System.Data.SqlTypes;
+using XRL.UI.ObjectFinderClassifiers;
 
 namespace XRL.World.Parts.Skill
 {
@@ -28,6 +29,16 @@ namespace XRL.World.Parts.Skill
             typeof(SaltHopperStance),
             typeof(SlumberStance),
             typeof(DaccaStance),
+        };
+
+        private static readonly List<string> StanceChoices = new List<string>()
+        {
+            "Way of the Dawnglider",
+            "Way of the Salthopper",
+            "Way of the Saltback",
+            "Way of the Astral Tabby",
+            "Way of the Slumberling",
+            "Way of the Death-Dacca"
         };
 
         public Guid DismissStanceID;
@@ -68,15 +79,37 @@ namespace XRL.World.Parts.Skill
         public override bool AddSkill(GameObject GO)
         {
             this.DismissStanceID = base.AddMyActivatedAbility("Dismiss Stance", "DismissStanceCommand", "Skill", "Dismiss your current stance.", "*", null, false, false, true);
+            
+            int InitialStance = Popup.PickOption(
+                Title: "Choose your starting style ...",
+                Options: StanceChoices,
+                AllowEscape: true);
 
-            if (!ParentObject.HasSkill("WM_MMA_MartialStances"))
+            if (InitialStance == 0)
             {
-                if (!ParentObject.HasSkill("WM_MMA_PathDawnGlider"))
-                {
-                    ParentObject.AddSkill("WM_MMA_PathDawnGlider");
-                }
+                ParentObject.AddSkill<WM_MMA_PathDawnGlider>();
             }
-
+            if (InitialStance == 1)
+            {
+                ParentObject.AddSkill<WM_MMA_PathSaltHopper>();
+            }
+            if (InitialStance == 2)
+            {
+                ParentObject.AddSkill<WM_MMA_PathSaltBack>();
+            }
+            if (InitialStance == 3)
+            {
+                ParentObject.AddSkill<WM_MMA_PathAstralTabby>();
+            }
+            if (InitialStance == 4)
+            {
+                ParentObject.AddSkill<WM_MMA_PathSlumberling>();
+            }
+            if (InitialStance == 5)
+            {
+                ParentObject.AddSkill<WM_MMA_PathDeathDacca>();
+            }
+            
             StanceVisceraDefID = GO.AddActivatedAbility(
                 Name: wmSVToggleState,
                 Command: "WM_VisceralTextSysEvent",

@@ -172,7 +172,7 @@ namespace XRL.World.Parts.Skill
 
             eDefender = Target;
 
-            if (cell == null)
+            if (Target == null)
             {
                 AddPlayerMessage("Must target an enemy!");
                 return;

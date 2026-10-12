@@ -101,6 +101,7 @@ namespace XRL.World.Parts.Skill
                         if (Limb.DefaultBehavior.IsValid() && Limb.DefaultBehavior.Blueprint == "DefaultFist" &&
                             Limb.DefaultBehavior.TryGetPart(out MeleeWeapon MW))
                         {
+                            Limb.DefaultBehavior.RemoveProperty("UndesirableWeapon");
                             MW.PenBonus = WM_MMASkillTree.GetLevelValuePenetration(ParentObject.Level);
                             MW.BaseDamage = WM_MMASkillTree.GetLevelValueBaseDamage(ParentObject.Level);
 

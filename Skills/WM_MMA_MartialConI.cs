@@ -18,6 +18,14 @@ namespace XRL.World.Parts.Skill
 
         public override bool AddSkill(GameObject GO)
         {
+           var EquipmentList = ParentObject.GetEquippedObjects();
+           foreach (var E in EquipmentList)
+           {
+               if (E.IsNatural())
+               {
+                   E.RemoveProperty("UndesirableWeapon");
+               }
+           }
             return true;
         }
 

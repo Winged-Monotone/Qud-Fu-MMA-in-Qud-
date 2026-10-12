@@ -83,8 +83,8 @@ namespace XRL.World.Effects
 
             PlayWorldSound("swapstance", PitchVariance: 0.5f);
 
-            StatShifter.SetStatShift("AV", -(int)Math.Round(ParentAV * 0.5));
-            StatShifter.SetStatShift("DV", -(int)Math.Round(ParentDV * 0.5));
+            StatShifter.SetStatShift("AV", -(int)Math.Round(ParentAV / 2f));
+            StatShifter.SetStatShift("DV", -(int)Math.Round(ParentDV / 2f));
 
             this.SlumberID = base.AddMyActivatedAbility("Slumber", "SlumberSleepCommand", "Power", "Fall into a deep slumber, regenerating your hitpoints.", "Z", null, false, false, false);
 

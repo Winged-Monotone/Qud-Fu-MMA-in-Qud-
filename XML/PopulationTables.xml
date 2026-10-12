@@ -23,7 +23,6 @@
 
     <population Name="StartingGear_DivineDawningFistRyu">
         <group Name="Items" Style="pickeach">
-
             <object Blueprint="Camel Bladder" Number="1" />
             <object Blueprint="FullWaterskin" Number="2" />
             <object Blueprint="Throwing Knife" Number="10" />

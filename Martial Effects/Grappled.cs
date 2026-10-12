@@ -172,7 +172,8 @@ namespace XRL.World.Effects
             }
             else if (E.ID == "LeftCell")
             {
-                var mine = Object.CurrentCell;
+                var mine = Object?.CurrentCell;
+                
                 var left = E.GetParameter("Cell") as Cell;
                 var dir = E.GetStringParameter("Direction");
                 var enter = left.GetCellFromDirection(dir);
@@ -182,8 +183,11 @@ namespace XRL.World.Effects
 
 
                 var dist = mine.PathDistanceTo(enter); // BUG? Misreports distance between zones as +1
-                if (dist <= 1) return true; // TODO: re-examine this, is disconnecting right move? move until adjacent?
-                if (dist > 3) Object.RemoveEffect(this);
+                
+                if (dist <= 1) 
+                    return true; // TODO: re-examine this, is disconnecting right move? move until adjacent?
+                if (dist > 3)
+                    Object.RemoveEffect(this);
                 else
                 {
                     Object.Move(mine.GetDirectionFromCell(left), Forced: true, Dragging: eGrappler, EnergyCost: 0);
