@@ -26,6 +26,7 @@ namespace XRL.World.Effects
         public Guid TestGrapProbCommand;
         public GameObject Target;
         public GameObject Grappler;
+        public Cell TargetCell;
         public int Passes;
 
         public int CurrentFreeArmCount;
@@ -290,11 +291,13 @@ namespace XRL.World.Effects
         public void wmGrapple()
         {
 
-            Grappler = Object;
+            var Grappler = Object;
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
 
             Target = PickDirection().GetCombatTarget();
+
+            var TargetsStrengthMod = Target.Statistics["Strength"].Modifier;
 
             bool GrappledCheck = !Target.HasEffect<Grappled>();
             bool SaveDynamics = !Target.MakeSave(Stat: "Strength", Difficulty: 12 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
@@ -343,80 +346,111 @@ namespace XRL.World.Effects
             var Grappler = Object;
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
-            
+
+            int DamageIntWallSmash = GrapplersStrengthMod + GrapplerLevel;
             int DamageIntBodySmash = (GrapplersStrengthMod + GrapplerLevel) / 2;
-            
-            var FindTarget = Object.CurrentCell.GetAdjacentCells();
-            FindGrappleTarget(FindTarget);
-            
+
+            var GrapplerAdjacentcells = Grappler.CurrentCell.GetAdjacentCells();
+
+            var TargetingPositional = PickDirectionS();
+            var TargetsPositionalCell = Object.CurrentCell.GetCellFromDirection(TargetingPositional);
+
+            Target = TargetsPositionalCell.GetFirstObjectWithEffect("Grappled");
+
+            // AddPlayerMessage("Target :" + Target.DisplayName);
+
+            bool GrappledCheck = Target.HasEffect<Grappled>();
             bool SaveDynamics = !Target.MakeSave(Stat: "Strength", Difficulty: 12 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
-            
             if (Target == null)
             {
                 AddPlayerMessage("You must select a grappled target.");
-                return;
             }
-            if (Target != null)
+            else if (GrappledCheck && Target != null)
             {
+
                 if (!Target.PhaseAndFlightMatches(Grappler))
                 {
                     AddPlayerMessage("You cannot reach this creature!");
-                    return;
                 }
-                if (SaveDynamics)
+                else if (SaveDynamics)
                 {
                     var TargetDestination = PickDirectionS();
-                    var CellDirection = Object.CurrentCell.GetCellFromDirection(TargetDestination);
-                    var AimingAt = CellDirection.GetCombatTarget(Attacker: Object, InanimateSolidOnly: true, IgnoreFlight: true);
-                    
-                    if (AimingAt.IsValid())
+                    TargetCell = Object.CurrentCell.GetCellFromDirection(TargetDestination);
+
+                    if (TargetCell == Target.CurrentCell)
                     {
-                        
-                        var AimingAtCurrentCell = AimingAt.CurrentCell;
-                        
-                        if (AimingAt.CurrentCell == Target.CurrentCell)
+                        AddPlayerMessage("You must choose a different space than your target's current.");
+                    }
+                    else if (TargetCell.HasWall() || TargetCell.HasObjectWithPart("Furniture"))
+                    {
+                        var VisceralRandom = Stat.Random(1, 100);
+                        var eWall = TargetCell.GetFirstObjectWithPart("Wall");
+                        var eFurniture = TargetCell.GetObjectWithTagOrProperty("Furniture");
+                        var eWallHPR10 = eWall.GetIntProperty("Hitpoints") / 10;
+
+                        if (TargetCell.HasWall())
+                            Target.CellTeleport(C: eWall.CurrentCell.GetFirstEmptyAdjacentCell(1, 1), EnergyCost: 50, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                        else if (TargetCell.HasObjectWithPart("Furniture"))
+                            Target.CellTeleport(C: eWall.CurrentCell.GetRandomLocalAdjacentCell(), EnergyCost: 50, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+
+                        if (VisceralRandom <= 33)
                         {
-                            AddPlayerMessage("You must choose a different space than your target's current.");
-                            return;
+
+                            Target.Splatter("*");
+                            Target.TakeDamage(Amount: DamageIntWallSmash + eWallHPR10, Attributes: "Bashing", DeathReason: "smashed against a wall.", ThirdPersonDeathReason: "You were smashed against a wall.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                            CombatJuice.cameraShake(0.5f);
                         }
-                        
-                        AimingAt.ShatterSplatter();
-                        if (AimingAt.Physics.Weight <= Target.Physics.Weight)
+                        else if (VisceralRandom <= 66)
                         {
-                            AimingAt.Move(
+                            int DamageInt = GrapplersStrengthMod + GrapplerLevel;
+
+                            Target.Splatter("*");
+                            Target.TakeDamage(Amount: DamageIntWallSmash + eWallHPR10, Attributes: "Bashing", DeathReason: "finely mashed against a wall.", ThirdPersonDeathReason: "You were finely mashed against a wall.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                            CombatJuice.cameraShake(0.5f);
+                        }
+                        else if (VisceralRandom <= 100)
+                        {
+                            int DamageInt = GrapplersStrengthMod + GrapplerLevel;
+
+                            Target.Splatter("*");
+                            Target.TakeDamage(Amount: DamageIntWallSmash + eWallHPR10, Attributes: "Bashing", DeathReason: "splattered against a wall.", ThirdPersonDeathReason: "You were splattered against a wall.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                            CombatJuice.cameraShake(0.5f);
+                        }
+                    }
+                    else if (TargetCell.HasCombatObject())
+                    {
+                        var CreatureInCell = TargetCell.GetCombatObject();
+
+                        bool SaveDynamics2 = !Target.MakeSave(Stat: "Strength", Difficulty: 8 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
+
+                        CreatureInCell.ShatterSplatter();
+                        CreatureInCell.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing", DeathReason: "colliding into another with vicious force.", ThirdPersonDeathReason: "You were splattered against another through wrestling.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                        if (SaveDynamics2)
+                        {
+                            CreatureInCell.Move(
                                 Direction: Directions.GetRandomDirection(),
                                 Forced: true,
                                 NearestAvailable: false,
-                                EnergyCost: 1000);
+                                EnergyCost: 50);
+                            Target.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing", DeathReason: "colliding into another with vicious force.", ThirdPersonDeathReason: "You were splattered against another through wrestling.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                            Target.CellTeleport(C: TargetCell, EnergyCost: 50, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                            CombatJuice.cameraShake(0.5f);
                         }
-                        AimingAt.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing", DeathReason: "colliding into another with vicious force.", ThirdPersonDeathReason: "You were splattered against another through wrestling.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling maneuver.");
-
-                       if (AimingAt.IsValid())
-                       {
-                           GrappleJuice(AimingAt, DamageIntBodySmash, GrapplersStrengthMod);
-                       }
-                       else
-                       {
-                           Target.CellTeleport(C: AimingAtCurrentCell, EnergyCost: 1000,
-                               Forced: true, VisualEffects: false, SkipRealityDistortion: true);
-                           Target.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing",
-                               DeathReason: "colliding into another with vicious force.",
-                               ThirdPersonDeathReason: "You were splattered against another through wrestling.",
-                               Owner: Grappler, Attacker: Grappler, Source: null,
-                               Message: "from %t wrestling maneuver.");
-                       }
-
-                        CombatJuice.cameraShake(0.5f);
+                        else
+                        {
+                            Target.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing", DeathReason: "colliding into another with vicious force.", ThirdPersonDeathReason: "You were splattered against another through wrestling.", Owner: Grappler, Attacker: Grappler, Source: null, Message: "from %t wrestling meanuver.");
+                            CombatJuice.cameraShake(0.5f);
+                        }
                     }
                     else
                     {
-                        XDidYToZ(Grappler, "wrestle", "", Target, "into another space", ".");
-                        Target.CellTeleport(C: CellDirection, EnergyCost: 50, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                        XDidYToZ(Grappler, "wrestles", "", Target, "into another space", ".");
+                        Target.CellTeleport(C: TargetCell, EnergyCost: 50, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
                     }
                 }
                 else
                 {
-                    AddPlayerMessage(Target.the + " resist your attempt to grapple.");
+                    AddPlayerMessage(Target.the + "resist your attempt to grapple.");
                 }
             }
         }
@@ -432,6 +466,13 @@ namespace XRL.World.Effects
 
         public void wmHipThrow()
         {
+            TextConsole _TextConsole = UI.Look._TextConsole;
+            ScreenBuffer Buffer = TextConsole.ScrapBuffer;
+            Core.XRLCore.Core.RenderMapToBuffer(Buffer);
+
+            List<GameObject> hit = new List<GameObject>(1);
+            List<Cell> usedCells = new List<Cell>(1);
+
             var Grappler = Object;
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
@@ -439,85 +480,77 @@ namespace XRL.World.Effects
             int DamageIntWallSmash = GrapplersStrengthMod + GrapplerLevel;
             int DamageIntBodySmash = (GrapplersStrengthMod + GrapplerLevel) / 2;
 
-            var FindTarget = Object.CurrentCell.GetAdjacentCells();
-            FindGrappleTarget(FindTarget);
-            
-            if (Target != null)
-            {
-                bool GrappledCheck = Target.RemoveEffect<Grappled>();
-                bool SaveDynamics = !Target.MakeSave(Stat: "Strength",
-                    Difficulty: 8 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
+            var TargetingPositional = PickDirectionS();
+            var TargetsPositionalCell = Object.CurrentCell.GetCellFromDirection(TargetingPositional);
 
-                if (!GrappledCheck)
-                {
-                    AddPlayerMessage("You must select a grappled target.");
-                }
-                else if (!Target.PhaseAndFlightMatches(Grappler))
+            Target = TargetsPositionalCell.GetFirstObjectWithEffect("Grappled");
+
+            bool GrappledCheck = Target.HasEffect<Grappled>();
+            bool SaveDynamics = !Target.MakeSave(Stat: "Strength", Difficulty: 8 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
+
+            var BlipTile = Target.Render.Tile;
+            var BlipColorString = Target.Render.TileColor;
+            var BlipDetailColor = Target.Render.DetailColor;
+            int BlipDuration = 10;
+
+            if (Target == null)
+            {
+                AddPlayerMessage("You must select a grappled target.");
+            }
+            else if (Target != null)
+            {
+                if (!Target.PhaseAndFlightMatches(Grappler))
                 {
                     AddPlayerMessage("You cannot reach this creature!");
                 }
                 else if (SaveDynamics)
                 {
 
+                    Target.RemoveEffect<Grappled>();
+
                     var TargetLine = PickLine(
                         Length: 3 + (GrapplerLevel / 3),
                         VisLevel: AllowVis.OnlyExplored);
-                        
-                    // Count is cumulative number of elements in the array. 
-                    //  The last index of an array is always the amount of elements minus 1. Because indices start at 0
-                    for (int index = 1, Count = TargetLine.Count; index < Count; index++)
-                    {
 
+                    for (int index = 1; index < TargetLine.Count; index++)
+                    {
                         Cell cell = TargetLine[index];
-                        
-                        var BlipTile = Target.Render.Tile;
-                        var BlipColorString = Target.Render.TileColor;
-                        var BlipDetailColor = Target.Render.DetailColor;
-                        int BlipDuration = 2 * index;
-                        
-                        cell.TileParticleBlip(BlipTile, BlipColorString, BlipDetailColor, BlipDuration, false,
-                            Target.Render.HFlip, Target.Render.VFlip);
-                        
-                        var AimingAt = cell.GetCombatTarget(Attacker: Object, InanimateSolidOnly: true, IgnoreFlight: true);
-                            
-                        if (AimingAt.IsValid())
+                        Buffer.Goto(cell.X, cell.Y);
+
+
+                        Target.TileParticleBlip(BlipTile, BlipColorString, BlipDetailColor, BlipDuration, false, Target.Render.HFlip, Target.Render.VFlip);
+
+                        _TextConsole.DrawBuffer(Buffer);
+                        System.Threading.Thread.Sleep(18);
+                        GameObject obj = cell.FindObject(o => o.ConsiderSolidFor(Grappler) || (o.HasPart("Combat") && !o.Physics.Solid));
+
+                        TargetCell = cell;
+
+                        if (obj != null)
                         {
-                            Target.CellTeleport(C: AimingAt.CurrentCell.GetFirstEmptyAdjacentCell(1, 1),
-                                EnergyCost: 1000, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
-                            Target.Splatter("*");
-                            Target.TakeDamage(Amount: AimingAt.IsWall()?DamageIntWallSmash:DamageIntBodySmash, Attributes: "Bashing",
-                                DeathReason: "finely mashed against something.",
-                                ThirdPersonDeathReason: "You were finely mashed against something.", Owner: Grappler,
-                                Attacker: Grappler, Source: null, Message: "from %t wrestling maneuver.");
-                            if (!Target.MakeSave(Stat: "Toughness", Difficulty: 8 + GrapplersStrengthMod, Attacker: Object, AttackerStat: "Strength"))
-                            {
-                                Target.ApplyEffect(new Dazed(Duration: 8));
-                            }
+                            TargetCell = cell;
+                            if (Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false))
+                                Target.TakeDamage(
+                                    Amount: DamageIntWallSmash,
+                                    Attributes: "Bashing",
+                                    DeathReason: "smashed against a wall.",
+                                    ThirdPersonDeathReason: "You were smashed against a wall.",
+                                    Owner: Grappler,
+                                    Attacker: Grappler,
+                                    Source: null,
+                                    Message: "from %t wrestling meanuver.");
                             CombatJuice.cameraShake(0.5f);
                             break;
                         }
-                        else if (index == Count - 1)
-                        {
-                            Target.CellTeleport(C: cell.IsPassable(Target)?cell:cell.GetFirstEmptyAdjacentCell(1, 1),
-                                EnergyCost: 1000, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
-                            if (!Target.MakeSave(Stat: "Toughness", Difficulty: 8 + GrapplersStrengthMod, Attacker: Object, AttackerStat: "Strength"))
-                            {
-                                Target.ApplyEffect(new Dazed(Duration: 8));
-                            }
-                            Target.Splatter("*");
-                            CombatJuice.cameraShake(0.1f);
-                        }
                     }
+                    Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false);
                 }
                 else if (!SaveDynamics)
                 {
-                    AddPlayerMessage(Target.DisplayNameOnlyDirect + " resist your attempt to hip-throw them.");
+                    AddPlayerMessage(Target.DisplayNameOnlyDirect + "resist your attempt to hip-throw them.");
                 }
-                
             }
         }
-        
-        
 
         //___________________________
         //_____________________________________________________
@@ -530,54 +563,58 @@ namespace XRL.World.Effects
 
         public void wmSuplex()
         {
-            
             var Grappler = Object;
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
 
             int DamageIntSuplexSmash = ((1 + (GrapplerLevel / 2)) * (GrapplersStrengthMod + Stat.Random(1, 3)));
-            var FindTarget = Object.CurrentCell.GetAdjacentCells();
 
-            FindGrappleTarget(FindTarget);
-            
-            if (Target != null)
+            var TargetingPositional = PickDirectionS();
+            var TargetsPositionalCell = Object.CurrentCell.GetCellFromDirection(TargetingPositional);
+
+            Target = TargetsPositionalCell.GetFirstObjectWithEffect("Grappled");
+
+            var TargetDir = Grappler.GetDirectionToward(Target);
+            var OppositeSpace = Directions.GetOppositeDirection(TargetDir);
+            var TargetCell = Object.CurrentCell.GetCellFromDirection(OppositeSpace);
+
+            var ShakeIntensity = Target.GetIntProperty("Hitpoints") / 10;
+            var ShakeDuration = Target.GetIntProperty("Hitpoints") / 50;
+
+            bool GrappledCheck = Target.HasEffect<Grappled>();
+            bool SaveDynamics = !Target.MakeSave(Stat: "Strength", Difficulty: 8 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
+
+            if (Target.HasEffect<Grappled>())
             {
-                var TargetDir = Grappler.GetDirectionToward(Target);
-                var OppositeSpace = Directions.GetOppositeDirection(TargetDir);
-                var TargetCell = Object.CurrentCell.GetCellFromDirection(OppositeSpace);
-                
-                bool SaveDynamics = !Target.MakeSave(Stat: "Strength",
-                    Difficulty: 8 + (GrapplersStrengthMod + (GrapplerLevel / 4)));
-
-                if (Target.HasEffect<Grappled>())
+                if (!Target.PhaseAndFlightMatches(Grappler))
                 {
-                    if (!Target.PhaseAndFlightMatches(Grappler))
-                    {
-                        AddPlayerMessage("You cannot reach this creature!");
-                    }
+                    AddPlayerMessage("You cannot reach this creature!");
+                }
+                if (SaveDynamics)
+                {
+                    Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false);
+                    Target.TakeDamage(
+                        Amount: DamageIntSuplexSmash,
+                                Attributes: "Bashing",
+                                DeathReason: "crushed by a suplex.",
+                                ThirdPersonDeathReason: "You were suplexed, you died.",
+                                Owner: Grappler,
+                                Attacker: Grappler,
+                                Source: null,
+                                Message: "from %t suplex meanuver.");
 
-                    if (SaveDynamics)
-                    {
-                        Acrobatics_Jump.PlayAnimation(Target, TargetCell);
-                        Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false);
-                        Target.TakeDamage(
-                            Amount: DamageIntSuplexSmash,
-                            Attributes: "Bashing",
-                            DeathReason: "crushed by a suplex.",
-                            ThirdPersonDeathReason: "You were suplexed, you died.",
-                            Owner: Grappler,
-                            Attacker: Grappler,
-                            Source: null,
-                            Message: "from %t suplex maneuver.");
-                        
-                        CombatJuice.cameraShake(0.5f);
+                    TextConsole _TextConsole = UI.Look._TextConsole;
+                    ScreenBuffer Buffer = TextConsole.ScrapBuffer;
+                    Core.XRLCore.Core.RenderMapToBuffer(Buffer);
 
-                        XDidYToZ(Grappler, "suplex", "", Target, "", "!");
-                    }
-                    else if (!SaveDynamics)
-                    {
-                        AddPlayerMessage(Target.DisplayNameOnlyDirect + " resist your attempt to suplex them.");
-                    }
+                    _TextConsole.DrawBuffer(Buffer);
+                    CombatJuice.cameraShake(0.5f);
+
+                    XDidYToZ(Grappler, "suplex", "", Target, "", "!");
+                }
+                else if (!SaveDynamics)
+                {
+                    AddPlayerMessage(Target.DisplayNameOnlyDirect + "resist your attempt to suplex them.");
                 }
             }
         }
@@ -597,8 +634,9 @@ namespace XRL.World.Effects
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
 
-            var FindTarget = Object.CurrentCell.GetAdjacentCells();
-            FindGrappleTarget(FindTarget);
+            var TargetingPositional = PickDirectionS();
+            var TargetsPositionalCell = Object.CurrentCell.GetCellFromDirection(TargetingPositional);
+            Target = TargetsPositionalCell.GetFirstObjectWithEffect("Grappled");
 
             var TargetCon = Target.Statistics["Toughness"].Modifier;
 
@@ -619,7 +657,7 @@ namespace XRL.World.Effects
             }
             else if (!SaveDynamics)
             {
-                AddPlayerMessage(Target.DisplayNameOnlyDirect + " resist your attempt to subdue.");
+                AddPlayerMessage(Target.DisplayNameOnlyDirect + "resist your attempt to subdue.");
             }
         }
 
@@ -638,8 +676,9 @@ namespace XRL.World.Effects
             var GrapplersStrengthMod = (Grappler.Statistics["Strength"].Modifier);
             var GrapplerLevel = (Grappler.Statistics["Level"].Value);
 
-            var FindTarget = Object.CurrentCell.GetAdjacentCells();
-            FindGrappleTarget(FindTarget);
+            var TargetingPositional = PickDirectionS();
+            var TargetsPositionalCell = Object.CurrentCell.GetCellFromDirection(TargetingPositional);
+            Target = TargetsPositionalCell.GetFirstObjectWithEffect("Grappled");
 
             int DamageIntRavage = (10 + GrapplerLevel / 3) * GrapplersStrengthMod;
 
@@ -669,7 +708,7 @@ namespace XRL.World.Effects
                 }
                 else if (!SaveDynamics)
                 {
-                    AddPlayerMessage(Target.DisplayNameOnlyDirect + " resist your attempt to destroy their limb.");
+                    AddPlayerMessage(Target.DisplayNameOnlyDirect + "resist your attempt to destroy their limb.");
                 }
             }
         }
@@ -763,41 +802,6 @@ namespace XRL.World.Effects
             }
 
             return true;
-        }
-
-        // Method Calls
-        
-        public void FindGrappleTarget(List<Cell> FindTarget)
-        {
-            foreach (var T in FindTarget)
-            {
-                var O = T.GetFirstObjectWithEffect("Grappled");
-
-                if (O.IsValid())
-                {
-                    Target = O;
-                    break;
-                }
-            }
-        }
-
-        public void GrappleJuice(GameObject AimingAt, int DamageIntBodySmash, int ObjectStrengthMod)
-        {
-            Target.CellTeleport(C: AimingAt.CurrentCell.GetRandomLocalAdjacentCell(), EnergyCost: 1000,
-                Forced: true, VisualEffects: false, SkipRealityDistortion: true);
-            Target.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing",
-                DeathReason: "colliding into another with vicious force.",
-                ThirdPersonDeathReason: "You were splattered against another through wrestling.",
-                Owner: Grappler, Attacker: Grappler, Source: null,
-                Message: "from %t wrestling maneuver.");
-            if (!Target.MakeSave(Stat: "Toughness", Difficulty: 8 + ObjectStrengthMod, Attacker: Object, AttackerStat: "Strength"))
-            {
-                Target.ApplyEffect(new Dazed(Duration: 8));
-            }
-            if (!AimingAt.MakeSave(Stat: "Toughness", Difficulty: 8 + ObjectStrengthMod, Attacker: Object, AttackerStat: "Strength"))
-            {
-                AimingAt.ApplyEffect(new Dazed(Duration: 8));
-            }
         }
     }
 }
