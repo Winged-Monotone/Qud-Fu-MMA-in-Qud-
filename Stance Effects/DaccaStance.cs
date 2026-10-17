@@ -3,6 +3,7 @@ using XRL.UI;
 using XRL.Rules;
 using XRL.Core;
 using System.Collections.Generic;
+using System.Linq;
 using XRL.World.Parts;
 using XRL.Language;
 using ConsoleLib.Console;
@@ -397,8 +398,7 @@ namespace XRL.World.Effects
                        }
                        else
                        {
-                           Target.CellTeleport(C: AimingAtCurrentCell, EnergyCost: 1000,
-                               Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                           GetRandomAdjacentVisibleCellAndTeleportObject(AimingAtCurrentCell);
                            Target.TakeDamage(Amount: DamageIntBodySmash, Attributes: "Bashing",
                                DeathReason: "colliding into another with vicious force.",
                                ThirdPersonDeathReason: "You were splattered against another through wrestling.",
@@ -482,8 +482,7 @@ namespace XRL.World.Effects
                             
                         if (AimingAt.IsValid())
                         {
-                            Target.CellTeleport(C: AimingAt.CurrentCell.GetFirstEmptyAdjacentCell(1, 1),
-                                EnergyCost: 1000, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                            GetRandomAdjacentVisibleCellAndTeleportObject(AimingAt.CurrentCell);
                             Target.Splatter("*");
                             Target.TakeDamage(Amount: AimingAt.IsWall()?DamageIntWallSmash:DamageIntBodySmash, Attributes: "Bashing",
                                 DeathReason: "finely mashed against something.",
@@ -498,12 +497,14 @@ namespace XRL.World.Effects
                         }
                         else if (index == Count - 1)
                         {
-                            Target.CellTeleport(C: cell.IsPassable(Target)?cell:cell.GetFirstEmptyAdjacentCell(1, 1),
-                                EnergyCost: 1000, Forced: true, VisualEffects: false, SkipRealityDistortion: true);
+                            
+                            GetRandomAdjacentVisibleCellAndTeleportObject(cell);
+                            Target.Splatter("*");
                             if (!Target.MakeSave(Stat: "Toughness", Difficulty: 8 + GrapplersStrengthMod, Attacker: Object, AttackerStat: "Strength"))
                             {
                                 Target.ApplyEffect(new Dazed(Duration: 8));
                             }
+                            
                             Target.Splatter("*");
                             CombatJuice.cameraShake(0.1f);
                         }
@@ -517,8 +518,6 @@ namespace XRL.World.Effects
             }
         }
         
-        
-
         //___________________________
         //_____________________________________________________
         //_____________________________________________________________________________
@@ -559,7 +558,16 @@ namespace XRL.World.Effects
                     if (SaveDynamics)
                     {
                         Acrobatics_Jump.PlayAnimation(Target, TargetCell);
-                        Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false);
+                        if (!TargetCell.IsPassable())
+                        {
+                            GetRandomAdjacentVisibleCellAndTeleportObject(TargetCell);
+                            TargetCell.ImplosionSplat();
+                        }
+                        else
+                        {
+                            Target.CellTeleport(C: TargetCell, EnergyCost: 10, Forced: true, VisualEffects: false);
+                            TargetCell.ImplosionSplat();
+                        }
                         Target.TakeDamage(
                             Amount: DamageIntSuplexSmash,
                             Attributes: "Bashing",
@@ -655,17 +663,22 @@ namespace XRL.World.Effects
                 if (SaveDynamics)
                 {
                     var TargetBodypart = Target.GetRandomConcreteBodyPart();
-                    TargetBodypart.Dismember();
-                    XDidYToZ(Actor: Grappler, Verb: "destroy", Object: Target, Extra: TargetBodypart.Name, EndMark: "!");
-                    Target.TakeDamage(
-                        Amount: DamageIntRavage,
-                                Attributes: "Bashing",
-                                DeathReason: "torn asunder by a ravaging blow.",
-                                ThirdPersonDeathReason: "You were torn asunder.",
-                                Owner: Grappler,
-                                Attacker: Grappler,
-                                Source: null,
-                                Message: "from %t ravaging blow.");
+                    
+                    if (TargetBodypart.Type == "Arm" && TargetBodypart.Type == "Hand" && TargetBodypart.Type == "Tail" && TargetBodypart.Type == "Wheel" && TargetBodypart.Type == "Foot" && TargetBodypart.Type == "Fin" && TargetBodypart.Type == "Tread" && TargetBodypart.Type == "Roots")
+                    {
+                        TargetBodypart.Dismember();
+                        XDidYToZ(Actor: Grappler, Verb: "destroy", Object: Target, Extra: TargetBodypart.Name,
+                            EndMark: "!");
+                        Target.TakeDamage(
+                            Amount: DamageIntRavage,
+                            Attributes: "Bashing",
+                            DeathReason: "torn asunder by a ravaging blow.",
+                            ThirdPersonDeathReason: "You were torn asunder.",
+                            Owner: Grappler,
+                            Attacker: Grappler,
+                            Source: null,
+                            Message: "from %t ravaging blow.");
+                    }
                 }
                 else if (!SaveDynamics)
                 {
@@ -797,6 +810,28 @@ namespace XRL.World.Effects
             if (!AimingAt.MakeSave(Stat: "Toughness", Difficulty: 8 + ObjectStrengthMod, Attacker: Object, AttackerStat: "Strength"))
             {
                 AimingAt.ApplyEffect(new Dazed(Duration: 8));
+            }
+        }
+
+        public void GetRandomAdjacentVisibleCellAndTeleportObject(Cell eCell)
+        {
+            var Random = new Random();
+            var RandomVisibleCell = eCell.GetAdjacentCells().OrderBy(i => Random.Next());
+
+            foreach (var C in RandomVisibleCell)
+            {
+                if (C.IsVisible() && C.IsExplored() && C.IsPassable())
+                {
+                    Target.CellTeleport(
+                        C: C,
+                        EnergyCost: 1000, Forced: true, VisualEffects: false,
+                        SkipRealityDistortion: true);
+                    break;
+                }
+                else
+                {
+                                    
+                }
             }
         }
     }

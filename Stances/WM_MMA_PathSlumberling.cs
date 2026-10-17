@@ -174,7 +174,7 @@ namespace XRL.World.Parts.Skill
                                         {
                                             ob.Dismember();
                                             Flankers.Die(ParentObject,
-                                                ParentObject.it + " lob " + Flankers.its + ob.Name + ", killing it!",
+                                                ParentObject.it + " lob off" + Flankers.its + ob.Name + ", killing it!",
                                                 null);
                                         }
                                         else if (ob.Type == "Body")
@@ -227,7 +227,7 @@ namespace XRL.World.Parts.Skill
                 {
                     // AddPlayerMessage("slumberstarting for each 3");
                     var FrightenedFlankers = c2.GetObjectsInCell();
-                    var FrightQuery = FrightenedFlankers.Where(Obj => !Obj.MakeSave("Ego", 20 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false) && Obj != Attacker && Obj.HasPart("Brain") || Obj.HasPart("Combat"));
+                    var FrightQuery = FrightenedFlankers.Where(Obj => !Obj.MakeSave("Willpower", 20 + (AttackerLevels / 3), Attacker, "Ego", "Ego", false) && Obj != Attacker && Obj.HasPart("Brain") || Obj.HasPart("Combat"));
 
                     foreach (var o2 in FrightenedFlankers)
                     {
